@@ -1,0 +1,91 @@
+/* ═══════════════════════════════════════════════
+   S-09 Profile — Page CSS
+═══════════════════════════════════════════════ */
+
+/* ═══ CONTENT AREA (override layout.css flex->block) ═══ */
+.content-area{flex:1;display:block;overflow-y:auto;padding:24px 28px}
+.content-area::-webkit-scrollbar{width:5px}
+.content-area::-webkit-scrollbar-thumb{background:var(--gray-200);border-radius:3px}
+
+/* ═══ TWO COLUMN LAYOUT ═══ */
+.profile-columns{display:grid;grid-template-columns:1fr 340px;gap:16px;align-items:start}
+.profile-col-main{display:flex;flex-direction:column;gap:16px;min-width:0}
+.profile-col-side{display:flex;flex-direction:column;gap:16px;min-width:0}
+
+/* ═══ PROFILE HERO ═══ */
+.profile-hero{background:var(--taupe-800);border:0.5px solid var(--border-subtle);border-radius:var(--radius-lg);padding:20px 24px;margin-bottom:16px;display:flex;align-items:center;gap:16px;position:relative}
+.profile-avatar-lg{width:52px;height:52px;border-radius:50%;background:var(--taupe-300);display:flex;align-items:center;justify-content:center;font-family:var(--font-display);font-size:20px;font-weight:800;color:#fff;flex-shrink:0;border:2px solid rgba(255,255,255,.15)}
+.profile-info{flex:1;z-index:1}
+.profile-name{font-family:var(--font-display);font-size:18px;font-weight:700;color:#fff;margin-bottom:2px}
+.profile-meta{font-size:12px;color:var(--gray-400);display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.profile-meta-item{display:flex;align-items:center;gap:4px}
+.profile-meta-item svg{width:13px;height:13px;opacity:.6}
+.profile-badges{display:flex;gap:5px;margin-top:6px;flex-wrap:wrap}
+.profile-badge{display:flex;align-items:center;gap:4px;padding:4px 12px;border-radius:var(--radius-full);font-size:11px;font-weight:600;background:rgba(255,255,255,.08);color:rgba(255,255,255,.7);border:1px solid rgba(255,255,255,.1);white-space:nowrap}
+.profile-badge svg{width:12px;height:12px}
+.profile-edit{flex-shrink:0}
+.profile-edit .btn{background:rgba(255,255,255,.1);color:#fff;border:1px solid rgba(255,255,255,.15)}
+.profile-edit .btn:hover{background:rgba(255,255,255,.18)}
+
+/* ═══ SECTION CARD (page-specific additions) ═══ */
+.profile-columns .section-card{margin-bottom:0}
+.sc-header{padding:16px 20px;border-bottom:.5px solid var(--border-subtle);display:flex;align-items:center;justify-content:space-between}
+.sc-title{font-family:var(--font-display);font-size:15px;font-weight:600;display:flex;align-items:center;gap:8px}
+.sc-icon{width:24px;height:24px;border-radius:6px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.sc-body{padding:20px}
+
+/* ═══ FORM (page-specific additions) ═══ */
+.form-grid-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px 20px}
+.input-suffix{position:relative}
+.input-suffix .input{padding-right:48px}
+.input-suffix .suffix{position:absolute;right:14px;top:50%;transform:translateY(-50%);font-size:13px;color:var(--text-tertiary);pointer-events:none}
+
+/* ═══ INFO ROW ═══ */
+.info-grid{display:grid;grid-template-columns:1fr 1fr;gap:0}
+.info-item{padding:12px 0;border-bottom:.5px solid var(--border-subtle);display:flex;flex-direction:column;gap:2px}
+.info-item:nth-last-child(-n+2){border-bottom:none}
+.info-label{font-size:11px;color:var(--text-tertiary);font-weight:500}
+.info-value{font-size:14px;font-weight:500}
+.info-value.empty{color:var(--text-tertiary);font-style:italic}
+
+/* ═══ TAG (page-specific additions) ═══ */
+.tag-list{display:flex;gap:6px;flex-wrap:wrap}
+.tag-green{background:var(--green-50);color:var(--green-600);border-color:var(--green-200)}
+.tag-blue{background:var(--pale-blue);color:#3b6fa0;border-color:#b5cedf}
+.tag-yellow{background:#fefce8;color:#a16207;border-color:#fde047}
+
+/* ═══ TARGET COMPANY ═══ */
+.target-company-card{display:flex;align-items:center;gap:14px;padding:16px;border-radius:var(--radius-md);border:1.5px solid var(--green-200);background:var(--green-50)}
+.tcc-logo{width:48px;height:48px;border-radius:var(--radius-md);background:var(--bg-surface);border:.5px solid var(--border-subtle);display:flex;align-items:center;justify-content:center;font-family:var(--font-display);font-size:14px;font-weight:800;color:var(--taupe-400);flex-shrink:0}
+.tcc-info{flex:1}
+.tcc-name{font-size:15px;font-weight:700}
+.tcc-sub{font-size:12px;color:var(--text-secondary);margin-top:1px}
+.tcc-score{text-align:center;flex-shrink:0}
+.tcc-score-num{font-family:var(--font-display);font-size:24px;font-weight:800;color:var(--green-600);line-height:1}
+.tcc-score-label{font-size:10px;color:var(--text-tertiary);margin-top:2px}
+
+/* ═══ SPEC SUMMARY ═══ */
+.spec-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.spec-item{padding:14px;border-radius:var(--radius-md);border:.5px solid var(--border-subtle);background:var(--bg-page)}
+.spec-item-label{font-size:10px;color:var(--text-tertiary);text-transform:uppercase;letter-spacing:.06em;margin-bottom:4px;font-weight:600}
+.spec-item-value{font-size:18px;font-weight:700;line-height:1}
+.spec-item-sub{font-size:11px;color:var(--text-secondary);margin-top:4px}
+
+/* ═══ EXPERIENCE LIST ═══ */
+.exp-list{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.exp-item{display:flex;align-items:flex-start;gap:10px;padding:14px;border-radius:var(--radius-md);border:.5px solid var(--border-subtle);background:var(--bg-page)}
+.exp-icon{width:32px;height:32px;border-radius:var(--radius-sm);display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px}
+.exp-info{flex:1;min-width:0}
+.exp-title{font-size:12px;font-weight:600;line-height:1.4}
+.exp-meta{font-size:11px;color:var(--text-tertiary);margin-top:2px}
+
+/* ═══ SETTINGS ═══ */
+.setting-row{display:flex;align-items:center;justify-content:space-between;padding:14px 0;border-bottom:.5px solid var(--border-subtle)}
+.setting-row:last-child{border-bottom:none}
+.setting-info{flex:1}
+.setting-name{font-size:13px;font-weight:600}
+.setting-desc{font-size:11px;color:var(--text-tertiary);margin-top:1px}
+
+/* ═══ DANGER ZONE ═══ */
+.danger-zone{border-color:#fecaca}
+.danger-zone .sc-header{background:#fef2f2;border-bottom-color:#fecaca}

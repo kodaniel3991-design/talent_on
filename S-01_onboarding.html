@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Talent ON — 로그인</title>
+<link rel="preconnect" href="https://cdn.jsdelivr.net">
+<link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Sora:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/tokens.css">
+<link rel="stylesheet" href="css/base.css">
+<link rel="stylesheet" href="css/layout.css">
+<link rel="stylesheet" href="css/components.css">
+<link rel="stylesheet" href="css/dark.css">
+<link rel="stylesheet" href="css/pages/onboarding.css">
+</head>
+<body>
+
+<div class="split">
+
+  <!-- ═══ LEFT — Branding ═══ -->
+  <div class="left">
+    <div class="brand-content">
+      <div class="brand-logo">
+        <div class="brand-logo-mark">T</div>
+        <div class="brand-logo-text">Talent ON<small>국립창원대학교 대학일자리플러스센터</small></div>
+      </div>
+
+      <h1 class="brand-headline">AI가 설계하는<br>나만의 <span>취업 로드맵</span></h1>
+      <p class="brand-desc">창원 지역 우수 기업의 인재상을 AI로 분석하여, 목표 기업까지의 준비 과정을 스스로 설계하고 실행하도록 돕습니다.</p>
+
+      <div class="features">
+        <div class="feature">
+          <div class="feature-icon">
+            <svg viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="7" stroke="var(--green-300)" stroke-width="1.5"/><path d="M7 10l2 2 4-4" stroke="var(--green-300)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <div class="feature-text">
+            <div class="feature-title">AI 달성 가능성 분석</div>
+            <div class="feature-desc">내 스펙과 목표 기업의 요구 조건을 AI가 비교 분석하여 달성 가능성을 알려줍니다.</div>
+          </div>
+        </div>
+        <div class="feature">
+          <div class="feature-icon">
+            <svg viewBox="0 0 20 20" fill="none"><rect x="3" y="3" width="14" height="14" rx="3" stroke="var(--green-300)" stroke-width="1.5"/><path d="M7 7h6M7 10h4M7 13h5" stroke="var(--green-300)" stroke-width="1.2" stroke-linecap="round"/></svg>
+          </div>
+          <div class="feature-text">
+            <div class="feature-title">학기별 준비 로드맵 자동 생성</div>
+            <div class="feature-desc">달성 분석 결과를 기반으로 졸업까지의 체크리스트를 AI가 생성합니다.</div>
+          </div>
+        </div>
+        <div class="feature">
+          <div class="feature-icon">
+            <svg viewBox="0 0 20 20" fill="none"><rect x="2" y="10" width="4" height="7" rx="1" fill="var(--green-300)" opacity=".5"/><rect x="8" y="6" width="4" height="11" rx="1" fill="var(--green-300)" opacity=".7"/><rect x="14" y="2" width="4" height="15" rx="1" fill="var(--green-300)"/></svg>
+          </div>
+          <div class="feature-text">
+            <div class="feature-title">52개 창원 기업 DB</div>
+            <div class="feature-desc">면접 후기, 합격 스펙, 연봉, 인재상까지 — 기업 정보를 한 곳에서 확인하세요.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="left-footer">
+      <div class="left-footer-text">AI 자기주도 취업 준비 시스템 · 2026.04</div>
+    </div>
+  </div>
+
+  <!-- ═══ RIGHT — Login ═══ -->
+  <div class="right">
+
+    <div class="login-card">
+      <div class="login-header">
+        <h2>시작하기</h2>
+        <p>학교 계정으로 로그인하세요</p>
+      </div>
+
+      <!-- TAB -->
+      <div class="login-tabs">
+        <button class="login-tab active" onclick="switchLoginTab('login',this)">로그인</button>
+        <button class="login-tab" onclick="switchLoginTab('guide',this)">첫 방문 안내</button>
+      </div>
+
+      <!-- LOGIN PANEL -->
+      <div class="login-panel active" id="panel-login">
+
+        <!-- SSO -->
+        <button class="btn btn-sso" onclick="doLogin()">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><rect x="2" y="2" width="16" height="16" rx="3" stroke="var(--taupe-500)" stroke-width="1.3" fill="none"/><path d="M6 7h8M6 10h5M6 13h6" stroke="var(--taupe-500)" stroke-width="1.2" stroke-linecap="round"/></svg>
+          창원대학교 통합 계정으로 로그인 (SSO)
+        </button>
+
+        <div class="divider">또는 직접 입력</div>
+
+        <!-- Manual -->
+        <div class="form-group">
+          <label class="form-label">학번</label>
+          <div class="input-icon-wrap">
+            <div class="input-icon"><svg viewBox="0 0 16 16" fill="none"><circle cx="8" cy="5" r="3" stroke="currentColor" stroke-width="1.3" fill="none"/><path d="M2 14c0-3.3 2.7-6 6-6s6 2.7 6 6" stroke="currentColor" stroke-width="1.3" fill="none"/></svg></div>
+            <input type="text" class="input" placeholder="예: 20211234" id="studentId">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">비밀번호</label>
+          <div class="input-icon-wrap">
+            <div class="input-icon"><svg viewBox="0 0 16 16" fill="none"><rect x="3" y="7" width="10" height="7" rx="2" stroke="currentColor" stroke-width="1.3" fill="none"/><path d="M5 7V5a3 3 0 016 0v2" stroke="currentColor" stroke-width="1.3"/></svg></div>
+            <input type="password" class="input" placeholder="비밀번호 입력" id="password">
+          </div>
+        </div>
+
+        <div class="form-row">
+          <label class="checkbox-label"><input type="checkbox" checked> 로그인 유지</label>
+          <a class="form-link" href="javascript:alert('비밀번호 찾기 기능은 학교 포털에서 이용하세요.')">비밀번호 찾기</a>
+        </div>
+
+        <button class="btn btn-primary" onclick="doLogin()">
+          <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M6 3l5 5-5 5" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          로그인
+        </button>
+
+        <div style="margin-top:16px;text-align:center">
+          <span style="font-size:12px;color:var(--text-tertiary)">계정이 없으신가요? </span>
+          <a class="form-link" href="#" onclick="switchLoginTab('guide',document.querySelectorAll('.login-tab')[1])">첫 방문 안내 보기</a>
+        </div>
+      </div>
+
+      <!-- GUIDE PANEL (첫 방문) -->
+      <div class="login-panel" id="panel-guide">
+        <div style="padding:4px 0 16px">
+          <div style="font-size:14px;font-weight:700;margin-bottom:4px">처음 오셨나요? 환영합니다!</div>
+          <div style="font-size:12px;color:var(--text-secondary);line-height:1.6">Talent ON은 창원대학교 재학생이면 누구나 사용할 수 있습니다. 학교 통합 계정으로 로그인하면 바로 시작됩니다.</div>
+        </div>
+
+        <!-- 학년별 가이드 탭 -->
+        <div style="display:flex;gap:4px;margin-bottom:14px">
+          <button class="guide-tab active" onclick="switchGuide('senior',this)" style="flex:1;padding:8px;border-radius:var(--radius-sm);border:1.5px solid var(--border-subtle);background:var(--bg-surface);font-size:12px;font-weight:600;cursor:pointer;font-family:inherit;color:var(--text-secondary);transition:all .15s">3~4학년 (실전)</button>
+          <button class="guide-tab" onclick="switchGuide('junior',this)" style="flex:1;padding:8px;border-radius:var(--radius-sm);border:1.5px solid var(--border-subtle);background:var(--bg-surface);font-size:12px;font-weight:600;cursor:pointer;font-family:inherit;color:var(--text-secondary);transition:all .15s">1~2학년 (탐색)</button>
+        </div>
+
+        <!-- 취준생 가이드 -->
+        <div class="guide-steps" id="guide-senior">
+          <div class="guide-step">
+            <div class="guide-num">1</div>
+            <div class="guide-info">
+              <div class="guide-title">나의 수준 진단</div>
+              <div class="guide-desc">학점, 어학, 자격증, 경험을 입력하세요. AI 매칭의 기반 데이터가 됩니다.</div>
+            </div>
+          </div>
+          <div class="guide-step">
+            <div class="guide-num">2</div>
+            <div class="guide-info">
+              <div class="guide-title">AI 기업 매칭</div>
+              <div class="guide-desc">달성 가능성 순으로 기업을 추천합니다. 최대 3개 목표를 설정할 수 있습니다.</div>
+            </div>
+          </div>
+          <div class="guide-step">
+            <div class="guide-num">3</div>
+            <div class="guide-info">
+              <div class="guide-title">달성 분석 & 로드맵</div>
+              <div class="guide-desc">선택한 기업별 GAP을 분석하고, 학기별 준비 체크리스트를 자동 생성합니다.</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 저학년 가이드 (숨김) -->
+        <div class="guide-steps" id="guide-junior" style="display:none">
+          <div class="guide-step">
+            <div class="guide-num" style="background:var(--beige)">1</div>
+            <div class="guide-info">
+              <div class="guide-title">관심 분야 설정</div>
+              <div class="guide-desc">희망 직무와 관심 산업군을 설정하세요. 아직 정확하지 않아도 괜찮습니다.</div>
+            </div>
+          </div>
+          <div class="guide-step">
+            <div class="guide-num" style="background:var(--beige)">2</div>
+            <div class="guide-info">
+              <div class="guide-title">기업 둘러보기</div>
+              <div class="guide-desc">창원 지역 기업들을 탐색하며 어떤 인재를 원하는지 미리 파악하세요.</div>
+            </div>
+          </div>
+          <div class="guide-step">
+            <div class="guide-num" style="background:var(--beige)">3</div>
+            <div class="guide-info">
+              <div class="guide-title">경험 기록 시작</div>
+              <div class="guide-desc">활동, 프로젝트, 봉사 등 경험을 기록하세요. 3학년 때 매칭에 활용됩니다.</div>
+            </div>
+          </div>
+        </div>
+
+        <button class="btn btn-primary" style="margin-top:20px" onclick="switchLoginTab('login',document.querySelectorAll('.login-tab')[0])">
+          지금 시작하기 →
+        </button>
+      </div>
+
+      <!-- SUCCESS VIEW — 학년별 분기 -->
+      <div class="success-view" id="successView">
+        <div class="success-icon">
+          <svg width="32" height="32" viewBox="0 0 16 16" fill="none"><path d="M3 8l3 3 7-7" stroke="var(--green-500)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <div class="success-title">안녕하세요, 김창원님!</div>
+        <div class="success-desc" style="margin-bottom:20px">맞춤 경험을 위해 현재 학년을 선택해주세요.</div>
+
+        <!-- 학년 선택 카드 -->
+        <div style="display:flex;gap:12px;margin-bottom:16px">
+          <!-- 저학년 카드 -->
+          <div onclick="selectGrade('junior')" id="card-junior" style="flex:1;padding:20px 16px;border-radius:var(--radius-lg);border:2px solid var(--border-subtle);background:var(--bg-surface);cursor:pointer;transition:all .2s;text-align:center">
+            <div style="width:48px;height:48px;border-radius:50%;background:#fef7ed;display:flex;align-items:center;justify-content:center;margin:0 auto 10px">
+              <svg width="22" height="22" viewBox="0 0 16 16" fill="none"><path d="M1 6l7-3 7 3-7 3-7-3z" stroke="var(--beige)" stroke-width="1.3" stroke-linejoin="round"/><path d="M4 7.5v4l4 2 4-2v-4" stroke="var(--beige)" stroke-width="1.3" stroke-linejoin="round"/></svg>
+            </div>
+            <div style="font-size:15px;font-weight:700;margin-bottom:2px">1~2학년</div>
+            <div style="font-size:11px;color:var(--text-secondary);line-height:1.5">탐색 모드<br>관심 분야 설정 · 경험 쌓기</div>
+          </div>
+          <!-- 취준생 카드 -->
+          <div onclick="selectGrade('senior')" id="card-senior" style="flex:1;padding:20px 16px;border-radius:var(--radius-lg);border:2px solid var(--border-subtle);background:var(--bg-surface);cursor:pointer;transition:all .2s;text-align:center">
+            <div style="width:48px;height:48px;border-radius:50%;background:var(--green-50);display:flex;align-items:center;justify-content:center;margin:0 auto 10px">
+              <svg width="22" height="22" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="6" stroke="var(--green-500)" stroke-width="1.3"/><circle cx="8" cy="8" r="3" stroke="var(--green-500)" stroke-width="1.2"/><circle cx="8" cy="8" r="0.8" fill="var(--green-500)"/></svg>
+            </div>
+            <div style="font-size:15px;font-weight:700;margin-bottom:2px">3~4학년</div>
+            <div style="font-size:11px;color:var(--text-secondary);line-height:1.5">실전 모드<br>달성 분석 · 맞춤 로드맵</div>
+          </div>
+        </div>
+
+        <!-- 선택 후 버튼 (숨김) -->
+        <div id="gradeActions" style="display:none">
+          <div id="juniorActions" style="display:none">
+            <div style="padding:14px;border-radius:var(--radius-md);background:#fef7ed;border:1px solid var(--beige);margin-bottom:14px;text-align:left">
+              <div style="font-size:13px;font-weight:700;color:#b45309;margin-bottom:4px">탐색 모드로 시작합니다</div>
+              <div style="font-size:12px;color:#92400e;line-height:1.6">관심 분야를 설정하고, 기업을 둘러보며 경험을 기록하세요. 기초 역량 체크리스트를 제공합니다.</div>
+            </div>
+            <div style="display:flex;gap:8px">
+              <a class="btn btn-primary" href="S-09_profile.html" style="flex:1">관심 분야 설정하기</a>
+              <a class="btn btn-sso" href="S-02_dashboard.html" style="flex:1;margin:0">대시보드로 이동</a>
+            </div>
+          </div>
+          <div id="seniorActions" style="display:none">
+            <div style="padding:14px;border-radius:var(--radius-md);background:var(--green-50);border:1px solid var(--green-200);margin-bottom:14px;text-align:left">
+              <div style="font-size:13px;font-weight:700;color:var(--green-700);margin-bottom:4px">실전 모드로 시작합니다</div>
+              <div style="font-size:12px;color:var(--green-600);line-height:1.6">수준 진단을 완료하면 AI가 달성 가능한 기업을 매칭하고, 맞춤 로드맵을 생성합니다.</div>
+            </div>
+            <div style="display:flex;gap:8px">
+              <a class="btn btn-primary" href="S-05_assessment.html" style="flex:1">수준 진단 시작</a>
+              <a class="btn btn-sso" href="S-02_dashboard.html" style="flex:1;margin:0">대시보드로 이동</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="right-footer">
+      <p>국립창원대학교 대학일자리플러스센터<br>문의: 055-213-2606 · <a href="javascript:alert('이용약관 페이지 준비 중입니다.')">이용약관</a> · <a href="javascript:alert('개인정보처리방침 페이지 준비 중입니다.')">개인정보처리방침</a></p>
+    </div>
+
+  </div>
+</div>
+
+<script>
+function switchLoginTab(tab, btn) {
+  document.querySelectorAll('.login-tab').forEach(t => t.classList.remove('active'));
+  btn.classList.add('active');
+  document.querySelectorAll('.login-panel').forEach(p => p.classList.remove('active'));
+  document.getElementById('panel-' + tab).classList.add('active');
+  document.getElementById('successView').classList.remove('active');
+}
+
+function doLogin() {
+  document.querySelectorAll('.login-panel').forEach(p => p.classList.remove('active'));
+  document.querySelector('.login-tabs').style.display = 'none';
+  document.getElementById('successView').classList.add('active');
+}
+
+function switchGuide(mode, btn) {
+  document.querySelectorAll('.guide-tab').forEach(t => {
+    t.style.background = 'var(--bg-surface)';
+    t.style.color = 'var(--text-secondary)';
+    t.style.borderColor = 'var(--border-subtle)';
+  });
+  btn.style.background = 'var(--taupe-500)';
+  btn.style.color = '#fff';
+  btn.style.borderColor = 'var(--taupe-500)';
+  document.getElementById('guide-senior').style.display = mode==='senior' ? '' : 'none';
+  document.getElementById('guide-junior').style.display = mode==='junior' ? '' : 'none';
+}
+
+function selectGrade(grade) {
+  // Visual selection
+  document.getElementById('card-junior').style.borderColor = grade==='junior' ? 'var(--beige)' : 'var(--border-subtle)';
+  document.getElementById('card-junior').style.background = grade==='junior' ? '#fef7ed' : 'var(--bg-surface)';
+  document.getElementById('card-senior').style.borderColor = grade==='senior' ? 'var(--green-400)' : 'var(--border-subtle)';
+  document.getElementById('card-senior').style.background = grade==='senior' ? 'var(--green-50)' : 'var(--bg-surface)';
+  // Show actions
+  document.getElementById('gradeActions').style.display = 'block';
+  document.getElementById('juniorActions').style.display = grade==='junior' ? 'block' : 'none';
+  document.getElementById('seniorActions').style.display = grade==='senior' ? 'block' : 'none';
+  // Save to localStorage
+  localStorage.setItem('talentOn_gradeMode', grade);
+}
+</script>
+
+<script src="js/common.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Talent ON — 홈 대시보드</title>
+<link rel="preconnect" href="https://cdn.jsdelivr.net">
+<link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Sora:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/tokens.css">
+<link rel="stylesheet" href="css/base.css">
+<link rel="stylesheet" href="css/layout.css">
+<link rel="stylesheet" href="css/components.css">
+<link rel="stylesheet" href="css/dark.css">
+<link rel="stylesheet" href="css/pages/dashboard.css">
+</head>
+<body>
+
+<div class="shell">
+
+  <!-- ═══ SIDEBAR (common.js) ═══ -->
+  <nav class="sidebar" id="sidebar"></nav>
+
+  <!-- ═══════════ MAIN WRAPPER ═══════════ -->
+  <div class="main-wrapper">
+
+    <!-- GNB (common.js) -->
+    <header class="gnb" id="gnb"></header>
+
+    <!-- CONTENT AREA -->
+    <div class="content-area">
+
+      <!-- ═══════════ MAIN CONTENT ═══════════ -->
+      <main class="main-content">
+
+        <!-- WELCOME -->
+        <div class="welcome" id="welcomeSenior">
+          <div class="welcome-badge">AI Career Roadmap · 실전 모드</div>
+          <h1>안녕하세요, <span>김창원</span>님</h1>
+          <p id="welcomeMsg">목표 기업까지 로드맵 진행률 68% — 이번 주 2개 항목을 완료해보세요.</p>
+        </div>
+
+        <!-- 저학년 전용 웰컴 (숨김) -->
+        <div class="welcome" id="welcomeJunior" style="display:none;background:linear-gradient(135deg,var(--taupe-800) 0%,#2a2015 100%)">
+          <div class="welcome-badge" style="background:rgba(201,173,147,.2);border-color:rgba(201,173,147,.25);color:var(--beige)">탐색 모드 · 1~2학년</div>
+          <h1>안녕하세요, <span style="color:var(--beige)">김창원</span>님</h1>
+          <p>관심 분야를 탐색하고, 경험을 기록하며 기초 역량을 쌓아보세요.</p>
+        </div>
+
+        <!-- 저학년 전용 가이드 카드 (숨김) -->
+        <div id="juniorGuide" style="display:none;margin-bottom:20px">
+          <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px">
+            <a href="S-09_profile.html" style="text-decoration:none;color:inherit;padding:18px;background:var(--bg-surface);border:.5px solid var(--border-subtle);border-radius:var(--radius-lg);box-shadow:var(--shadow-sm);transition:all .15s">
+              <div style="width:36px;height:36px;border-radius:var(--radius-md);background:#fef7ed;display:flex;align-items:center;justify-content:center;margin-bottom:10px">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="6" stroke="var(--beige)" stroke-width="1.3"/><circle cx="8" cy="8" r="3" stroke="var(--beige)" stroke-width="1.2"/><circle cx="8" cy="8" r="0.8" fill="var(--beige)"/></svg>
+              </div>
+              <div style="font-size:14px;font-weight:700;margin-bottom:4px">관심 분야 설정</div>
+              <div style="font-size:12px;color:var(--text-secondary);line-height:1.5">희망 직무와 관심 산업군을 설정하세요. AI 추천의 핵심 기준이 됩니다.</div>
+            </a>
+            <a href="S-03_company-search.html" style="text-decoration:none;color:inherit;padding:18px;background:var(--bg-surface);border:.5px solid var(--border-subtle);border-radius:var(--radius-lg);box-shadow:var(--shadow-sm);transition:all .15s">
+              <div style="width:36px;height:36px;border-radius:var(--radius-md);background:var(--taupe-50);display:flex;align-items:center;justify-content:center;margin-bottom:10px">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="7" cy="7" r="4" stroke="var(--taupe-400)" stroke-width="1.3"/><path d="M10 10l3 3" stroke="var(--taupe-400)" stroke-width="1.3" stroke-linecap="round"/></svg>
+              </div>
+              <div style="font-size:14px;font-weight:700;margin-bottom:4px">기업 둘러보기</div>
+              <div style="font-size:12px;color:var(--text-secondary);line-height:1.5">창원 지역 기업들을 탐색하고, 어떤 기업이 있는지 알아보세요.</div>
+            </a>
+            <a href="S-08_progress-log.html" style="text-decoration:none;color:inherit;padding:18px;background:var(--bg-surface);border:.5px solid var(--border-subtle);border-radius:var(--radius-lg);box-shadow:var(--shadow-sm);transition:all .15s">
+              <div style="width:36px;height:36px;border-radius:var(--radius-md);background:var(--green-50);display:flex;align-items:center;justify-content:center;margin-bottom:10px">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M11 2l3 3-8 8H3v-3l8-8z" stroke="var(--green-500)" stroke-width="1.3" stroke-linejoin="round"/></svg>
+              </div>
+              <div style="font-size:14px;font-weight:700;margin-bottom:4px">경험 기록 시작</div>
+              <div style="font-size:12px;color:var(--text-secondary);line-height:1.5">활동, 프로젝트, 수상 경험을 기록하세요. 나중에 매칭에 반영됩니다.</div>
+            </a>
+          </div>
+        </div>
+
+        <!-- STAT CARDS -->
+        <div class="stats-grid">
+          <!-- 로드맵 진행률 -->
+          <div class="stat-card">
+            <div class="stat-top">
+              <div class="stat-icon" style="background:var(--taupe-50)">
+                <svg viewBox="0 0 20 20" fill="none"><rect x="2" y="10" width="4" height="8" rx="1" fill="var(--taupe-500)"/><rect x="8" y="6" width="4" height="12" rx="1" fill="var(--green-400)"/><rect x="14" y="2" width="4" height="16" rx="1" fill="var(--green-300)"/></svg>
+              </div>
+              <span class="stat-badge up">+12%</span>
+            </div>
+            <div class="stat-label">로드맵 진행률</div>
+            <div class="stat-value-row">
+              <div class="stat-value">68<span class="stat-unit">%</span></div>
+            </div>
+            <div class="stat-progress">
+              <div class="stat-progress-fill" style="width:68%;background:var(--taupe-500)"></div>
+            </div>
+          </div>
+
+          <!-- GAP 적합도 -->
+          <div class="stat-card">
+            <div class="stat-top">
+              <div class="stat-icon" style="background:var(--taupe-50)">
+                <svg viewBox="0 0 20 20" fill="none"><polygon points="10,2 12.5,7 18,7.5 14,11 15,17 10,14 5,17 6,11 2,7.5 7.5,7" stroke="var(--taupe-400)" stroke-width="1.3" fill="var(--taupe-100)"/></svg>
+              </div>
+              <span class="stat-badge up">+8</span>
+            </div>
+            <div class="stat-label">달성 가능성</div>
+            <div class="stat-value-row">
+              <div class="stat-value">72<span class="stat-unit">점</span></div>
+            </div>
+            <div class="stat-progress">
+              <div class="stat-progress-fill" style="width:72%;background:var(--taupe-400)"></div>
+            </div>
+          </div>
+
+          <!-- 완료 항목 -->
+          <div class="stat-card">
+            <div class="stat-top">
+              <div class="stat-icon" style="background:#f0f4ff">
+                <svg viewBox="0 0 20 20" fill="none"><rect x="3" y="3" width="14" height="14" rx="3" stroke="var(--pale-blue)" stroke-width="1.5" fill="none"/><path d="M7 10l2.5 2.5L13 8" stroke="#5b8db8" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </div>
+              <span class="stat-badge up">+3</span>
+            </div>
+            <div class="stat-label">완료 항목</div>
+            <div class="stat-value-row">
+              <div class="stat-value">12<span class="stat-unit"> / 18</span></div>
+            </div>
+            <div class="stat-progress">
+              <div class="stat-progress-fill" style="width:67%;background:#5b8db8"></div>
+            </div>
+          </div>
+
+          <!-- 연속 접속 -->
+          <div class="stat-card">
+            <div class="stat-top">
+              <div class="stat-icon" style="background:#fef7ed">
+                <svg viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="7" stroke="var(--beige)" stroke-width="1.5" fill="none"/><path d="M10 6v4l3 2" stroke="var(--beige)" stroke-width="1.5" stroke-linecap="round"/></svg>
+              </div>
+              <span class="stat-badge" style="color:var(--beige)">BEST</span>
+            </div>
+            <div class="stat-label">연속 접속</div>
+            <div class="stat-value-row">
+              <div class="stat-value">7<span class="stat-unit">일</span></div>
+            </div>
+            <div class="stat-progress">
+              <div class="stat-progress-fill" style="width:100%;background:var(--beige)"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- TARGET COMPANY + GAP -->
+        <div class="section-card">
+          <div class="section-header">
+            <div class="section-title">
+              <div class="section-title-icon" style="background:var(--taupe-50);color:var(--taupe-500)">
+                <svg width="13" height="13" viewBox="0 0 16 16" fill="none"><rect x="2" y="2" width="12" height="12" rx="2" stroke="currentColor" stroke-width="1.5" fill="none"/><path d="M5 5h6M5 8h4M5 11h5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+              </div>
+              목표 기업 & 달성 분석
+            </div>
+            <a class="section-action" href="S-06_gap-analysis.html">상세 보기 &rarr;</a>
+          </div>
+          <div class="section-body">
+            <div class="target-company">
+              <div class="company-logo" style="overflow:hidden"><img src="https://www.google.com/s2/favicons?domain=doosan.com&sz=128" alt="두산" style="width:100%;height:100%;object-fit:contain;padding:5px" onerror="this.remove();this.parentElement.textContent='두산'"></div>
+              <div class="company-info">
+                <div class="company-name">두산에너빌리티</div>
+                <div class="company-meta">
+                  <span>
+                    <svg width="11" height="11" viewBox="0 0 16 16" fill="none"><rect x="2" y="3" width="12" height="11" rx="1.5" stroke="currentColor" stroke-width="1.3" fill="none"/><path d="M2 6h12" stroke="currentColor" stroke-width="1.2"/></svg>
+                    에너지/플랜트
+                  </span>
+                  <span>
+                    <svg width="11" height="11" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="6" r="3" stroke="currentColor" stroke-width="1.3" fill="none"/><path d="M3 14c0-2.8 2.2-5 5-5s5 2.2 5 5" stroke="currentColor" stroke-width="1.3" fill="none"/></svg>
+                    대기업
+                  </span>
+                  <span>
+                    <svg width="11" height="11" viewBox="0 0 16 16" fill="none"><path d="M8 1v14M1 8h14" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>
+                    창원 성산구
+                  </span>
+                </div>
+              </div>
+              <div class="gap-score-box">
+                <div class="gap-score-ring">
+                  <svg width="64" height="64" viewBox="0 0 64 64">
+                    <circle cx="32" cy="32" r="26" fill="none" stroke="var(--border-subtle)" stroke-width="6"/>
+                    <circle cx="32" cy="32" r="26" fill="none" stroke="var(--green-400)" stroke-width="6"
+                      stroke-dasharray="117.5 163.4" stroke-linecap="round"/>
+                  </svg>
+                  <div class="gap-score-num">72<small>/ 100</small></div>
+                </div>
+                <div class="gap-score-label">달성 가능성</div>
+              </div>
+            </div>
+
+            <!-- GAP 항목들 -->
+            <div class="gap-items">
+              <div class="gap-item">
+                <div class="gap-item-icon" style="background:var(--taupe-50)">
+                  <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 8l3 3 7-7" stroke="var(--green-500)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </div>
+                <div class="gap-item-info">
+                  <div class="gap-item-name">학점 (3.8/4.5)</div>
+                  <div class="gap-item-bar"><div class="gap-item-bar-fill" style="width:84%;background:var(--green-400)"></div></div>
+                </div>
+                <div class="gap-item-score" style="color:var(--green-500)">84</div>
+              </div>
+
+              <div class="gap-item">
+                <div class="gap-item-icon" style="background:var(--taupe-50)">
+                  <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 8l3 3 7-7" stroke="var(--green-500)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </div>
+                <div class="gap-item-info">
+                  <div class="gap-item-name">어학 (TOEIC 820)</div>
+                  <div class="gap-item-bar"><div class="gap-item-bar-fill" style="width:78%;background:var(--green-400)"></div></div>
+                </div>
+                <div class="gap-item-score" style="color:var(--green-500)">78</div>
+              </div>
+
+              <div class="gap-item">
+                <div class="gap-item-icon" style="background:#fef7ed">
+                  <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M8 4v5M8 11v1" stroke="var(--beige)" stroke-width="2" stroke-linecap="round"/></svg>
+                </div>
+                <div class="gap-item-info">
+                  <div class="gap-item-name">자격증 (1/3 보유)</div>
+                  <div class="gap-item-bar"><div class="gap-item-bar-fill" style="width:45%;background:var(--beige)"></div></div>
+                </div>
+                <div class="gap-item-score" style="color:var(--beige)">45</div>
+              </div>
+
+              <div class="gap-item">
+                <div class="gap-item-icon" style="background:#fef2f2">
+                  <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M5 5l6 6M11 5l-6 6" stroke="#dc2626" stroke-width="2" stroke-linecap="round"/></svg>
+                </div>
+                <div class="gap-item-info">
+                  <div class="gap-item-name">인턴 경험 (0회)</div>
+                  <div class="gap-item-bar"><div class="gap-item-bar-fill" style="width:15%;background:#dc2626"></div></div>
+                </div>
+                <div class="gap-item-score" style="color:#dc2626">15</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- TWO COLUMN: TODO + RECENT COMPANIES -->
+        <div class="two-col">
+
+          <!-- 다음 할 일 -->
+          <div class="section-card">
+            <div class="section-header">
+              <div class="section-title">
+                <div class="section-title-icon" style="background:var(--green-50);color:var(--green-600)">
+                  <svg width="12" height="12" viewBox="0 0 16 16" fill="none"><path d="M3 8l3 3 7-7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </div>
+                다음 할 일
+              </div>
+              <span class="badge badge-taupe">4개 남음</span>
+            </div>
+            <div class="section-body">
+              <div class="todo-list">
+                <div class="todo-item" onclick="this.classList.toggle('done')">
+                  <div class="todo-check"></div>
+                  <div class="todo-content">
+                    <div class="todo-text">에너지관리기사 필기 원서접수</div>
+                    <div class="todo-sub">접수 마감: 4월 15일</div>
+                  </div>
+                  <span class="todo-tag tag-urgent">긴급</span>
+                </div>
+                <div class="todo-item" onclick="this.classList.toggle('done')">
+                  <div class="todo-check"></div>
+                  <div class="todo-content">
+                    <div class="todo-text">TOEIC 점수 850 이상 달성</div>
+                    <div class="todo-sub">현재 820 → 목표 850</div>
+                  </div>
+                  <span class="todo-tag tag-normal">진행중</span>
+                </div>
+                <div class="todo-item" onclick="this.classList.toggle('done')">
+                  <div class="todo-check"></div>
+                  <div class="todo-content">
+                    <div class="todo-text">캡스톤디자인 프로젝트 참여</div>
+                    <div class="todo-sub">3학년 2학기 개설</div>
+                  </div>
+                  <span class="todo-tag tag-optional">예정</span>
+                </div>
+                <div class="todo-item done" onclick="this.classList.toggle('done')">
+                  <div class="todo-check"></div>
+                  <div class="todo-content">
+                    <div class="todo-text">두산에너빌리티 인재상 분석</div>
+                    <div class="todo-sub">AI 분석 완료</div>
+                  </div>
+                  <span class="todo-tag tag-normal">완료</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 추천 프로그램 -->
+          <div class="section-card">
+            <div class="section-header">
+              <div class="section-title">
+                <div class="section-title-icon" style="background:var(--taupe-50);color:var(--taupe-500)">
+                  <svg width="12" height="12" viewBox="0 0 16 16" fill="none"><path d="M2 3h12M2 8h8M2 13h10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+                </div>
+                추천 프로그램
+              </div>
+              <a class="section-action" href="S-03_company-search.html">전체 &rarr;</a>
+            </div>
+            <div class="section-body" style="display:flex;flex-direction:column;gap:10px;">
+              <div style="display:flex;align-items:center;gap:12px;padding:12px;border-radius:var(--radius-md);border:0.5px solid var(--border-subtle);background:var(--bg-page);">
+                <div style="width:36px;height:36px;border-radius:8px;background:var(--green-50);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:15px">
+                  <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><rect x="2" y="2" width="12" height="12" rx="2" stroke="var(--green-500)" stroke-width="1.3" fill="none"/><path d="M5 6h6M5 8.5h4M5 11h5" stroke="var(--green-500)" stroke-width="1" stroke-linecap="round"/></svg>
+                </div>
+                <div style="flex:1;min-width:0">
+                  <div style="font-size:13px;font-weight:600;color:var(--text-primary)">에너지관리기사 스터디</div>
+                  <div style="font-size:11px;color:var(--text-tertiary)">취업전략센터 · 4월 개설</div>
+                </div>
+                <span class="badge badge-green">모집중</span>
+              </div>
+              <div style="display:flex;align-items:center;gap:12px;padding:12px;border-radius:var(--radius-md);border:0.5px solid var(--border-subtle);background:var(--bg-page);">
+                <div style="width:36px;height:36px;border-radius:8px;background:var(--taupe-50);display:flex;align-items:center;justify-content:center;flex-shrink:0">
+                  <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="6" r="3" stroke="var(--taupe-400)" stroke-width="1.3" fill="none"/><path d="M3 14c0-2.8 2.2-5 5-5s5 2.2 5 5" stroke="var(--taupe-400)" stroke-width="1.3" fill="none"/></svg>
+                </div>
+                <div style="flex:1;min-width:0">
+                  <div style="font-size:13px;font-weight:600;color:var(--text-primary)">두산 현직자 멘토링</div>
+                  <div style="font-size:11px;color:var(--text-tertiary)">대학일자리센터 · 5월 예정</div>
+                </div>
+                <span class="badge badge-yellow">예정</span>
+              </div>
+              <div style="display:flex;align-items:center;gap:12px;padding:12px;border-radius:var(--radius-md);border:0.5px solid var(--border-subtle);background:var(--bg-page);">
+                <div style="width:36px;height:36px;border-radius:8px;background:#f0f4ff;display:flex;align-items:center;justify-content:center;flex-shrink:0">
+                  <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M4 12V4l4 3-4 3z" fill="#5b8db8"/><rect x="2" y="3" width="12" height="10" rx="2" stroke="#5b8db8" stroke-width="1.3" fill="none"/></svg>
+                </div>
+                <div style="flex:1;min-width:0">
+                  <div style="font-size:13px;font-weight:600;color:var(--text-primary)">TOEIC 집중반 (850+)</div>
+                  <div style="font-size:11px;color:var(--text-tertiary)">어학교육센터 · 진행중</div>
+                </div>
+                <span class="badge badge-green">수강가능</span>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+      </main>
+
+      <!-- ═══════════ RIGHT PANEL ═══════════ -->
+      <aside class="right-panel">
+
+        <!-- 성취 배지 -->
+        <div class="rp-section">
+          <div class="rp-title">내 성취 배지 <small>8개 중 5개 획득</small></div>
+          <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px">
+            <div style="text-align:center;padding:10px 4px;border-radius:var(--radius-md);background:var(--green-50);border:1px solid var(--green-200)">
+              <div style="font-size:20px;margin-bottom:4px"><svg width="20" height="20" viewBox="0 0 16 16" fill="none"><path d="M8 2L5 8h6L8 2zM6 8v4h4V8" stroke="var(--green-500)" stroke-width="1.3" stroke-linejoin="round"/></svg></div>
+              <div style="font-size:9px;font-weight:600;color:var(--green-700)">첫 발걸음</div>
+            </div>
+            <div style="text-align:center;padding:10px 4px;border-radius:var(--radius-md);background:var(--green-50);border:1px solid var(--green-200)">
+              <div style="font-size:20px;margin-bottom:4px"><svg width="20" height="20" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="6" stroke="var(--green-500)" stroke-width="1.3"/><circle cx="8" cy="8" r="3" stroke="var(--green-500)" stroke-width="1.2"/><circle cx="8" cy="8" r="0.8" fill="var(--green-500)"/></svg></div>
+              <div style="font-size:9px;font-weight:600;color:var(--green-700)">목표 설정</div>
+            </div>
+            <div style="text-align:center;padding:10px 4px;border-radius:var(--radius-md);background:var(--green-50);border:1px solid var(--green-200)">
+              <div style="font-size:20px;margin-bottom:4px"><svg width="20" height="20" viewBox="0 0 16 16" fill="none"><path d="M8 1c0 3 4 4 4 8 0 2.5-2 4-4 4S4 11.5 4 9c0-2 1-3 2-4s2-2.5 2-4z" stroke="var(--green-500)" stroke-width="1.3"/></svg></div>
+              <div style="font-size:9px;font-weight:600;color:var(--green-700)">7일 연속</div>
+            </div>
+            <div style="text-align:center;padding:10px 4px;border-radius:var(--radius-md);background:var(--green-50);border:1px solid var(--green-200)">
+              <div style="font-size:20px;margin-bottom:4px"><svg width="20" height="20" viewBox="0 0 16 16" fill="none"><path d="M11 2l3 3-8 8H3v-3l8-8z" stroke="var(--green-500)" stroke-width="1.3" stroke-linejoin="round"/></svg></div>
+              <div style="font-size:9px;font-weight:600;color:var(--green-700)">기록왕</div>
+            </div>
+            <div style="text-align:center;padding:10px 4px;border-radius:var(--radius-md);background:var(--green-50);border:1px solid var(--green-200)">
+              <div style="font-size:20px;margin-bottom:4px"><svg width="20" height="20" viewBox="0 0 16 16" fill="none"><path d="M4 1h5l4 4v9a1 1 0 01-1 1H4a1 1 0 01-1-1V2a1 1 0 011-1z" stroke="var(--green-500)" stroke-width="1.3"/></svg></div>
+              <div style="font-size:9px;font-weight:600;color:var(--green-700)">자격증 헌터</div>
+            </div>
+            <!-- 미획득 배지 -->
+            <div style="text-align:center;padding:10px 4px;border-radius:var(--radius-md);background:var(--bg-subtle);border:1px solid var(--border-subtle);opacity:.4">
+              <div style="font-size:20px;margin-bottom:4px"><svg width="20" height="20" viewBox="0 0 16 16" fill="none"><rect x="1" y="5" width="14" height="9" rx="1.5" stroke="var(--gray-400)" stroke-width="1.3"/></svg></div>
+              <div style="font-size:9px;font-weight:600;color:var(--text-tertiary)">인턴 챌린저</div>
+            </div>
+            <div style="text-align:center;padding:10px 4px;border-radius:var(--radius-md);background:var(--bg-subtle);border:1px solid var(--border-subtle);opacity:.4">
+              <div style="font-size:20px;margin-bottom:4px"><svg width="20" height="20" viewBox="0 0 16 16" fill="none"><polygon points="8,1 10,6 15,6.5 11,9.5 12.5,14.5 8,11.5 3.5,14.5 5,9.5 1,6.5 6,6" stroke="var(--gray-400)" stroke-width="1.2"/></svg></div>
+              <div style="font-size:9px;font-weight:600;color:var(--text-tertiary)">로드맵 50%</div>
+            </div>
+            <div style="text-align:center;padding:10px 4px;border-radius:var(--radius-md);background:var(--bg-subtle);border:1px solid var(--border-subtle);opacity:.4">
+              <div style="font-size:20px;margin-bottom:4px"><svg width="20" height="20" viewBox="0 0 16 16" fill="none"><path d="M1 6l7-3 7 3-7 3-7-3z" stroke="var(--gray-400)" stroke-width="1.2" stroke-linejoin="round"/><path d="M4 7.5v4l4 2 4-2v-4" stroke="var(--gray-400)" stroke-width="1.2" stroke-linejoin="round"/></svg></div>
+              <div style="font-size:9px;font-weight:600;color:var(--text-tertiary)">졸업 준비</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 학과 내 순위 -->
+        <div class="rp-section">
+          <div class="rp-title">학과 내 순위 <small>기계공학과</small></div>
+          <div style="padding:14px;border-radius:var(--radius-md);background:var(--bg-surface);border:.5px solid var(--border-subtle)">
+            <div style="text-align:center;margin-bottom:12px">
+              <div style="font-family:var(--font-display);font-size:32px;font-weight:800;color:var(--taupe-500)">12위</div>
+              <div style="font-size:11px;color:var(--text-tertiary)">87명 중 · 상위 14%</div>
+            </div>
+            <div style="display:flex;flex-direction:column;gap:6px">
+              <div style="display:flex;align-items:center;gap:8px;font-size:12px">
+                <span style="width:20px;font-weight:700;color:var(--taupe-500);font-family:var(--font-mono)">1</span>
+                <span style="flex:1">이○○</span>
+                <span style="font-family:var(--font-mono);font-weight:600;color:var(--green-600)">95%</span>
+              </div>
+              <div style="display:flex;align-items:center;gap:8px;font-size:12px">
+                <span style="width:20px;font-weight:700;color:var(--taupe-500);font-family:var(--font-mono)">2</span>
+                <span style="flex:1">박○○</span>
+                <span style="font-family:var(--font-mono);font-weight:600;color:var(--green-600)">91%</span>
+              </div>
+              <div style="display:flex;align-items:center;gap:8px;font-size:12px">
+                <span style="width:20px;font-weight:700;color:var(--taupe-500);font-family:var(--font-mono)">3</span>
+                <span style="flex:1">최○○</span>
+                <span style="font-family:var(--font-mono);font-weight:600;color:var(--green-600)">88%</span>
+              </div>
+              <div style="height:1px;background:var(--border-subtle);margin:4px 0"></div>
+              <div style="display:flex;align-items:center;gap:8px;font-size:12px;background:var(--taupe-50);padding:6px 8px;border-radius:var(--radius-sm);border:1px solid var(--taupe-200)">
+                <span style="width:20px;font-weight:700;color:var(--taupe-600);font-family:var(--font-mono)">12</span>
+                <span style="flex:1;font-weight:600;color:var(--taupe-600)">나 (김창원)</span>
+                <span style="font-family:var(--font-mono);font-weight:600;color:var(--taupe-500)">68%</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 로드맵 진행 현황 -->
+        <div class="rp-section">
+          <div class="rp-title">로드맵 현황 <small>18개 항목 중 12개 완료</small></div>
+          <div class="roadmap-progress">
+            <div class="roadmap-ring-wrapper">
+              <div class="roadmap-ring">
+                <svg width="100" height="100" viewBox="0 0 100 100">
+                  <circle cx="50" cy="50" r="40" fill="none" stroke="var(--border-subtle)" stroke-width="8"/>
+                  <circle cx="50" cy="50" r="40" fill="none" stroke="var(--green-400)" stroke-width="8"
+                    stroke-dasharray="170.9 251.3" stroke-linecap="round"/>
+                </svg>
+                <div class="roadmap-ring-center">
+                  <div class="roadmap-ring-pct">68%</div>
+                  <div class="roadmap-ring-label">진행률</div>
+                </div>
+              </div>
+            </div>
+            <div class="roadmap-steps">
+              <div class="roadmap-step">
+                <div class="step-dot" style="background:var(--green-400)"></div>
+                <div class="step-name">1단계 — 기초 역량</div>
+                <div class="step-status" style="color:var(--green-500)">5/5</div>
+              </div>
+              <div class="roadmap-step">
+                <div class="step-dot" style="background:var(--green-400)"></div>
+                <div class="step-name">2단계 — 전공 심화</div>
+                <div class="step-status" style="color:var(--green-500)">4/5</div>
+              </div>
+              <div class="roadmap-step">
+                <div class="step-dot" style="background:var(--beige)"></div>
+                <div class="step-name">3단계 — 자격·어학</div>
+                <div class="step-status" style="color:var(--beige)">2/4</div>
+              </div>
+              <div class="roadmap-step">
+                <div class="step-dot" style="background:var(--border-default)"></div>
+                <div class="step-name">4단계 — 실무 경험</div>
+                <div class="step-status" style="color:var(--text-tertiary)">1/4</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 추천 기업 -->
+        <div class="rp-section">
+          <div class="rp-title">추천 기업 <small>달성 가능성 순</small></div>
+
+          <div id="recCompanies"></div>
+        </div>
+
+        <!-- AI 커리어 팁 -->
+        <div class="rp-section">
+          <div class="rp-title">AI 커리어 팁</div>
+          <div class="ai-tip">
+            <div class="ai-tip-header">
+              <svg viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="6.5" stroke="var(--taupe-400)" stroke-width="1.3"/><path d="M6 6.5a2 2 0 113.5 1.8c-.5.3-.5.5-.5 1.2M8 12v.5" stroke="var(--taupe-400)" stroke-width="1.3" stroke-linecap="round"/></svg>
+              AI 분석 인사이트
+            </div>
+            <p>두산에너빌리티는 <strong>에너지관리기사</strong>와 <strong>CAD/CAE 경험</strong>을 중요시합니다. 현재 자격증 GAP이 가장 크니, 이번 학기 필기 시험을 목표로 잡는 것을 추천합니다.</p>
+            <div class="ai-tip-action">
+              자세한 분석 보기 &rarr;
+            </div>
+          </div>
+        </div>
+
+        <!-- 최근 활동 -->
+        <div class="rp-section">
+          <div class="rp-title">최근 활동</div>
+          <div class="activity-log">
+            <div class="activity-item">
+              <div class="activity-dot" style="background:var(--green-50);border-color:var(--green-200)">
+                <svg width="10" height="10" viewBox="0 0 16 16" fill="none"><path d="M3 8l3 3 7-7" stroke="var(--green-500)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </div>
+              <div class="activity-info">
+                <div class="activity-text"><strong>TOEIC 820점</strong> 점수 등록</div>
+                <div class="activity-time">오늘 14:30</div>
+              </div>
+            </div>
+            <div class="activity-item">
+              <div class="activity-dot">
+                <svg width="10" height="10" viewBox="0 0 16 16" fill="none"><polygon points="8,2 10,6 14,7 11,10 12,14 8,12 4,14 5,10 2,7 6,6" stroke="var(--text-tertiary)" stroke-width="1.2" fill="none"/></svg>
+              </div>
+              <div class="activity-info">
+                <div class="activity-text">달성 분석 <strong>재실행</strong></div>
+                <div class="activity-time">어제 10:15</div>
+              </div>
+            </div>
+            <div class="activity-item">
+              <div class="activity-dot">
+                <svg width="10" height="10" viewBox="0 0 16 16" fill="none"><rect x="3" y="3" width="10" height="10" rx="2" stroke="var(--text-tertiary)" stroke-width="1.2" fill="none"/></svg>
+              </div>
+              <div class="activity-info">
+                <div class="activity-text">로드맵 3단계 <strong>CAD 기초</strong> 완료</div>
+                <div class="activity-time">3월 29일</div>
+              </div>
+            </div>
+            <div class="activity-item">
+              <div class="activity-dot">
+                <svg width="10" height="10" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="5" stroke="var(--text-tertiary)" stroke-width="1.2" fill="none"/></svg>
+              </div>
+              <div class="activity-info">
+                <div class="activity-text"><strong>두산에너빌리티</strong> 목표 기업 설정</div>
+                <div class="activity-time">3월 25일</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </aside>
+
+    </div>
+  </div>
+</div>
+
+<script>
+(function restoreDashboardProgress(){
+  var stored = localStorage.getItem('talentOn_progress');
+  if(stored === null) return;
+  var pct = parseInt(stored, 10);
+  if(isNaN(pct)) return;
+  // Update stat card value
+  var statValues = document.querySelectorAll('.stat-value');
+  for(var i=0;i<statValues.length;i++){
+    var label = statValues[i].closest('.stat-card');
+    if(label && label.querySelector('.stat-label') && label.querySelector('.stat-label').textContent.indexOf('로드맵 진행률') !== -1){
+      statValues[i].innerHTML = pct + '<span class="stat-unit">%</span>';
+      break;
+    }
+  }
+  // Update progress bar
+  var fills = document.querySelectorAll('.stat-progress-fill');
+  if(fills.length > 0) fills[0].style.width = pct + '%';
+  // Update welcome message
+  var welcomeP = document.querySelector('.welcome p');
+  if(welcomeP){
+    welcomeP.textContent = welcomeP.textContent.replace(/\d+%/, pct + '%');
+  }
+  // Update right panel ring chart
+  var ringPct = document.querySelector('.roadmap-ring-pct');
+  if(ringPct) ringPct.textContent = pct + '%';
+  // Update ring SVG (circumference = 2*PI*40 = 251.3)
+  var ringCircles = document.querySelectorAll('.roadmap-ring svg circle');
+  if(ringCircles.length >= 2){
+    var circ = 251.3;
+    ringCircles[1].setAttribute('stroke-dasharray', (circ * pct / 100).toFixed(1) + ' ' + circ.toFixed(1));
+  }
+})();
+
+// 학년별 분기 UI
+(function applyGradeMode(){
+  var mode = localStorage.getItem('talentOn_gradeMode');
+  if(mode === 'junior'){
+    // 저학년: 탐색 모드
+    document.getElementById('welcomeSenior').style.display = 'none';
+    document.getElementById('welcomeJunior').style.display = '';
+    document.getElementById('juniorGuide').style.display = '';
+  }
+  // senior 또는 미설정: 기본(실전 모드) 유지
+})();
+</script>
+
+<script src="data/companies.js"></script>
+<script src="js/renderers.js"></script>
+<script>
+(function(){
+  var el = document.getElementById('recCompanies');
+  if(el) el.innerHTML = COMPANIES_DATA.slice(0,4).map(renderRecCompany).join('');
+})();
+</script>
+
+<!-- Common Components -->
+<script src="js/common.js"></script>
+<script>
+renderSidebar('sidebar', STUDENT_MENU);
+renderGNB('gnb', { showSearch: true });
+</script>
+
+</body>
+</html>

@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Talent ON — 기업 DB 관리</title>
+<link rel="preconnect" href="https://cdn.jsdelivr.net">
+<link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Sora:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/tokens.css">
+<link rel="stylesheet" href="css/base.css">
+<link rel="stylesheet" href="css/layout.css">
+<link rel="stylesheet" href="css/components.css">
+<link rel="stylesheet" href="css/dark.css">
+<link rel="stylesheet" href="css/pages/admin.css">
+</head>
+<body>
+<div class="shell">
+  <!-- SIDEBAR (common.js) -->
+  <aside class="sidebar" id="sidebar"></aside>
+
+  <div class="main-wrapper">
+    <!-- GNB (common.js) -->
+    <header class="gnb" id="gnb"></header>
+    <div class="content-area">
+      <main class="main-content">
+        <!-- HEADER -->
+        <div class="page-header">
+          <div>
+            <h2>기업 데이터베이스</h2>
+            <p>등록된 기업의 인재상, 요구스펙 정보를 관리합니다.</p>
+          </div>
+          <button class="btn btn-primary" id="toggleFormBtn">+ 기업 등록</button>
+        </div>
+
+        <!-- INLINE FORM -->
+        <div class="company-form" id="companyForm">
+          <h3>새 기업 등록</h3>
+          <div class="form-grid">
+            <div class="form-group">
+              <label class="form-label">기업명</label>
+              <input type="text" class="form-input" placeholder="기업명 입력">
+            </div>
+            <div class="form-group">
+              <label class="form-label">산업</label>
+              <input type="text" class="form-input" placeholder="예: 에너지/플랜트">
+            </div>
+            <div class="form-group">
+              <label class="form-label">규모</label>
+              <select class="form-input">
+                <option>대기업</option>
+                <option>중견기업</option>
+                <option>중소기업</option>
+                <option>스타트업</option>
+              </select>
+            </div>
+            <div class="form-group full">
+              <label class="form-label">위치</label>
+              <input type="text" class="form-input" placeholder="예: 경남 창원시 성산구">
+            </div>
+            <div class="form-group full">
+              <label class="form-label">인재상</label>
+              <textarea class="form-input" placeholder="기업의 인재상을 입력하세요..."></textarea>
+            </div>
+            <div class="form-group full">
+              <label class="form-label">요구스펙</label>
+              <textarea class="form-input" placeholder="학점, 어학, 자격증 등 요구스펙을 입력하세요..."></textarea>
+            </div>
+          </div>
+          <div class="form-actions">
+            <button class="btn btn-outline" id="cancelFormBtn">취소</button>
+            <button class="btn btn-primary">저장</button>
+          </div>
+        </div>
+
+        <!-- TOOLBAR -->
+        <div class="toolbar">
+          <div class="search-box">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--text-tertiary)" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+            <input type="text" placeholder="기업명으로 검색...">
+          </div>
+          <select class="filter-select">
+            <option>전체 산업</option>
+            <option>에너지/플랜트</option>
+            <option>방산/항공</option>
+            <option>전자/IT</option>
+            <option>자동차/기계</option>
+            <option>화학/소재</option>
+          </select>
+          <select class="filter-select">
+            <option>전체 규모</option>
+            <option>대기업</option>
+            <option>중견기업</option>
+            <option>중소기업</option>
+          </select>
+        </div>
+
+        <!-- TABLE -->
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>기업명</th>
+                <th>산업</th>
+                <th>규모</th>
+                <th>인재상 요약</th>
+                <th>요구스펙</th>
+                <th>등록일</th>
+                <th>수정일</th>
+                <th>관리</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td style="font-weight:600">두산에너빌리티</td>
+                <td>에너지/플랜트</td>
+                <td><span class="badge badge-lg">대기업</span></td>
+                <td class="truncate">도전정신과 글로벌 역량을 갖춘 엔지니어링 인재</td>
+                <td style="font-size:12px">12개</td>
+                <td style="font-size:12px;color:var(--text-secondary)">2025-09-15</td>
+                <td style="font-size:12px;color:var(--text-secondary)">2026-03-20</td>
+                <td><div class="actions"><button class="btn btn-outline btn-sm">편집</button><button class="btn-danger">삭제</button></div></td>
+              </tr>
+              <tr>
+                <td style="font-weight:600">한화에어로스페이스</td>
+                <td>방산/항공</td>
+                <td><span class="badge badge-lg">대기업</span></td>
+                <td class="truncate">혁신적 사고와 책임감을 갖춘 항공우주 전문인재</td>
+                <td style="font-size:12px">15개</td>
+                <td style="font-size:12px;color:var(--text-secondary)">2025-08-22</td>
+                <td style="font-size:12px;color:var(--text-secondary)">2026-03-18</td>
+                <td><div class="actions"><button class="btn btn-outline btn-sm">편집</button><button class="btn-danger">삭제</button></div></td>
+              </tr>
+              <tr>
+                <td style="font-weight:600">LG전자</td>
+                <td>전자/IT</td>
+                <td><span class="badge badge-lg">대기업</span></td>
+                <td class="truncate">고객가치 창출과 기술혁신을 선도하는 인재</td>
+                <td style="font-size:12px">18개</td>
+                <td style="font-size:12px;color:var(--text-secondary)">2025-07-10</td>
+                <td style="font-size:12px;color:var(--text-secondary)">2026-02-28</td>
+                <td><div class="actions"><button class="btn btn-outline btn-sm">편집</button><button class="btn-danger">삭제</button></div></td>
+              </tr>
+              <tr>
+                <td style="font-weight:600">현대위아</td>
+                <td>자동차/기계</td>
+                <td><span class="badge badge-lg">대기업</span></td>
+                <td class="truncate">창의적 문제해결 능력과 팀워크를 갖춘 기계공학 인재</td>
+                <td style="font-size:12px">11개</td>
+                <td style="font-size:12px;color:var(--text-secondary)">2025-10-05</td>
+                <td style="font-size:12px;color:var(--text-secondary)">2026-03-25</td>
+                <td><div class="actions"><button class="btn btn-outline btn-sm">편집</button><button class="btn-danger">삭제</button></div></td>
+              </tr>
+              <tr>
+                <td style="font-weight:600">삼성SDI</td>
+                <td>화학/소재</td>
+                <td><span class="badge badge-lg">대기업</span></td>
+                <td class="truncate">열정과 전문성으로 배터리 기술을 선도할 인재</td>
+                <td style="font-size:12px">14개</td>
+                <td style="font-size:12px;color:var(--text-secondary)">2025-09-01</td>
+                <td style="font-size:12px;color:var(--text-secondary)">2026-03-12</td>
+                <td><div class="actions"><button class="btn btn-outline btn-sm">편집</button><button class="btn-danger">삭제</button></div></td>
+              </tr>
+              <tr>
+                <td style="font-weight:600">STX엔진</td>
+                <td>에너지/플랜트</td>
+                <td><span class="badge badge-md">중견기업</span></td>
+                <td class="truncate">성실하고 기술역량이 뛰어난 엔진 전문 엔지니어</td>
+                <td style="font-size:12px">8개</td>
+                <td style="font-size:12px;color:var(--text-secondary)">2025-11-20</td>
+                <td style="font-size:12px;color:var(--text-secondary)">2026-01-15</td>
+                <td><div class="actions"><button class="btn btn-outline btn-sm">편집</button><button class="btn-danger">삭제</button></div></td>
+              </tr>
+              <tr>
+                <td style="font-weight:600">한국항공우주산업</td>
+                <td>방산/항공</td>
+                <td><span class="badge badge-lg">대기업</span></td>
+                <td class="truncate">국방과 항공 분야의 미래를 이끌 전문 기술인재</td>
+                <td style="font-size:12px">16개</td>
+                <td style="font-size:12px;color:var(--text-secondary)">2025-08-30</td>
+                <td style="font-size:12px;color:var(--text-secondary)">2026-03-05</td>
+                <td><div class="actions"><button class="btn btn-outline btn-sm">편집</button><button class="btn-danger">삭제</button></div></td>
+              </tr>
+              <tr>
+                <td style="font-weight:600">창원특수강</td>
+                <td>화학/소재</td>
+                <td><span class="badge badge-sm">중소기업</span></td>
+                <td class="truncate">재료공학 기초가 탄탄하고 현장 적응력이 높은 인재</td>
+                <td style="font-size:12px">6개</td>
+                <td style="font-size:12px;color:var(--text-secondary)">2026-01-10</td>
+                <td style="font-size:12px;color:var(--text-secondary)">2026-03-28</td>
+                <td><div class="actions"><button class="btn btn-outline btn-sm">편집</button><button class="btn-danger">삭제</button></div></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </main>
+    </div>
+  </div>
+</div>
+
+<script>
+const toggleBtn = document.getElementById('toggleFormBtn');
+const form = document.getElementById('companyForm');
+const cancelBtn = document.getElementById('cancelFormBtn');
+
+toggleBtn.addEventListener('click', () => {
+  form.classList.toggle('visible');
+  toggleBtn.textContent = form.classList.contains('visible') ? '닫기' : '+ 기업 등록';
+});
+cancelBtn.addEventListener('click', () => {
+  form.classList.remove('visible');
+  toggleBtn.textContent = '+ 기업 등록';
+});
+</script>
+
+<!-- Common Components -->
+<script src="js/common.js"></script>
+<script>
+renderSidebar('sidebar', ADMIN_MENU, { admin: true });
+renderGNB('gnb', { title: '기업 DB 관리' });
+</script>
+
+</body>
+</html>

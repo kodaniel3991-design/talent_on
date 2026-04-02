@@ -1,0 +1,102 @@
+/* ═══════════════════════════════════════════════
+   S-01 Onboarding — Page CSS
+═══════════════════════════════════════════════ */
+
+/* ═══ BODY OVERRIDE (onboarding page) ═══ */
+html{height:100%}
+body{background:var(--taupe-800);min-height:100%;display:flex}
+
+/* ═══ SPLIT LAYOUT ═══ */
+.split{display:flex;width:100%;min-height:100vh}
+
+/* LEFT — Branding */
+.left{flex:1;background:var(--taupe-800);display:flex;flex-direction:column;justify-content:center;padding:60px;position:relative;overflow:hidden}
+.left::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 60% 70% at 30% 60%,rgba(135,154,119,.1) 0%,transparent 70%);pointer-events:none}
+.left::after{content:'T';position:absolute;right:-40px;bottom:-60px;font-family:var(--font-display);font-size:400px;font-weight:800;color:rgba(255,255,255,.015);line-height:1;pointer-events:none}
+
+.brand-content{position:relative;z-index:1;max-width:480px}
+.brand-logo{display:flex;align-items:center;gap:12px;margin-bottom:48px}
+.brand-logo-mark{width:44px;height:44px;background:var(--taupe-500);border-radius:var(--radius-md);display:flex;align-items:center;justify-content:center;font-family:var(--font-display);font-weight:800;color:#fff;font-size:20px}
+.brand-logo-text{font-family:var(--font-display);font-size:18px;font-weight:700;color:#fff}
+.brand-logo-text small{display:block;font-size:11px;font-weight:400;color:var(--gray-400)}
+
+.brand-headline{font-family:var(--font-display);font-size:38px;font-weight:800;color:#fff;line-height:1.2;letter-spacing:-.03em;margin-bottom:16px}
+.brand-headline span{color:var(--green-300)}
+.brand-desc{font-size:15px;color:var(--gray-400);line-height:1.7;margin-bottom:40px;max-width:400px}
+
+.features{display:flex;flex-direction:column;gap:16px}
+.feature{display:flex;align-items:flex-start;gap:14px}
+.feature-icon{width:40px;height:40px;border-radius:var(--radius-md);background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.08);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.feature-icon svg{width:18px;height:18px}
+.feature-text{flex:1}
+.feature-title{font-size:13px;font-weight:700;color:#fff;margin-bottom:2px}
+.feature-desc{font-size:12px;color:var(--gray-400);line-height:1.5}
+
+.left-footer{position:absolute;bottom:32px;left:60px;z-index:1;display:flex;align-items:center;gap:16px}
+.left-footer-text{font-size:11px;color:var(--gray-500)}
+
+/* RIGHT — Login Form */
+.right{width:520px;min-width:520px;background:var(--bg-page);display:flex;flex-direction:column;align-items:center;justify-content:center;padding:60px}
+
+.login-card{width:100%;max-width:380px}
+.login-header{text-align:center;margin-bottom:32px}
+.login-header h2{font-family:var(--font-display);font-size:22px;font-weight:700;margin-bottom:6px}
+.login-header p{font-size:13px;color:var(--text-secondary)}
+
+/* TABS */
+.login-tabs{display:flex;gap:4px;background:var(--bg-subtle);border-radius:var(--radius-md);padding:4px;margin-bottom:24px}
+.login-tab{flex:1;padding:9px;border-radius:var(--radius-sm);border:none;background:transparent;font-family:var(--font-body);font-size:13px;font-weight:600;color:var(--text-secondary);cursor:pointer;transition:all var(--duration-fast)}
+.login-tab.active{background:var(--bg-surface);color:var(--text-primary);box-shadow:var(--shadow-sm)}
+.login-tab:hover:not(.active){color:var(--text-primary)}
+
+/* PANELS */
+.login-panel{display:none}
+.login-panel.active{display:block}
+
+/* FORM (page-specific overrides) */
+.form-group{margin-bottom:16px;flex-direction:row}
+.form-label{display:block;margin-bottom:6px}
+.input{padding:11px 14px}
+.input-icon-wrap{position:relative}
+.input-icon-wrap .input{padding-left:42px}
+.input-icon{position:absolute;left:14px;top:50%;transform:translateY(-50%);color:var(--text-tertiary);pointer-events:none}
+.input-icon svg{width:16px;height:16px}
+.form-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px}
+.checkbox-label{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--text-secondary);cursor:pointer}
+.checkbox-label input{width:14px;height:14px;accent-color:var(--taupe-500)}
+.form-link{font-size:12px;color:var(--taupe-500);text-decoration:none;font-weight:500}
+.form-link:hover{color:var(--taupe-700);text-decoration:underline}
+
+/* BTN (page-specific overrides) */
+.btn{display:flex;width:100%;font-size:14px;padding:12px 20px}
+.btn-primary{box-shadow:0 2px 8px rgba(85,73,64,.3)}
+.btn-primary:hover{box-shadow:0 4px 12px rgba(85,73,64,.4)}
+.btn-primary:active{transform:scale(.98)}
+.btn-sso{background:var(--bg-surface);color:var(--text-primary);border:1.5px solid var(--border-default);margin-bottom:10px}
+.btn-sso:hover{background:var(--bg-subtle);border-color:var(--border-default)}
+.btn-sso img{width:20px;height:20px}
+
+.divider{display:flex;align-items:center;gap:12px;margin:20px 0;font-size:11px;color:var(--text-tertiary)}
+.divider::before,.divider::after{content:'';flex:1;height:1px;background:var(--border-subtle)}
+
+/* GUIDE STEPS */
+.guide-steps{display:flex;flex-direction:column;gap:12px;margin-top:8px}
+.guide-step{display:flex;align-items:flex-start;gap:12px;padding:14px;border-radius:var(--radius-md);border:.5px solid var(--border-subtle);background:var(--bg-surface)}
+.guide-num{width:28px;height:28px;border-radius:50%;background:var(--taupe-500);color:#fff;display:flex;align-items:center;justify-content:center;font-family:var(--font-mono);font-size:12px;font-weight:700;flex-shrink:0}
+.guide-info{flex:1}
+.guide-title{font-size:13px;font-weight:600;margin-bottom:2px}
+.guide-desc{font-size:11px;color:var(--text-secondary);line-height:1.5}
+
+/* SUCCESS ANIMATION */
+.success-view{display:none;text-align:center;padding:20px 0}
+.success-view.active{display:block}
+.success-icon{width:72px;height:72px;border-radius:50%;background:var(--green-50);border:2px solid var(--green-200);display:flex;align-items:center;justify-content:center;margin:0 auto 16px;animation:popIn .4s var(--ease-default)}
+@keyframes popIn{0%{transform:scale(0);opacity:0}100%{transform:scale(1);opacity:1}}
+.success-title{font-family:var(--font-display);font-size:20px;font-weight:700;margin-bottom:6px}
+.success-desc{font-size:13px;color:var(--text-secondary);margin-bottom:24px;line-height:1.6}
+
+/* FOOTER */
+.right-footer{margin-top:40px;text-align:center}
+.right-footer p{font-size:11px;color:var(--text-tertiary)}
+.right-footer a{color:var(--taupe-500);text-decoration:none;font-weight:500}
+.right-footer a:hover{text-decoration:underline}

@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Talent ON — 수준 진단</title>
+<link rel="preconnect" href="https://cdn.jsdelivr.net">
+<link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Sora:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/tokens.css">
+<link rel="stylesheet" href="css/base.css">
+<link rel="stylesheet" href="css/layout.css">
+<link rel="stylesheet" href="css/components.css">
+<link rel="stylesheet" href="css/dark.css">
+<link rel="stylesheet" href="css/pages/assessment.css">
+</head>
+<body>
+
+<div class="shell">
+
+  <!-- ═══ SIDEBAR (common.js) ═══ -->
+  <nav class="sidebar" id="sidebar"></nav>
+
+  <!-- ═══ MAIN ═══ -->
+  <div class="main-wrapper">
+    <!-- GNB (common.js) -->
+    <header class="gnb" id="gnb"></header>
+
+    <div class="content-area">
+
+      <!-- ═══ MAIN CONTENT ═══ -->
+      <main class="main-content">
+        <div class="page-header">
+          <h1>나의 수준 진단</h1>
+          <p>현재 보유한 스펙과 학년을 입력하면, AI가 달성 가능한 기업을 매칭해드립니다.</p>
+        </div>
+
+        <!-- STEP INDICATOR -->
+        <div class="steps">
+          <div class="step step-done" onclick="goStep(0)">
+            <div class="step-num">
+              <svg width="12" height="12" viewBox="0 0 16 16" fill="none"><path d="M3 8l3 3 7-7" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </div>
+            <div class="step-label">학점</div>
+          </div>
+          <div class="step-line done"></div>
+          <div class="step step-active" onclick="goStep(1)">
+            <div class="step-num">2</div>
+            <div class="step-label">어학</div>
+          </div>
+          <div class="step-line"></div>
+          <div class="step" onclick="goStep(2)">
+            <div class="step-num">3</div>
+            <div class="step-label">자격증</div>
+          </div>
+          <div class="step-line"></div>
+          <div class="step" onclick="goStep(3)">
+            <div class="step-num">4</div>
+            <div class="step-label">경험</div>
+          </div>
+          <div class="step-line"></div>
+          <div class="step" onclick="goStep(4)">
+            <div class="step-num">5</div>
+            <div class="step-label">완료</div>
+          </div>
+        </div>
+
+        <!-- SECTION 1: 학점 -->
+        <div class="form-section" id="sec-0">
+          <div class="fs-header">
+            <div class="fs-icon" style="background:var(--green-50)">
+              <svg viewBox="0 0 16 16" fill="none"><path d="M2 12l6-3 6 3M2 9l6-3 6 3" stroke="var(--green-500)" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/><path d="M2 12v3l6 -2 6 2v-3" stroke="var(--green-500)" stroke-width="1.3" fill="none"/></svg>
+            </div>
+            <div class="fs-title-wrap">
+              <div class="fs-title">학점 정보</div>
+              <div class="fs-desc">전체 평균 학점과 전공 학점을 입력하세요</div>
+            </div>
+            <span class="fs-badge badge-green">Step 1/5</span>
+          </div>
+          <div class="fs-body">
+            <div class="form-grid">
+              <div class="form-group">
+                <label class="form-label">전체 평균 학점 <span class="req">*</span></label>
+                <div class="input-suffix">
+                  <input type="number" class="input" placeholder="3.80" step="0.01" min="0" max="4.5" value="3.80" oninput="updateSummary()">
+                  <span class="suffix">/ 4.5</span>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="form-label">전공 평균 학점</label>
+                <div class="input-suffix">
+                  <input type="number" class="input" placeholder="4.00" step="0.01" min="0" max="4.5" value="4.00">
+                  <span class="suffix">/ 4.5</span>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="form-label">이수 학점</label>
+                <div class="input-suffix">
+                  <input type="number" class="input" placeholder="96" value="96">
+                  <span class="suffix">학점</span>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="form-label">졸업 요구 학점</label>
+                <div class="input-suffix">
+                  <input type="number" class="input" value="130" disabled>
+                  <span class="suffix">학점</span>
+                </div>
+              </div>
+            </div>
+            <div class="btn-group">
+              <div></div>
+              <button class="btn btn-primary" onclick="goStep(1)">다음: 어학 &rarr;</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- SECTION 2: 어학 -->
+        <div class="form-section active" id="sec-1">
+          <div class="fs-header">
+            <div class="fs-icon" style="background:var(--pale-blue)">
+              <svg viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="6" stroke="#5b8db8" stroke-width="1.3" fill="none"/><path d="M3 8h10M8 2c-2 2-2 4 0 6s2 4 0 6M8 2c2 2 2 4 0 6s-2 4 0 6" stroke="#5b8db8" stroke-width="1" fill="none"/></svg>
+            </div>
+            <div class="fs-title-wrap">
+              <div class="fs-title">어학 성적</div>
+              <div class="fs-desc">공인 어학 성적을 입력하세요 (복수 입력 가능)</div>
+            </div>
+            <span class="fs-badge badge-taupe">Step 2/5</span>
+          </div>
+          <div class="fs-body">
+            <div class="form-grid">
+              <div class="form-group">
+                <label class="form-label">TOEIC <span class="req">*</span></label>
+                <div class="input-suffix">
+                  <input type="number" class="input" placeholder="820" value="820" oninput="updateSummary()">
+                  <span class="suffix">점</span>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="form-label">TOEIC Speaking</label>
+                <select class="select">
+                  <option value="">미응시</option>
+                  <option>Level 5 (110~120)</option>
+                  <option selected>Level 6 (130~150)</option>
+                  <option>Level 7 (160~180)</option>
+                  <option>Level 8 (190~200)</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label class="form-label">OPIC</label>
+                <select class="select">
+                  <option value="">미응시</option>
+                  <option>NH</option>
+                  <option>IL</option>
+                  <option selected>IM1</option>
+                  <option>IM2</option>
+                  <option>IM3</option>
+                  <option>IH</option>
+                  <option>AL</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label class="form-label">기타 어학</label>
+                <input type="text" class="input" placeholder="예: JLPT N2, HSK 5급">
+              </div>
+            </div>
+            <div class="form-group" style="margin-top:16px">
+              <label class="form-label">영어 회화 자기 평가</label>
+              <div class="slider-group">
+                <div class="slider-header">
+                  <span class="form-hint">기초 → 원어민 수준</span>
+                  <span class="slider-val" id="engLevel">중급</span>
+                </div>
+                <input type="range" min="1" max="5" value="3" oninput="document.getElementById('engLevel').textContent=['기초','초중급','중급','중상급','고급'][this.value-1]">
+              </div>
+            </div>
+            <div class="btn-group">
+              <button class="btn btn-ghost" onclick="goStep(0)">&larr; 이전</button>
+              <button class="btn btn-primary" onclick="goStep(2)">다음: 자격증 &rarr;</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- SECTION 3: 자격증 -->
+        <div class="form-section" id="sec-2">
+          <div class="fs-header">
+            <div class="fs-icon" style="background:var(--taupe-50)">
+              <svg viewBox="0 0 16 16" fill="none"><rect x="2" y="3" width="12" height="10" rx="2" stroke="var(--taupe-400)" stroke-width="1.3" fill="none"/><path d="M5 7h6M5 9.5h4" stroke="var(--taupe-400)" stroke-width="1" stroke-linecap="round"/></svg>
+            </div>
+            <div class="fs-title-wrap">
+              <div class="fs-title">자격증</div>
+              <div class="fs-desc">보유 자격증과 취득 예정 자격증을 입력하세요</div>
+            </div>
+            <span class="fs-badge badge-taupe">Step 3/5</span>
+          </div>
+          <div class="fs-body">
+            <div class="form-group" style="margin-bottom:16px">
+              <label class="form-label">보유 자격증</label>
+              <div class="tag-input-wrap" onclick="this.querySelector('input').focus()">
+                <span class="tag">컴퓨터활용능력 1급 <span class="tag-remove" onclick="this.parentElement.remove();event.stopPropagation()">&times;</span></span>
+                <input type="text" class="tag-input" placeholder="자격증명 입력 후 Enter" onkeydown="if(event.key==='Enter'&&this.value.trim()){const t=document.createElement('span');t.className='tag';t.innerHTML=this.value.trim()+' <span class=\'tag-remove\' onclick=\'this.parentElement.remove();event.stopPropagation()\'>&times;</span>';this.before(t);this.value='';event.preventDefault();updateSummary()}">
+              </div>
+              <div class="form-hint">Enter를 눌러 추가. 예: 에너지관리기사, 정보처리기사</div>
+            </div>
+            <div class="form-group">
+              <label class="form-label">취득 예정 자격증</label>
+              <div class="tag-input-wrap" onclick="this.querySelector('input').focus()">
+                <span class="tag" style="background:#fefce8;color:#a16207;border-color:#fde047">에너지관리기사 <span class="tag-remove" onclick="this.parentElement.remove();event.stopPropagation()">&times;</span></span>
+                <input type="text" class="tag-input" placeholder="예정 자격증 입력 후 Enter" onkeydown="if(event.key==='Enter'&&this.value.trim()){const t=document.createElement('span');t.className='tag';t.style.cssText='background:#fefce8;color:#a16207;border-color:#fde047';t.innerHTML=this.value.trim()+' <span class=\'tag-remove\' onclick=\'this.parentElement.remove();event.stopPropagation()\'>&times;</span>';this.before(t);this.value='';event.preventDefault()}">
+              </div>
+            </div>
+            <div class="btn-group">
+              <button class="btn btn-ghost" onclick="goStep(1)">&larr; 이전</button>
+              <button class="btn btn-primary" onclick="goStep(3)">다음: 경험 &rarr;</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- SECTION 4: 경험 -->
+        <div class="form-section" id="sec-3">
+          <div class="fs-header">
+            <div class="fs-icon" style="background:#fef7ed">
+              <svg viewBox="0 0 16 16" fill="none"><rect x="1" y="5" width="14" height="9" rx="2" stroke="var(--beige)" stroke-width="1.3" fill="none"/><path d="M5 5V3.5A1.5 1.5 0 016.5 2h3A1.5 1.5 0 0111 3.5V5" stroke="var(--beige)" stroke-width="1.3"/></svg>
+            </div>
+            <div class="fs-title-wrap">
+              <div class="fs-title">경험 & 활동</div>
+              <div class="fs-desc">인턴, 프로젝트, 대외활동 등을 입력하세요</div>
+            </div>
+            <span class="fs-badge badge-taupe">Step 4/5</span>
+          </div>
+          <div class="fs-body">
+            <div class="exp-list" id="expList">
+              <div class="exp-card">
+                <div class="exp-icon" style="background:var(--green-50)">
+                  <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><rect x="2" y="2" width="12" height="12" rx="2" stroke="var(--green-500)" stroke-width="1.3" fill="none"/><path d="M5 6h6M5 8.5h4M5 11h5" stroke="var(--green-500)" stroke-width="1" stroke-linecap="round"/></svg>
+                </div>
+                <div class="exp-info">
+                  <div class="exp-title">캡스톤디자인 — IoT 에너지 모니터링</div>
+                  <div class="exp-meta">프로젝트 · 2025.09 ~ 2025.12 · 4개월</div>
+                </div>
+                <div class="exp-remove" onclick="this.parentElement.remove()">&times;</div>
+              </div>
+              <div class="exp-card">
+                <div class="exp-icon" style="background:var(--pale-blue)">
+                  <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="6" r="3" stroke="#5b8db8" stroke-width="1.3" fill="none"/><path d="M3 14c0-2.8 2.2-5 5-5s5 2.2 5 5" stroke="#5b8db8" stroke-width="1.3" fill="none"/></svg>
+                </div>
+                <div class="exp-info">
+                  <div class="exp-title">창원시 에너지 공단 — 행정 보조</div>
+                  <div class="exp-meta">대외활동 · 2025.07 ~ 2025.08 · 2개월</div>
+                </div>
+                <div class="exp-remove" onclick="this.parentElement.remove()">&times;</div>
+              </div>
+            </div>
+            <button class="add-btn" style="margin-top:12px" onclick="addExpModal()">
+              <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M8 3v10M3 8h10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+              경험 추가
+            </button>
+
+            <!-- Add form (inline) -->
+            <div id="addExpForm" style="display:none;margin-top:14px;padding:16px;border:1.5px solid var(--taupe-200);border-radius:var(--radius-md);background:var(--taupe-50)">
+              <div class="form-grid" style="margin-bottom:12px">
+                <div class="form-group">
+                  <label class="form-label">유형</label>
+                  <select class="select" id="expType">
+                    <option>인턴</option>
+                    <option>프로젝트</option>
+                    <option>대외활동</option>
+                    <option>공모전</option>
+                    <option>봉사활동</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label class="form-label">기간 (개월)</label>
+                  <input type="number" class="input" id="expDur" placeholder="3" value="3">
+                </div>
+                <div class="form-group form-full">
+                  <label class="form-label">내용</label>
+                  <input type="text" class="input" id="expDesc" placeholder="예: OO기업 기계설계팀 인턴">
+                </div>
+              </div>
+              <div style="display:flex;gap:8px;justify-content:flex-end">
+                <button class="btn btn-ghost btn-sm" onclick="document.getElementById('addExpForm').style.display='none'">취소</button>
+                <button class="btn btn-primary btn-sm" onclick="addExp()">추가</button>
+              </div>
+            </div>
+
+            <div class="form-group" style="margin-top:18px">
+              <label class="form-label">보유 기술 / 스킬</label>
+              <div class="tag-input-wrap" onclick="this.querySelector('input').focus()">
+                <span class="tag">AutoCAD <span class="tag-remove" onclick="this.parentElement.remove();event.stopPropagation()">&times;</span></span>
+                <span class="tag">SolidWorks <span class="tag-remove" onclick="this.parentElement.remove();event.stopPropagation()">&times;</span></span>
+                <span class="tag">Python <span class="tag-remove" onclick="this.parentElement.remove();event.stopPropagation()">&times;</span></span>
+                <input type="text" class="tag-input" placeholder="스킬 입력 후 Enter" onkeydown="if(event.key==='Enter'&&this.value.trim()){const t=document.createElement('span');t.className='tag';t.innerHTML=this.value.trim()+' <span class=\'tag-remove\' onclick=\'this.parentElement.remove();event.stopPropagation()\'>&times;</span>';this.before(t);this.value='';event.preventDefault()}">
+              </div>
+            </div>
+
+            <div class="btn-group">
+              <button class="btn btn-ghost" onclick="goStep(2)">&larr; 이전</button>
+              <button class="btn btn-primary" onclick="goStep(4)">다음: 확인 &rarr;</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- SECTION 5: 완료 & 제출 -->
+        <div class="form-section" id="sec-4">
+          <div class="fs-header">
+            <div class="fs-icon" style="background:var(--green-50)">
+              <svg viewBox="0 0 16 16" fill="none"><path d="M3 8l3 3 7-7" stroke="var(--green-500)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </div>
+            <div class="fs-title-wrap">
+              <div class="fs-title">입력 완료 — AI 기업 매칭 시작</div>
+              <div class="fs-desc">입력한 정보를 확인하고, 나에게 맞는 기업을 찾아보세요</div>
+            </div>
+            <span class="fs-badge badge-green">Step 5/5</span>
+          </div>
+          <div class="fs-body" style="text-align:center;padding:40px 24px">
+            <div style="width:72px;height:72px;border-radius:50%;background:var(--green-50);border:2px solid var(--green-200);display:flex;align-items:center;justify-content:center;margin:0 auto 16px">
+              <svg width="32" height="32" viewBox="0 0 16 16" fill="none"><path d="M3 8l3 3 7-7" stroke="var(--green-500)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </div>
+            <div style="font-family:var(--font-display);font-size:20px;font-weight:700;color:var(--text-primary);margin-bottom:6px">모든 정보가 입력되었습니다</div>
+            <p style="font-size:13px;color:var(--text-secondary);max-width:440px;margin:0 auto 24px">
+              입력하신 스펙과 남은 학기를 기반으로<br>
+              AI가 <strong>달성 가능한 기업</strong>을 추천합니다.
+            </p>
+            <button class="btn btn-accent btn-lg" onclick="startCompanyMatching()">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="7" cy="7" r="4" stroke="#fff" stroke-width="1.5"/><path d="M10 10l3 3" stroke="#fff" stroke-width="1.5" stroke-linecap="round"/></svg>
+              AI 기업 매칭 시작하기
+            </button>
+            <p style="font-size:11px;color:var(--text-tertiary);margin-top:12px">매칭에 약 5초가 소요됩니다</p>
+            <div class="btn-group" style="justify-content:center">
+              <button class="btn btn-ghost" onclick="goStep(3)">&larr; 돌아가서 수정</button>
+            </div>
+          </div>
+        </div>
+
+      </main>
+
+      <!-- ═══ RIGHT PANEL ═══ -->
+      <aside class="right-panel">
+
+        <!-- 다음 단계 안내 -->
+        <div class="rp-section">
+          <div class="rp-title">다음 단계</div>
+          <div style="padding:14px;border-radius:var(--radius-md);border:.5px solid var(--green-200);background:var(--green-50)">
+            <div style="font-size:13px;font-weight:600;color:var(--green-700);margin-bottom:6px">스펙 입력 완료 후</div>
+            <div style="font-size:12px;color:var(--green-600);line-height:1.6">
+              ① AI가 달성 가능한 기업을 추천<br>
+              ② 원하는 기업 선택 (최대 3개)<br>
+              ③ 선택한 기업별 달성 분석<br>
+              ④ 통합 로드맵 자동 생성
+            </div>
+          </div>
+        </div>
+
+        <!-- 입력 완성도 -->
+        <div class="rp-section">
+          <div class="rp-title">입력 완성도</div>
+          <div class="completeness">
+            <div class="completeness-ring">
+              <svg width="90" height="90" viewBox="0 0 90 90">
+                <circle cx="45" cy="45" r="36" fill="none" stroke="var(--border-subtle)" stroke-width="7"/>
+                <circle cx="45" cy="45" r="36" fill="none" stroke="var(--green-400)" stroke-width="7"
+                  stroke-dasharray="158 226.2" stroke-linecap="round" id="compRing"/>
+              </svg>
+              <div class="completeness-center">
+                <div class="completeness-pct" id="compPct">70%</div>
+                <div class="completeness-label">완성도</div>
+              </div>
+            </div>
+            <div class="completeness-hint">나머지 항목을 입력하면 더 정확한 분석이 가능해요</div>
+          </div>
+        </div>
+
+        <!-- 내 스펙 요약 -->
+        <div class="rp-section">
+          <div class="rp-title">내 스펙 요약 <small>실시간 반영</small></div>
+          <div class="summary-card">
+            <div class="summary-item">
+              <div class="si-label">
+                <svg viewBox="0 0 16 16" fill="none"><path d="M2 12l6-3 6 3M2 9l6-3 6 3" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                학점
+              </div>
+              <div class="si-value" id="sumGpa">3.80 / 4.5</div>
+            </div>
+            <div class="summary-item">
+              <div class="si-label">
+                <svg viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="6" stroke="currentColor" stroke-width="1.2" fill="none"/><path d="M3 8h10" stroke="currentColor" stroke-width="1"/></svg>
+                TOEIC
+              </div>
+              <div class="si-value" id="sumToeic">820점</div>
+            </div>
+            <div class="summary-item">
+              <div class="si-label">
+                <svg viewBox="0 0 16 16" fill="none"><rect x="2" y="3" width="12" height="10" rx="2" stroke="currentColor" stroke-width="1.2" fill="none"/><path d="M5 7h6" stroke="currentColor" stroke-width="1"/></svg>
+                자격증
+              </div>
+              <div class="si-value" id="sumCert">1개 보유</div>
+            </div>
+            <div class="summary-item">
+              <div class="si-label">
+                <svg viewBox="0 0 16 16" fill="none"><rect x="1" y="5" width="14" height="9" rx="2" stroke="currentColor" stroke-width="1.2" fill="none"/></svg>
+                경험
+              </div>
+              <div class="si-value" id="sumExp">2건 (6개월)</div>
+            </div>
+            <div class="summary-item">
+              <div class="si-label">
+                <svg viewBox="0 0 16 16" fill="none"><path d="M4 4h8M4 8h6M4 12h4" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+                스킬
+              </div>
+              <div class="si-value" id="sumSkills">3개</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- AI TIP -->
+        <div class="rp-section">
+          <div class="ai-tip">
+            <div class="ai-tip-header">
+              <svg viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="6.5" stroke="var(--taupe-400)" stroke-width="1.3"/><path d="M6 6.5a2 2 0 113.5 1.8c-.5.3-.5.5-.5 1.2M8 12v.5" stroke="var(--taupe-400)" stroke-width="1.3" stroke-linecap="round"/></svg>
+              입력 팁
+            </div>
+            <p>모든 항목을 입력할수록 <strong>기업 매칭 정확도</strong>가 올라갑니다. 특히 <strong>자격증</strong>과 <strong>경험</strong>은 매칭 결과에 큰 영향을 미칩니다.</p>
+          </div>
+        </div>
+
+        <!-- 매칭 0건 안내 -->
+        <div class="rp-section">
+          <div style="padding:12px;border-radius:var(--radius-md);background:var(--bg-page);border:.5px solid var(--border-subtle);font-size:12px;color:var(--text-secondary);line-height:1.6">
+            <strong style="color:var(--text-primary)">매칭 기업이 없을 수도 있나요?</strong><br>
+            현재 수준과 남은 학기로 달성 가능성 50% 이상인 기업이 없을 경우, 기초 역량부터 쌓는 기본 로드맵을 먼저 제공합니다. 다음 학기 재진단 시 매칭 기업이 발생합니다.
+          </div>
+        </div>
+
+      </aside>
+
+    </div>
+  </div>
+</div>
+
+<script>
+let currentStep = 1;
+
+function goStep(n) {
+  currentStep = n;
+  // Show/hide sections
+  document.querySelectorAll('.form-section').forEach((s, i) => {
+    s.classList.toggle('active', i === n);
+  });
+  // Update step indicators
+  const steps = document.querySelectorAll('.step');
+  const lines = document.querySelectorAll('.step-line');
+  steps.forEach((s, i) => {
+    s.classList.remove('step-active', 'step-done');
+    if (i < n) s.classList.add('step-done');
+    else if (i === n) s.classList.add('step-active');
+    // Fix done checkmark
+    const num = s.querySelector('.step-num');
+    if (i < n) {
+      num.innerHTML = '<svg width="12" height="12" viewBox="0 0 16 16" fill="none"><path d="M3 8l3 3 7-7" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+    } else {
+      num.textContent = i + 1;
+    }
+  });
+  lines.forEach((l, i) => {
+    l.classList.toggle('done', i < n);
+  });
+  // Scroll to top
+  document.querySelector('.main-content').scrollTop = 0;
+}
+
+function addExpModal() {
+  document.getElementById('addExpForm').style.display = 'block';
+}
+
+function addExp() {
+  const type = document.getElementById('expType').value;
+  const dur = document.getElementById('expDur').value;
+  const desc = document.getElementById('expDesc').value;
+  if (!desc.trim()) return;
+  const colors = {
+    '인턴': ['var(--taupe-50)', 'var(--taupe-400)'],
+    '프로젝트': ['var(--green-50)', 'var(--green-500)'],
+    '대외활동': ['var(--pale-blue)', '#5b8db8'],
+    '공모전': ['#fefce8', '#a16207'],
+    '봉사활동': ['var(--green-50)', 'var(--green-500)']
+  };
+  const [bg, clr] = colors[type] || ['var(--gray-100)', 'var(--gray-500)'];
+  const card = document.createElement('div');
+  card.className = 'exp-card';
+  card.innerHTML = `
+    <div class="exp-icon" style="background:${bg}">
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><rect x="1" y="5" width="14" height="9" rx="2" stroke="${clr}" stroke-width="1.3" fill="none"/><path d="M5 5V3.5A1.5 1.5 0 016.5 2h3A1.5 1.5 0 0111 3.5V5" stroke="${clr}" stroke-width="1.3"/></svg>
+    </div>
+    <div class="exp-info">
+      <div class="exp-title">${desc}</div>
+      <div class="exp-meta">${type} · ${dur}개월</div>
+    </div>
+    <div class="exp-remove" onclick="this.parentElement.remove()">&times;</div>`;
+  document.getElementById('expList').appendChild(card);
+  document.getElementById('addExpForm').style.display = 'none';
+  document.getElementById('expDesc').value = '';
+}
+
+function updateSummary() {
+  // Just a simple demonstration of live update
+}
+function startCompanyMatching(){
+  document.getElementById('loadingOverlay').classList.add('active');
+  setTimeout(function(){ location.href='S-03_company-search.html'; },2000);
+}
+</script>
+
+<div class="loading-overlay" id="loadingOverlay">
+  <div class="loading-spinner"></div>
+  <div class="loading-text">AI가 기업을 매칭하고 있습니다...</div>
+  <div class="loading-sub">나의 스펙과 남은 학기를 분석 중</div>
+</div>
+
+<!-- Common Components -->
+<script src="js/common.js"></script>
+<script>
+renderSidebar('sidebar', STUDENT_MENU);
+renderGNB('gnb', { breadcrumb: [{ label: '홈', href: 'S-02_dashboard.html' }, { label: '수준 진단' }] });
+</script>
+
+</body>
+</html>

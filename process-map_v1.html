@@ -1,0 +1,656 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Talent ON — 프로세스 맵</title>
+<link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Sora:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/tokens.css">
+<link rel="stylesheet" href="css/base.css">
+<link rel="stylesheet" href="css/layout.css">
+<link rel="stylesheet" href="css/components.css">
+<link rel="stylesheet" href="css/dark.css">
+<style>
+/* ═══ EXTRA TOKENS (page-specific) ═══ */
+:root{
+  --amber-50:#fef7ed;--amber-100:#fde68a;--amber-400:#f5a623;--amber-600:#d97706;
+  --purple-50:#f3eef9;--purple-200:#d4c4e8;--purple-400:#9b7acc;--purple-600:#7c3aed;
+  --blue-50:#eef4fb;--blue-200:#b5cedf;--blue-400:#5b8db8;
+}
+
+/* PAGE HEADER (page-specific override) */
+.page-header{padding:24px 28px 16px}
+.page-header p{line-height:1.6}
+
+/* TAB */
+.tabs{display:flex;gap:6px;padding:0 28px;margin-bottom:16px}
+.tab{padding:8px 20px;border-radius:var(--radius-full);border:1.5px solid var(--border-subtle);background:var(--bg-surface);font-size:12px;font-weight:600;color:var(--gray-500);cursor:pointer;transition:all .15s;font-family:var(--font-body)}
+.tab:hover{border-color:var(--gray-300)}
+.tab.active{background:var(--taupe-500);color:#fff;border-color:var(--taupe-500)}
+
+/* ═══ SUMMARY CARDS ═══ */
+.summary-cards{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;padding:0 28px;margin-bottom:16px}
+.sum-card{display:flex;align-items:center;gap:12px;padding:16px 18px;background:var(--bg-surface);border:.5px solid var(--border-subtle);border-radius:var(--radius-lg);cursor:pointer;transition:all .15s}
+.sum-card:hover{box-shadow:var(--shadow-md);transform:translateY(-1px)}
+.sum-card.active{border-color:var(--taupe-500);box-shadow:0 0 0 1px var(--taupe-500)}
+.sum-icon{width:40px;height:40px;border-radius:var(--radius-md);display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
+.sum-title{font-size:14px;font-weight:700}
+.sum-sub{font-size:11px;color:var(--gray-500);margin-top:1px}
+.sum-chevron{margin-left:auto;color:var(--gray-300);font-size:16px;transition:transform .2s}
+.sum-card.active .sum-chevron{transform:rotate(180deg);color:var(--taupe-500)}
+
+/* ═══ STEP FLOW (horizontal breadcrumb) ═══ */
+.step-flow{display:flex;align-items:center;justify-content:center;gap:0;padding:0 28px;margin-bottom:16px}
+.sf-node{font-size:12px;font-weight:500;color:var(--gray-500);padding:5px 14px;border-radius:var(--radius-full);background:var(--bg-surface);border:.5px solid var(--border-subtle);white-space:nowrap}
+.sf-node.active{background:var(--taupe-500);color:#fff;border-color:var(--taupe-500);font-weight:600}
+.sf-arrow{color:var(--gray-300);font-size:12px;margin:0 4px;flex-shrink:0}
+
+/* ═══ MAP CARD (wrapping canvas) ═══ */
+.map-card{margin:0 28px 28px;background:var(--bg-surface);border:.5px solid var(--border-subtle);border-radius:var(--radius-lg);box-shadow:0 1px 3px rgba(85,73,64,.06);overflow:hidden;position:relative}
+.map-card-header{display:flex;align-items:center;justify-content:space-between;padding:14px 20px;border-bottom:.5px solid var(--border-subtle)}
+.map-card-title{font-size:13px;color:var(--gray-500)}
+.map-card-actions{display:flex;gap:4px}
+.map-btn{width:32px;height:32px;border-radius:var(--radius-sm);border:.5px solid var(--border-subtle);background:var(--bg-surface);display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all .15s;color:var(--gray-500);font-size:14px}
+.map-btn:hover{background:var(--gray-100);color:var(--gray-800)}
+.map-btn svg{width:16px;height:16px}
+
+/* ═══ ZOOM WRAPPER ═══ */
+.map-viewport{overflow:auto;position:relative;min-height:400px;max-height:calc(100vh - 340px)}
+.map-viewport::-webkit-scrollbar{width:6px;height:6px}
+.map-viewport::-webkit-scrollbar-thumb{background:var(--gray-200);border-radius:3px}
+.map-inner{transform-origin:top left;transition:transform .3s ease;padding:24px 20px 40px}
+
+/* ZOOM CONTROLS (floating) */
+.zoom-controls{position:absolute;bottom:16px;left:16px;display:flex;flex-direction:column;gap:4px;z-index:10}
+.zoom-btn{width:32px;height:32px;border-radius:var(--radius-sm);border:.5px solid var(--border-subtle);background:var(--bg-surface);display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all .15s;color:var(--gray-600);font-size:16px;font-weight:700;box-shadow:var(--shadow-sm)}
+.zoom-btn:hover{background:var(--gray-100)}
+.zoom-level{font-size:9px;text-align:center;color:var(--gray-400);font-family:var(--font-mono);margin-top:2px}
+
+/* FULLSCREEN */
+.map-card.fullscreen{position:fixed;inset:0;z-index:9999;margin:0;border-radius:0;border:none}
+.map-card.fullscreen .map-viewport{max-height:calc(100vh - 56px)}
+
+/* MAP PANEL (inside card) */
+.map-panel{display:none}
+.map-panel.active{display:block}
+.map-panel::-webkit-scrollbar{height:6px}
+.map-panel::-webkit-scrollbar-thumb{background:var(--gray-200);border-radius:3px}
+
+/* ═══ CANVAS ═══ */
+.canvas{position:relative;min-width:1100px;padding:20px 0}
+
+/* ═══ LANE ═══ */
+.lane{display:flex;align-items:flex-start;gap:0;position:relative;margin-bottom:40px}
+.lane-label{writing-mode:vertical-lr;font-size:11px;font-weight:700;letter-spacing:.06em;padding:12px 8px;border-radius:var(--radius-sm);margin-right:16px;flex-shrink:0;text-align:center;min-height:80px;display:flex;align-items:center;justify-content:center}
+.ll-student{background:var(--amber-50);color:var(--amber-600);border:1.5px solid var(--amber-100)}
+.ll-data{background:var(--taupe-50);color:var(--taupe-600);border:1.5px solid var(--taupe-200)}
+.ll-admin{background:var(--green-50);color:var(--green-600);border:1.5px solid var(--green-200)}
+
+/* ═══ FLOW ROW ═══ */
+.flow-row{display:flex;align-items:center;gap:0;flex:1}
+
+/* ═══ MAIN NODE ═══ */
+.main-node{display:flex;flex-direction:column;align-items:center;flex-shrink:0;position:relative}
+.mn-box{display:flex;align-items:center;gap:12px;padding:16px 22px;border-radius:14px;min-width:170px;cursor:pointer;transition:all .2s;text-decoration:none;color:inherit;position:relative;z-index:2}
+.mn-box:hover{transform:translateY(-2px)}
+.mn-icon{width:40px;height:40px;border-radius:var(--radius-md);display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
+.mn-info{flex:1;min-width:0}
+.mn-title{font-size:14px;font-weight:700;margin-bottom:1px;white-space:nowrap}
+.mn-sub{font-size:11px;line-height:1.4;white-space:nowrap}
+
+/* Main node variants */
+.mn-amber .mn-box{background:#fffbf0;border:1.5px solid var(--amber-100);box-shadow:0 2px 8px rgba(245,166,35,.1)}
+.mn-amber .mn-icon{background:var(--amber-100)}
+.mn-amber .mn-sub{color:var(--amber-600)}
+.mn-amber .mn-box:hover{box-shadow:var(--shadow-md)}
+
+.mn-taupe .mn-box{background:var(--bg-surface);border:1.5px solid var(--taupe-200);box-shadow:0 2px 8px rgba(85,73,64,.08)}
+.mn-taupe .mn-icon{background:var(--taupe-50)}
+.mn-taupe .mn-sub{color:var(--taupe-400)}
+.mn-taupe .mn-box:hover{box-shadow:var(--shadow-md)}
+
+.mn-green .mn-box{background:#f8faf6;border:1.5px solid var(--green-200);box-shadow:0 2px 8px rgba(135,154,119,.1)}
+.mn-green .mn-icon{background:var(--green-50)}
+.mn-green .mn-sub{color:var(--green-500)}
+.mn-green .mn-box:hover{box-shadow:var(--shadow-md)}
+
+.mn-purple .mn-box{background:#faf8fd;border:1.5px solid var(--purple-200);box-shadow:0 2px 8px rgba(124,59,237,.08)}
+.mn-purple .mn-icon{background:var(--purple-50)}
+.mn-purple .mn-title{color:var(--purple-600)}
+.mn-purple .mn-sub{color:var(--purple-400)}
+.mn-purple .mn-box:hover{box-shadow:var(--shadow-md)}
+
+.mn-blue .mn-box{background:#f6fafd;border:1.5px solid var(--blue-200);box-shadow:0 2px 8px rgba(91,141,184,.08)}
+.mn-blue .mn-icon{background:var(--blue-50)}
+.mn-blue .mn-sub{color:var(--blue-400)}
+
+/* ═══ ARROW ═══ */
+.arrow{display:flex;align-items:center;flex-shrink:0;padding:0 2px;position:relative;z-index:1}
+.arrow svg{display:block}
+.arrow-label{position:absolute;top:-14px;left:50%;transform:translateX(-50%);font-size:9px;color:var(--gray-400);white-space:nowrap;font-family:var(--font-mono)}
+
+/* ═══ SUB NODES (children branching down) ═══ */
+.sub-branch{display:flex;gap:10px;justify-content:center;margin-top:0;position:relative;padding-top:20px}
+.sub-branch::before{content:'';position:absolute;top:0;left:50%;width:1px;height:20px;border-left:1.5px dashed var(--gray-300)}
+/* horizontal connector */
+.sub-branch::after{content:'';position:absolute;top:20px;height:1.5px;border-top:1.5px dashed var(--gray-300)}
+
+.sub-node{padding:10px 14px;border-radius:var(--radius-md);text-align:center;min-width:120px;position:relative;cursor:pointer;transition:all .15s;text-decoration:none;color:inherit}
+.sub-node:hover{transform:translateY(-2px)}
+.sub-node::before{content:'';position:absolute;top:-12px;left:50%;width:1px;height:12px;border-left:1.5px dashed var(--gray-300)}
+.sn-icon{font-size:14px;margin-bottom:3px}
+.sn-title{font-size:11px;font-weight:700;margin-bottom:1px}
+.sn-sub{font-size:10px;line-height:1.4}
+
+.sn-amber{background:#fffdf5;border:1px solid var(--amber-100)}
+.sn-amber .sn-title{color:var(--amber-600)}
+.sn-amber .sn-sub{color:var(--beige)}
+
+.sn-taupe{background:var(--taupe-50);border:1px solid var(--taupe-200)}
+.sn-taupe .sn-title{color:var(--taupe-600)}
+.sn-taupe .sn-sub{color:var(--taupe-400)}
+
+.sn-green{background:var(--green-50);border:1px solid var(--green-200)}
+.sn-green .sn-title{color:var(--green-600)}
+.sn-green .sn-sub{color:var(--green-500)}
+
+.sn-purple{background:var(--purple-50);border:1px solid var(--purple-200)}
+.sn-purple .sn-title{color:var(--purple-600)}
+.sn-purple .sn-sub{color:var(--purple-400)}
+
+.sn-blue{background:var(--blue-50);border:1px solid var(--blue-200)}
+.sn-blue .sn-title{color:var(--blue-400)}
+.sn-blue .sn-sub{color:var(--gray-500)}
+
+/* ═══ CROSS-LANE CONNECTOR (dashed curve) ═══ */
+.cross-connectors{position:absolute;inset:0;pointer-events:none;z-index:0}
+
+/* ═══ ANNOTATION ═══ */
+.annotation{display:flex;align-items:center;gap:6px;margin:20px auto 0;justify-content:center;padding:10px 20px;border-radius:var(--radius-full);background:var(--bg-surface);border:1.5px dashed var(--gray-300);width:fit-content;font-size:12px;color:var(--gray-500)}
+.annotation svg{flex-shrink:0}
+
+/* ═══ LEGEND ═══ */
+.legend{display:flex;justify-content:center;gap:20px;padding:20px;flex-wrap:wrap}
+.legend-item{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--gray-500)}
+.lg-dot{width:14px;height:14px;border-radius:4px;border:1.5px solid}
+.lg-amber{background:#fffbf0;border-color:var(--amber-100)}
+.lg-taupe{background:var(--bg-surface);border-color:var(--taupe-200)}
+.lg-green{background:#f8faf6;border-color:var(--green-200)}
+.lg-purple{background:#faf8fd;border-color:var(--purple-200)}
+.lg-blue{background:#f6fafd;border-color:var(--blue-200)}
+
+/* Quick links */
+.quick-links{max-width:1000px;margin:0 auto 40px;display:flex;gap:8px;flex-wrap:wrap;justify-content:center;padding:0 40px}
+.ql{padding:6px 14px;border-radius:var(--radius-full);font-size:11px;font-weight:600;text-decoration:none;border:1px solid;transition:all .15s}
+.ql:hover{transform:translateY(-1px)}
+.ql-s{background:var(--taupe-50);color:var(--taupe-600);border-color:var(--taupe-200)}
+.ql-a{background:var(--green-50);color:var(--green-600);border-color:var(--green-200)}
+</style>
+</head>
+<body>
+
+<div class="shell">
+
+  <!-- SIDEBAR -->
+  <nav class="sidebar">
+    <div class="sidebar-logo"><div class="logo-mark">T</div><div class="logo-text">Talent ON<small>창원대학교</small></div></div>
+    <div class="sidebar-menu">
+      <div class="menu-section-label">메인</div>
+      <a class="mi" href="S-02_dashboard.html"><svg viewBox="0 0 16 16" fill="none"><rect x="1" y="9" width="4" height="6" rx="1" fill="currentColor"/><rect x="6" y="5" width="4" height="10" rx="1" fill="currentColor"/><rect x="11" y="1" width="4" height="14" rx="1" fill="currentColor" opacity=".5"/></svg>대시보드</a>
+      <a class="mi active" href="process-map.html"><svg viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="6" stroke="currentColor" stroke-width="1.3" fill="none"/><circle cx="5" cy="7" r="1.5" fill="currentColor" opacity=".6"/><circle cx="11" cy="7" r="1.5" fill="currentColor" opacity=".6"/><circle cx="8" cy="11" r="1.5" fill="currentColor" opacity=".6"/><path d="M5 7L8 11M11 7L8 11" stroke="currentColor" stroke-width="1" opacity=".4"/></svg>프로세스 맵</a>
+      <a class="mi" href="S-03_company-search.html"><svg viewBox="0 0 16 16" fill="none"><circle cx="7" cy="7" r="5" stroke="currentColor" stroke-width="1.5" fill="none"/><path d="M11 11l3.5 3.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>기업 탐색<span class="menu-badge">52</span></a>
+      <div class="menu-section-label">진단 & 준비</div>
+      <a class="mi" href="S-05_assessment.html"><svg viewBox="0 0 16 16" fill="none"><path d="M3 8l3 3 7-7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>수준 진단</a>
+      <a class="mi" href="S-06_gap-analysis.html"><svg viewBox="0 0 16 16" fill="none"><polygon points="8,1 10,6 15,6 11,9 12.5,14 8,11 3.5,14 5,9 1,6 6,6" stroke="currentColor" stroke-width="1.2" fill="none"/></svg>GAP 분석</a>
+      <a class="mi" href="S-07_roadmap.html"><svg viewBox="0 0 16 16" fill="none"><rect x="2" y="2" width="12" height="12" rx="2" stroke="currentColor" stroke-width="1.5" fill="none"/><path d="M5 8h6M8 5v6" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>내 로드맵</a>
+      <a class="mi" href="S-08_progress-log.html"><svg viewBox="0 0 16 16" fill="none"><path d="M4 4h8M4 8h6M4 12h4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>진척 기록</a>
+      <div class="menu-section-label">설정</div>
+      <a class="mi" href="S-09_profile.html"><svg viewBox="0 0 16 16" fill="none"><circle cx="8" cy="5" r="3" stroke="currentColor" stroke-width="1.5" fill="none"/><path d="M2 14c0-3.3 2.7-6 6-6s6 2.7 6 6" stroke="currentColor" stroke-width="1.5" fill="none"/></svg>내 프로필</a>
+    </div>
+    <div class="sidebar-footer"><div class="sidebar-avatar">김</div><div><div style="font-size:12px;font-weight:600">김창원</div><div style="font-size:10px;color:var(--gray-400)">기계공학과 3학년</div></div></div>
+  </nav>
+
+  <!-- MAIN -->
+  <div class="main-wrapper">
+    <header class="gnb">
+      <div class="gnb-bc"><a href="S-02_dashboard.html">홈</a><span>&rsaquo;</span><strong>프로세스 맵</strong></div>
+      <div class="gnb-right"><button class="gnb-noti" onclick="toggleDark()" title="다크모드" style="font-size:14px;cursor:pointer;background:none;border:none" id="darkBtn"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M13 9.5A5.5 5.5 0 016.5 3c0-.5.1-1 .2-1.5A6.5 6.5 0 1014.5 9c-.5.1-1 .2-1.5.2z" stroke="currentColor" stroke-width="1.3"/></svg></button> 2026.04.02</div>
+    </header>
+
+    <div class="content-scroll">
+
+<div class="page-header">
+  <h1>프로세스 맵</h1>
+  <p>학생과 관리자 관점에서 Talent ON의 전체 흐름을 확인하세요. 각 노드를 클릭하면 해당 화면으로 이동합니다.</p>
+</div>
+
+<!-- SUMMARY CARDS -->
+<div class="summary-cards">
+  <div class="sum-card active" onclick="switchTab('student',this);highlightCard(this)">
+    <div class="sum-icon" style="background:var(--amber-50)"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 2L5 8h6L8 2zM6 8v4h4V8" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/></svg></div>
+    <div><div class="sum-title">온보딩 → 로드맵</div><div class="sum-sub">신규 학생 핵심 플로우</div></div>
+    <div class="sum-chevron">⌄</div>
+  </div>
+  <div class="sum-card" onclick="switchTab('student',this);highlightCard(this)">
+    <div class="sum-icon" style="background:var(--taupe-50)"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M2 8a6 6 0 0110-4.5M14 8a6 6 0 01-10 4.5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/><path d="M12 1v3.5h-3.5M4 15v-3.5h3.5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+    <div><div class="sum-title">진척 기록 루프</div><div class="sum-sub">재방문 학생 반복 플로우</div></div>
+    <div class="sum-chevron">⌄</div>
+  </div>
+  <div class="sum-card" onclick="switchTab('admin',document.querySelectorAll('.tab')[1]);highlightCard(this)">
+    <div class="sum-icon" style="background:var(--green-50)"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="6" cy="5" r="2.5" stroke="currentColor" stroke-width="1.3"/><path d="M1 14c0-2.8 2.2-5 5-5s5 2.2 5 5" stroke="currentColor" stroke-width="1.3"/><circle cx="11" cy="5" r="2" stroke="currentColor" stroke-width="1.2"/><path d="M12 9c1.7.5 3 2.2 3 4" stroke="currentColor" stroke-width="1.2"/></svg></div>
+    <div><div class="sum-title">학생 모니터링</div><div class="sum-sub">관리자 개입 플로우</div></div>
+    <div class="sum-chevron">⌄</div>
+  </div>
+  <div class="sum-card" onclick="switchTab('admin',document.querySelectorAll('.tab')[1]);highlightCard(this)">
+    <div class="sum-icon" style="background:var(--purple-50)"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><rect x="3" y="4" width="10" height="8" rx="2" stroke="currentColor" stroke-width="1.3"/><circle cx="6" cy="8" r="1" fill="currentColor"/><circle cx="10" cy="8" r="1" fill="currentColor"/><path d="M8 1v3M3 8H1M15 8h-2" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg></div>
+    <div><div class="sum-title">기업 등록 · AI</div><div class="sum-sub">AI 인재상 추출 플로우</div></div>
+    <div class="sum-chevron">⌄</div>
+  </div>
+</div>
+
+<!-- STEP FLOW BREADCRUMB -->
+<div class="step-flow" id="stepFlow">
+  <div class="sf-node active">온보딩</div><div class="sf-arrow">→</div>
+  <div class="sf-node">기업 탐색</div><div class="sf-arrow">→</div>
+  <div class="sf-node">수준 진단</div><div class="sf-arrow">→</div>
+  <div class="sf-node">GAP 분석</div><div class="sf-arrow">→</div>
+  <div class="sf-node">로드맵 생성</div><div class="sf-arrow">→</div>
+  <div class="sf-node">진척 기록</div>
+</div>
+
+<!-- MAP CARD -->
+<div class="map-card" id="mapCard">
+  <div class="map-card-header">
+    <div class="map-card-title" id="mapTitle">전체 흐름도 — 노드를 클릭하면 연결된 흐름만 표시됩니다</div>
+    <div class="map-card-actions">
+      <div class="legend" style="display:flex;gap:12px;margin:0;padding:0">
+        <div class="legend-item"><div class="lg-dot lg-amber"></div>설정</div>
+        <div class="legend-item"><div class="lg-dot lg-taupe"></div>학생</div>
+        <div class="legend-item"><div class="lg-dot lg-green"></div>관리자</div>
+        <div class="legend-item"><div class="lg-dot lg-purple"></div>AI</div>
+        <div class="legend-item"><div class="lg-dot lg-blue"></div>시스템</div>
+      </div>
+      <div style="width:1px;height:20px;background:var(--border-subtle);margin:0 8px"></div>
+      <div class="tabs" style="padding:0;margin:0;gap:4px">
+        <button class="tab active" onclick="switchTab('student',this)" style="padding:5px 14px;font-size:11px"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M1 6l7-3 7 3-7 3-7-3z" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round"/><path d="M4 7.5v4l4 2 4-2v-4" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round"/></svg> 학생</button>
+        <button class="tab" onclick="switchTab('admin',this)" style="padding:5px 14px;font-size:11px"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><rect x="3" y="2" width="10" height="12" rx="1" stroke="currentColor" stroke-width="1.3"/><path d="M6 5h1M9 5h1M6 8h1M9 8h1M6 11h4" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg> 관리자</button>
+      </div>
+      <div style="width:1px;height:20px;background:var(--border-subtle);margin:0 4px"></div>
+      <button class="map-btn" onclick="toggleFullscreen()" title="전체화면">
+        <svg viewBox="0 0 16 16" fill="none"><path d="M2 6V2h4M10 2h4v4M14 10v4h-4M6 14H2v-4" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+    </div>
+  </div>
+
+  <div class="map-viewport" id="mapViewport">
+    <!-- ZOOM CONTROLS -->
+    <div class="zoom-controls">
+      <button class="zoom-btn" onclick="zoomIn()" title="확대">+</button>
+      <button class="zoom-btn" onclick="zoomOut()" title="축소">−</button>
+      <button class="zoom-btn" onclick="zoomReset()" title="맞춤" style="font-size:12px">
+        <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="2" y="2" width="12" height="12" rx="2" stroke="currentColor" stroke-width="1.3"/></svg>
+      </button>
+      <div class="zoom-level" id="zoomLevel">100%</div>
+    </div>
+
+    <div class="map-inner" id="mapInner">
+
+<!-- ═══════════════════════════════════════════
+     학생 프로세스
+═══════════════════════════════════════════ -->
+<div class="map-panel active" id="panel-student">
+<div class="canvas">
+
+  <!-- LANE 1: 설정 흐름 (온보딩 ~ 목표 설정) -->
+  <div class="lane">
+    <div class="lane-label ll-student">설정 흐름</div>
+    <div class="flow-row">
+
+      <div class="main-node mn-amber">
+        <a class="mn-box" href="S-01_onboarding.html">
+          <div class="mn-icon"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 2L5 8h6L8 2zM6 8v4h4V8" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/></svg></div>
+          <div class="mn-info"><div class="mn-title">① 온보딩</div><div class="mn-sub">학교 계정 로그인</div></div>
+        </a>
+      </div>
+
+      <div class="arrow"><svg width="40" height="20"><path d="M0,10 L32,10" stroke="var(--amber-100)" stroke-width="2" fill="none"/><path d="M28,5 L36,10 L28,15" fill="var(--amber-400)" opacity=".5"/></svg></div>
+
+      <div class="main-node mn-amber">
+        <a class="mn-box" href="S-03_company-search.html">
+          <div class="mn-icon"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="7" cy="7" r="4" stroke="currentColor" stroke-width="1.3"/><path d="M10 10l3 3" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg></div>
+          <div class="mn-info"><div class="mn-title">② 기업 탐색</div><div class="mn-sub">52개 기업 검색</div></div>
+        </a>
+      </div>
+
+      <div class="arrow"><svg width="40" height="20"><path d="M0,10 L32,10" stroke="var(--amber-100)" stroke-width="2" fill="none"/><path d="M28,5 L36,10 L28,15" fill="var(--amber-400)" opacity=".5"/></svg></div>
+
+      <div class="main-node mn-amber">
+        <a class="mn-box" href="S-04_company-detail.html">
+          <div class="mn-icon"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><rect x="3" y="2" width="10" height="12" rx="1" stroke="currentColor" stroke-width="1.3"/><path d="M6 5h1M9 5h1M6 8h1M9 8h1M6 11h4" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg></div>
+          <div class="mn-info"><div class="mn-title">③ 기업 상세</div><div class="mn-sub">인재상 · 면접 · 연봉</div></div>
+        </a>
+      </div>
+
+      <div class="arrow"><svg width="40" height="20"><path d="M0,10 L32,10" stroke="var(--amber-100)" stroke-width="2" fill="none"/><path d="M28,5 L36,10 L28,15" fill="var(--amber-400)" opacity=".5"/></svg><div class="arrow-label">목표 설정</div></div>
+
+      <div class="main-node mn-amber">
+        <a class="mn-box" href="S-05_assessment.html">
+          <div class="mn-icon"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M11 2l3 3-8 8H3v-3l8-8z" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/></svg></div>
+          <div class="mn-info"><div class="mn-title">④ 수준 진단</div><div class="mn-sub">스펙 입력 (5단계)</div></div>
+        </a>
+        <!-- sub branches -->
+        <div class="sub-branch" style="gap:8px">
+          <div class="sub-node sn-amber"><div class="sn-icon"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M1 6l7-3 7 3-7 3-7-3z" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round"/><path d="M4 7.5v4l4 2 4-2v-4" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round"/></svg></div><div class="sn-title">학점</div><div class="sn-sub">전체 / 전공</div></div>
+          <div class="sub-node sn-amber"><div class="sn-icon"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="6" stroke="currentColor" stroke-width="1.3"/><path d="M2 8h12M8 2c-2 2-2 4 0 6s2 4 0 6M8 2c2 2 2 4 0 6s-2 4 0 6" stroke="currentColor" stroke-width="1"/></svg></div><div class="sn-title">어학</div><div class="sn-sub">TOEIC / OPIc</div></div>
+          <div class="sub-node sn-amber"><div class="sn-icon"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M4 1h5l4 4v9a1 1 0 01-1 1H4a1 1 0 01-1-1V2a1 1 0 011-1z" stroke="currentColor" stroke-width="1.3"/><path d="M9 1v4h4M6 8h4M6 11h3" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg></div><div class="sn-title">자격증</div><div class="sn-sub">보유 / 예정</div></div>
+          <div class="sub-node sn-amber"><div class="sn-icon"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><rect x="1" y="5" width="14" height="9" rx="1.5" stroke="currentColor" stroke-width="1.3"/><path d="M5 5V3.5A1.5 1.5 0 016.5 2h3A1.5 1.5 0 0111 3.5V5" stroke="currentColor" stroke-width="1.3"/></svg></div><div class="sn-title">경험</div><div class="sn-sub">인턴 / 활동</div></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- LANE 2: 데이터 흐름 (AI 분석 ~ 실행) -->
+  <div class="lane">
+    <div class="lane-label ll-data">데이터 흐름</div>
+    <div class="flow-row">
+
+      <div class="main-node mn-purple">
+        <div class="mn-box">
+          <div class="mn-icon"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><rect x="3" y="4" width="10" height="8" rx="2" stroke="currentColor" stroke-width="1.3"/><circle cx="6" cy="8" r="1" fill="currentColor"/><circle cx="10" cy="8" r="1" fill="currentColor"/><path d="M8 1v3M3 8H1M15 8h-2" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg></div>
+          <div class="mn-info"><div class="mn-title">AI GAP 분석</div><div class="mn-sub">AI-02 · 약 5초</div></div>
+        </div>
+      </div>
+
+      <div class="arrow"><svg width="50" height="20"><path d="M0,10 L42,10" stroke="var(--purple-200)" stroke-width="2" fill="none"/><path d="M38,5 L46,10 L38,15" fill="var(--purple-400)" opacity=".5"/></svg></div>
+
+      <div class="main-node mn-taupe">
+        <a class="mn-box" href="S-06_gap-analysis.html">
+          <div class="mn-icon"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><rect x="2" y="9" width="3" height="5" rx="0.5" stroke="currentColor" stroke-width="1.3"/><rect x="6.5" y="5" width="3" height="9" rx="0.5" stroke="currentColor" stroke-width="1.3"/><rect x="11" y="2" width="3" height="12" rx="0.5" stroke="currentColor" stroke-width="1.3"/></svg></div>
+          <div class="mn-info"><div class="mn-title">GAP 분석 결과</div><div class="mn-sub">레이더 차트 · 부족 항목</div></div>
+        </a>
+        <div class="sub-branch" style="gap:8px">
+          <div class="sub-node sn-taupe"><div class="sn-icon"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8l3 3 7-7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="sn-title">충족 항목</div><div class="sn-sub">학점 · 스킬</div></div>
+          <div class="sub-node sn-taupe" style="border-color:var(--beige)"><div class="sn-icon"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 1L1 14h14L8 1z" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/><path d="M8 6v4M8 12v.5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg></div><div class="sn-title">보강 필요</div><div class="sn-sub">어학 · 경험</div></div>
+          <div class="sub-node sn-taupe" style="border-color:#fecaca"><div class="sn-icon"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M4 4l8 8M12 4l-8 8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></div><div class="sn-title">미충족</div><div class="sn-sub">자격증 · 인턴</div></div>
+        </div>
+      </div>
+
+      <div class="arrow"><svg width="50" height="20"><path d="M0,10 L42,10" stroke="var(--purple-200)" stroke-width="2" fill="none"/><path d="M38,5 L46,10 L38,15" fill="var(--purple-400)" opacity=".5"/></svg></div>
+
+      <div class="main-node mn-purple">
+        <div class="mn-box">
+          <div class="mn-icon"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><rect x="3" y="4" width="10" height="8" rx="2" stroke="currentColor" stroke-width="1.3"/><circle cx="6" cy="8" r="1" fill="currentColor"/><circle cx="10" cy="8" r="1" fill="currentColor"/><path d="M8 1v3M3 8H1M15 8h-2" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg></div>
+          <div class="mn-info"><div class="mn-title">로드맵 생성</div><div class="mn-sub">AI-03 · 약 5초</div></div>
+        </div>
+      </div>
+
+      <div class="arrow"><svg width="50" height="20"><path d="M0,10 L42,10" stroke="var(--green-200)" stroke-width="2" fill="none"/><path d="M38,5 L46,10 L38,15" fill="var(--green-400)" opacity=".5"/></svg></div>
+
+      <div class="main-node mn-green">
+        <a class="mn-box" href="S-07_roadmap.html" style="border-width:2px">
+          <div class="mn-icon"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M1 3l5 2v10l-5-2V3zM6 5l4-2v10l-4 2V5zM10 3l5-2v10l-5 2V3z" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round"/></svg></div>
+          <div class="mn-info"><div class="mn-title" style="color:var(--green-700)">내 로드맵</div><div class="mn-sub">학기별 체크리스트</div></div>
+        </a>
+        <div class="sub-branch" style="gap:8px">
+          <div class="sub-node sn-green"><div class="sn-icon"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><rect x="2" y="3" width="12" height="11" rx="1.5" stroke="currentColor" stroke-width="1.3"/><path d="M2 6h12M5 1v3M11 1v3" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg></div><div class="sn-title">3학년 1학기</div><div class="sn-sub">5/5 완료</div></div>
+          <div class="sub-node sn-green" style="border-width:2px"><div class="sn-icon"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M4 6l6 6M8 2l6 6-3 1-4-4-1 3-4-4 3-1z" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/></svg></div><div class="sn-title">3학년 2학기</div><div class="sn-sub">현재 학기</div></div>
+          <div class="sub-node sn-green"><div class="sn-icon"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><rect x="2" y="3" width="12" height="11" rx="1.5" stroke="currentColor" stroke-width="1.3"/><path d="M2 6h12M5 1v3M11 1v3" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg></div><div class="sn-title">4학년 1학기</div><div class="sn-sub">5개 예정</div></div>
+          <div class="sub-node sn-green"><div class="sn-icon"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="6" stroke="currentColor" stroke-width="1.3"/><circle cx="8" cy="8" r="3" stroke="currentColor" stroke-width="1.2"/><circle cx="8" cy="8" r="0.8" fill="currentColor"/></svg></div><div class="sn-title">4학년 2학기</div><div class="sn-sub">공채 지원</div></div>
+        </div>
+      </div>
+
+      <div class="arrow"><svg width="50" height="20"><path d="M0,10 L42,10" stroke="var(--border-subtle)" stroke-width="2" fill="none"/><path d="M38,5 L46,10 L38,15" fill="var(--gray-400)" opacity=".4"/></svg></div>
+
+      <div class="main-node mn-taupe">
+        <a class="mn-box" href="S-08_progress-log.html">
+          <div class="mn-icon"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M11 2l3 3-8 8H3v-3l8-8z" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/></svg></div>
+          <div class="mn-info"><div class="mn-title">진척 기록</div><div class="mn-sub">메모 · 파일 첨부</div></div>
+        </a>
+        <div class="sub-branch" style="gap:8px">
+          <div class="sub-node sn-taupe"><div class="sn-icon"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M11 2l3 3-8 8H3v-3l8-8z" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/></svg></div><div class="sn-title">메모 작성</div><div class="sn-sub">활동 기록</div></div>
+          <div class="sub-node sn-taupe"><div class="sn-icon"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M12 7L7 12c-1.5 1.5-4 1.5-5.5 0S0 8 1.5 6.5l6-6c1-1 2.5-1 3.5 0s1 2.5 0 3.5L5 10" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg></div><div class="sn-title">파일 첨부</div><div class="sn-sub">증빙 업로드</div></div>
+          <div class="sub-node sn-taupe"><div class="sn-icon"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M6.5 9.5l3-3M5 8L3.5 9.5a2.5 2.5 0 003.5 3.5L8.5 11.5M11 8l1.5-1.5a2.5 2.5 0 00-3.5-3.5L7.5 4.5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg></div><div class="sn-title">링크 첨부</div><div class="sn-sub">외부 URL</div></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ANNOTATION -->
+  <div class="annotation">
+    <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M10 3v7M7 13c0 1.7 1.3 3 3 3s3-1.3 3-3" stroke="var(--gray-400)" stroke-width="1.3" stroke-linecap="round"/><circle cx="10" cy="17" r="1" fill="var(--gray-400)"/></svg>
+    진척 기록 → 대시보드(S-02) 진행률 자동 반영 · 매일 반복 루프
+  </div>
+
+  <!-- DB Layer -->
+  <div style="display:flex;gap:10px;justify-content:center;margin-top:24px">
+    <div class="sub-node sn-blue"><div class="sn-icon"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><ellipse cx="8" cy="4" rx="6" ry="2" stroke="currentColor" stroke-width="1.3"/><path d="M2 4v8c0 1.1 2.7 2 6 2s6-.9 6-2V4" stroke="currentColor" stroke-width="1.3"/><path d="M2 8c0 1.1 2.7 2 6 2s6-.9 6-2" stroke="currentColor" stroke-width="1.2"/></svg></div><div class="sn-title">students</div><div class="sn-sub">학생 정보</div></div>
+    <div class="sub-node sn-blue"><div class="sn-icon"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><ellipse cx="8" cy="4" rx="6" ry="2" stroke="currentColor" stroke-width="1.3"/><path d="M2 4v8c0 1.1 2.7 2 6 2s6-.9 6-2V4" stroke="currentColor" stroke-width="1.3"/><path d="M2 8c0 1.1 2.7 2 6 2s6-.9 6-2" stroke="currentColor" stroke-width="1.2"/></svg></div><div class="sn-title">companies</div><div class="sn-sub">기업 DB</div></div>
+    <div class="sub-node sn-blue"><div class="sn-icon"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><ellipse cx="8" cy="4" rx="6" ry="2" stroke="currentColor" stroke-width="1.3"/><path d="M2 4v8c0 1.1 2.7 2 6 2s6-.9 6-2V4" stroke="currentColor" stroke-width="1.3"/><path d="M2 8c0 1.1 2.7 2 6 2s6-.9 6-2" stroke="currentColor" stroke-width="1.2"/></svg></div><div class="sn-title">roadmaps</div><div class="sn-sub">로드맵 데이터</div></div>
+    <div class="sub-node sn-blue"><div class="sn-icon"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><ellipse cx="8" cy="4" rx="6" ry="2" stroke="currentColor" stroke-width="1.3"/><path d="M2 4v8c0 1.1 2.7 2 6 2s6-.9 6-2V4" stroke="currentColor" stroke-width="1.3"/><path d="M2 8c0 1.1 2.7 2 6 2s6-.9 6-2" stroke="currentColor" stroke-width="1.2"/></svg></div><div class="sn-title">progress_logs</div><div class="sn-sub">진척 기록</div></div>
+  </div>
+
+</div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     관리자 프로세스
+═══════════════════════════════════════════ -->
+<div class="map-panel" id="panel-admin">
+<div class="canvas">
+
+  <!-- LANE 1: 모니터링 흐름 -->
+  <div class="lane">
+    <div class="lane-label ll-admin">모니터링 흐름</div>
+    <div class="flow-row">
+
+      <div class="main-node mn-green">
+        <a class="mn-box" href="A-01_admin-home.html">
+          <div class="mn-icon"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><rect x="2" y="9" width="3" height="5" rx="0.5" stroke="currentColor" stroke-width="1.3"/><rect x="6.5" y="5" width="3" height="9" rx="0.5" stroke="currentColor" stroke-width="1.3"/><rect x="11" y="2" width="3" height="12" rx="0.5" stroke="currentColor" stroke-width="1.3"/></svg></div>
+          <div class="mn-info"><div class="mn-title">① 관리자 홈</div><div class="mn-sub">KPI · 지원 필요 학생</div></div>
+        </a>
+        <div class="sub-branch" style="gap:8px">
+          <div class="sub-node sn-green"><div class="sn-icon"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="6" cy="5" r="2.5" stroke="currentColor" stroke-width="1.3"/><path d="M1 14c0-2.8 2.2-5 5-5s5 2.2 5 5" stroke="currentColor" stroke-width="1.3"/><circle cx="11" cy="5" r="2" stroke="currentColor" stroke-width="1.2"/><path d="M12 9c1.7.5 3 2.2 3 4" stroke="currentColor" stroke-width="1.2"/></svg></div><div class="sn-title">전체 학생 수</div><div class="sn-sub">1,247명</div></div>
+          <div class="sub-node sn-green"><div class="sn-icon"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M2 12l4-4 3 2 5-6" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/><path d="M10 4h4v4" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="sn-title">로드맵 생성률</div><div class="sn-sub">68%</div></div>
+          <div class="sub-node sn-green"><div class="sn-icon"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 1c0 3 4 4 4 8 0 2.5-2 4-4 4S4 11.5 4 9c0-2 1-3 2-4s2-2.5 2-4z" stroke="currentColor" stroke-width="1.3"/><path d="M8 13c-1 0-2-.8-2-2 0-1.5 2-3 2-3s2 1.5 2 3c0 1.2-1 2-2 2z" stroke="currentColor" stroke-width="1.1"/></svg></div><div class="sn-title">활성 학생</div><div class="sn-sub">342명/월</div></div>
+          <div class="sub-node sn-green" style="border-color:#fecaca"><div class="sn-icon"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 1L1 14h14L8 1z" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/><path d="M8 6v4M8 12v.5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg></div><div class="sn-title">지원 필요</div><div class="sn-sub">진척 20% 미만</div></div>
+        </div>
+      </div>
+
+      <div class="arrow"><svg width="50" height="20"><path d="M0,10 L42,10" stroke="var(--green-200)" stroke-width="2" fill="none"/><path d="M38,5 L46,10 L38,15" fill="var(--green-400)" opacity=".5"/></svg></div>
+
+      <div class="main-node mn-green">
+        <a class="mn-box" href="A-02_student-list.html">
+          <div class="mn-icon"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="6" cy="5" r="2.5" stroke="currentColor" stroke-width="1.3"/><path d="M1 14c0-2.8 2.2-5 5-5s5 2.2 5 5" stroke="currentColor" stroke-width="1.3"/><circle cx="11" cy="5" r="2" stroke="currentColor" stroke-width="1.2"/><path d="M12 9c1.7.5 3 2.2 3 4" stroke="currentColor" stroke-width="1.2"/></svg></div>
+          <div class="mn-info"><div class="mn-title">② 학생 현황</div><div class="mn-sub">필터 · 검색 · 정렬</div></div>
+        </a>
+        <div class="sub-branch" style="gap:8px">
+          <div class="sub-node sn-green"><div class="sn-icon"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="7" cy="7" r="4" stroke="currentColor" stroke-width="1.3"/><path d="M10 10l3 3" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg></div><div class="sn-title">학과 필터</div><div class="sn-sub">기계 / 전기 / IT</div></div>
+          <div class="sub-node sn-green"><div class="sn-icon"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><rect x="2" y="9" width="3" height="5" rx="0.5" stroke="currentColor" stroke-width="1.3"/><rect x="6.5" y="5" width="3" height="9" rx="0.5" stroke="currentColor" stroke-width="1.3"/><rect x="11" y="2" width="3" height="12" rx="0.5" stroke="currentColor" stroke-width="1.3"/></svg></div><div class="sn-title">진척률 필터</div><div class="sn-sub">범위 선택</div></div>
+          <div class="sub-node sn-green"><div class="sn-icon"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><rect x="3" y="2" width="10" height="12" rx="1.5" stroke="currentColor" stroke-width="1.3"/><path d="M6 1h4v2H6V1z" stroke="currentColor" stroke-width="1.2"/><path d="M6 6h4M6 9h3" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg></div><div class="sn-title">CSV 내보내기</div><div class="sn-sub">데이터 다운로드</div></div>
+        </div>
+      </div>
+
+      <div class="arrow"><svg width="50" height="20"><path d="M0,10 L42,10" stroke="var(--border-subtle)" stroke-width="2" stroke-dasharray="5,4" fill="none"/><path d="M38,5 L46,10 L38,15" fill="var(--gray-400)" opacity=".3"/></svg><div class="arrow-label">학생 클릭</div></div>
+
+      <div class="main-node mn-taupe">
+        <a class="mn-box" href="S-07_roadmap.html">
+          <div class="mn-icon"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M1 3l5 2v10l-5-2V3zM6 5l4-2v10l-4 2V5zM10 3l5-2v10l-5 2V3z" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round"/></svg></div>
+          <div class="mn-info"><div class="mn-title">학생 로드맵 조회</div><div class="mn-sub">읽기 전용 모드</div></div>
+        </a>
+      </div>
+
+      <div class="arrow"><svg width="50" height="20"><path d="M0,10 L42,10" stroke="var(--border-subtle)" stroke-width="2" fill="none"/><path d="M38,5 L46,10 L38,15" fill="var(--gray-400)" opacity=".3"/></svg></div>
+
+      <div class="main-node mn-blue">
+        <div class="mn-box">
+          <div class="mn-icon"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 2h3l1.5 3.5-2 1.5c1 2 2.5 3.5 4.5 4.5l1.5-2L15 11v3c-7 0-13-6-13-13h1z" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round"/></svg></div>
+          <div class="mn-info"><div class="mn-title">상담 개입</div><div class="mn-sub">전화 / 메일 / 대면</div></div>
+        </div>
+      </div>
+
+      <div class="arrow"><svg width="50" height="20"><path d="M0,10 L42,10" stroke="var(--green-200)" stroke-width="2" fill="none"/><path d="M38,5 L46,10 L38,15" fill="var(--green-400)" opacity=".5"/></svg></div>
+
+      <div class="main-node mn-green">
+        <a class="mn-box" href="A-04_statistics.html">
+          <div class="mn-icon"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M2 12l4-4 3 2 5-6" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/><path d="M10 4h4v4" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <div class="mn-info"><div class="mn-title">③ 성과 확인</div><div class="mn-sub">통계 · 리포트</div></div>
+        </a>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- LANE 2: 기업 등록 흐름 -->
+  <div class="lane">
+    <div class="lane-label ll-admin">기업 등록 흐름</div>
+    <div class="flow-row">
+
+      <div class="main-node mn-green">
+        <a class="mn-box" href="A-03_company-manage.html">
+          <div class="mn-icon"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><rect x="3" y="2" width="10" height="12" rx="1" stroke="currentColor" stroke-width="1.3"/><path d="M6 5h1M9 5h1M6 8h1M9 8h1M6 11h4" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg></div>
+          <div class="mn-info"><div class="mn-title">④ 기업 DB 관리</div><div class="mn-sub">"기업 등록" 클릭</div></div>
+        </a>
+      </div>
+
+      <div class="arrow"><svg width="50" height="20"><path d="M0,10 L42,10" stroke="var(--green-200)" stroke-width="2" fill="none"/><path d="M38,5 L46,10 L38,15" fill="var(--green-400)" opacity=".5"/></svg></div>
+
+      <div class="main-node mn-green">
+        <div class="mn-box">
+          <div class="mn-icon"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><rect x="3" y="2" width="10" height="12" rx="1.5" stroke="currentColor" stroke-width="1.3"/><path d="M6 1h4v2H6V1z" stroke="currentColor" stroke-width="1.2"/><path d="M6 6h4M6 9h3" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg></div>
+          <div class="mn-info"><div class="mn-title">채용공고 입력</div><div class="mn-sub">텍스트 붙여넣기</div></div>
+        </div>
+        <div class="sub-branch" style="gap:8px">
+          <div class="sub-node sn-green"><div class="sn-icon"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M11 2l3 3-8 8H3v-3l8-8z" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/></svg></div><div class="sn-title">기업명 · 산업</div><div class="sn-sub">기본 정보</div></div>
+          <div class="sub-node sn-green"><div class="sn-icon"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M4 1h5l4 4v9a1 1 0 01-1 1H4a1 1 0 01-1-1V2a1 1 0 011-1z" stroke="currentColor" stroke-width="1.3"/><path d="M9 1v4h4M6 8h4M6 11h3" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg></div><div class="sn-title">공고 텍스트</div><div class="sn-sub">복사 붙여넣기</div></div>
+          <div class="sub-node sn-green"><div class="sn-icon"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 1C5.2 1 3 3.2 3 6c0 4 5 9 5 9s5-5 5-9c0-2.8-2.2-5-5-5z" stroke="currentColor" stroke-width="1.3"/><circle cx="8" cy="6" r="2" stroke="currentColor" stroke-width="1.2"/></svg></div><div class="sn-title">위치 · 규모</div><div class="sn-sub">창원 지역</div></div>
+        </div>
+      </div>
+
+      <div class="arrow"><svg width="50" height="20"><path d="M0,10 L42,10" stroke="var(--purple-200)" stroke-width="2" fill="none"/><path d="M38,5 L46,10 L38,15" fill="var(--purple-400)" opacity=".5"/></svg></div>
+
+      <div class="main-node mn-purple">
+        <div class="mn-box">
+          <div class="mn-icon"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><rect x="3" y="4" width="10" height="8" rx="2" stroke="currentColor" stroke-width="1.3"/><circle cx="6" cy="8" r="1" fill="currentColor"/><circle cx="10" cy="8" r="1" fill="currentColor"/><path d="M8 1v3M3 8H1M15 8h-2" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg></div>
+          <div class="mn-info"><div class="mn-title">AI 인재상 추출</div><div class="mn-sub">AI-01 · 약 5초</div></div>
+        </div>
+        <div class="sub-branch" style="gap:8px">
+          <div class="sub-node sn-purple"><div class="sn-icon"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="6" stroke="currentColor" stroke-width="1.3"/><circle cx="8" cy="8" r="3" stroke="currentColor" stroke-width="1.2"/><circle cx="8" cy="8" r="0.8" fill="currentColor"/></svg></div><div class="sn-title">필수 스펙</div><div class="sn-sub">학점 · 어학 · 자격증</div></div>
+          <div class="sub-node sn-purple"><div class="sn-icon"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><polygon points="8,1 10,6 15,6.5 11,9.5 12.5,14.5 8,11.5 3.5,14.5 5,9.5 1,6.5 6,6" stroke="currentColor" stroke-width="1.2"/></svg></div><div class="sn-title">우대 스펙</div><div class="sn-sub">인턴 · 스킬</div></div>
+          <div class="sub-node sn-purple"><div class="sn-icon"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M6 12h4M6.5 14h3M5 9c-1.5-1-2.5-2.5-2.5-4.5C2.5 1.5 5 0 8 0s5.5 1.5 5.5 4.5C13.5 6.5 12.5 8 11 9v1H5V9z" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="sn-title">인재상 요약</div><div class="sn-sub">AI 자동 생성</div></div>
+        </div>
+      </div>
+
+      <div class="arrow"><svg width="50" height="20"><path d="M0,10 L42,10" stroke="var(--border-subtle)" stroke-width="2" fill="none"/><path d="M38,5 L46,10 L38,15" fill="var(--gray-400)" opacity=".3"/></svg><div class="arrow-label">수동 검토</div></div>
+
+      <div class="main-node mn-green">
+        <div class="mn-box">
+          <div class="mn-icon"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M11 2l3 3-8 8H3v-3l8-8z" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/></svg></div>
+          <div class="mn-info"><div class="mn-title">결과 검토 · 수정</div><div class="mn-sub">담당자 수동 보정</div></div>
+        </div>
+      </div>
+
+      <div class="arrow"><svg width="50" height="20"><path d="M0,10 L42,10" stroke="var(--blue-200)" stroke-width="2" fill="none"/><path d="M38,5 L46,10 L38,15" fill="var(--blue-400)" opacity=".5"/></svg></div>
+
+      <div class="main-node mn-blue">
+        <div class="mn-box">
+          <div class="mn-icon"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><ellipse cx="8" cy="4" rx="6" ry="2" stroke="currentColor" stroke-width="1.3"/><path d="M2 4v8c0 1.1 2.7 2 6 2s6-.9 6-2V4" stroke="currentColor" stroke-width="1.3"/><path d="M2 8c0 1.1 2.7 2 6 2s6-.9 6-2" stroke="currentColor" stroke-width="1.2"/></svg></div>
+          <div class="mn-info"><div class="mn-title">DB 저장</div><div class="mn-sub">companies 테이블</div></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ANNOTATION -->
+  <div class="annotation">
+    <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M10 3v7M7 13c0 1.7 1.3 3 3 3s3-1.3 3-3" stroke="var(--gray-400)" stroke-width="1.3" stroke-linecap="round"/><circle cx="10" cy="17" r="1" fill="var(--gray-400)"/></svg>
+    AI 추출 결과는 자동 저장 ✕ · 담당자 검토 후 수동 저장 필수
+  </div>
+
+</div>
+</div>
+
+    </div><!-- map-inner -->
+  </div><!-- map-viewport -->
+</div><!-- map-card -->
+
+    </div><!-- content-scroll -->
+  </div><!-- main-wrapper -->
+</div><!-- shell -->
+
+<script>
+let currentZoom = 1;
+const ZOOM_STEP = 0.15;
+const ZOOM_MIN = 0.5;
+const ZOOM_MAX = 1.5;
+
+function switchTab(view, btn) {
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  btn.classList.add('active');
+  document.querySelectorAll('.map-panel').forEach(p => p.classList.remove('active'));
+  document.getElementById('panel-' + view).classList.add('active');
+
+  // Update step flow breadcrumb
+  const sf = document.getElementById('stepFlow');
+  if (view === 'student') {
+    sf.innerHTML = '<div class="sf-node active">온보딩</div><div class="sf-arrow">→</div><div class="sf-node">기업 탐색</div><div class="sf-arrow">→</div><div class="sf-node">수준 진단</div><div class="sf-arrow">→</div><div class="sf-node">GAP 분석</div><div class="sf-arrow">→</div><div class="sf-node">로드맵 생성</div><div class="sf-arrow">→</div><div class="sf-node">진척 기록</div>';
+    document.getElementById('mapTitle').textContent = '학생 프로세스 흐름도 — 노드를 클릭하면 해당 화면으로 이동합니다';
+  } else {
+    sf.innerHTML = '<div class="sf-node active">관리자 홈</div><div class="sf-arrow">→</div><div class="sf-node">학생 현황</div><div class="sf-arrow">→</div><div class="sf-node">로드맵 조회</div><div class="sf-arrow">→</div><div class="sf-node">상담 개입</div><div class="sf-arrow">→</div><div class="sf-node">기업 등록</div><div class="sf-arrow">→</div><div class="sf-node">통계 확인</div>';
+    document.getElementById('mapTitle').textContent = '관리자 프로세스 흐름도 — 노드를 클릭하면 해당 화면으로 이동합니다';
+  }
+}
+
+function highlightCard(el) {
+  document.querySelectorAll('.sum-card').forEach(c => c.classList.remove('active'));
+  el.classList.add('active');
+}
+
+function zoomIn() {
+  if (currentZoom < ZOOM_MAX) {
+    currentZoom = Math.min(currentZoom + ZOOM_STEP, ZOOM_MAX);
+    applyZoom();
+  }
+}
+function zoomOut() {
+  if (currentZoom > ZOOM_MIN) {
+    currentZoom = Math.max(currentZoom - ZOOM_STEP, ZOOM_MIN);
+    applyZoom();
+  }
+}
+function zoomReset() {
+  currentZoom = 1;
+  applyZoom();
+}
+function applyZoom() {
+  document.getElementById('mapInner').style.transform = `scale(${currentZoom})`;
+  document.getElementById('zoomLevel').textContent = Math.round(currentZoom * 100) + '%';
+}
+
+function toggleFullscreen() {
+  const card = document.getElementById('mapCard');
+  card.classList.toggle('fullscreen');
+}
+
+// ESC to exit fullscreen
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') document.getElementById('mapCard').classList.remove('fullscreen');
+});
+
+function toggleDark(){
+  document.body.classList.toggle('dark');
+  var isDark = document.body.classList.contains('dark');
+  localStorage.setItem('talentOn_darkMode', isDark);
+  document.getElementById('darkBtn').innerHTML = isDark ? '<svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="3.5" stroke="currentColor" stroke-width="1.3"/><path d="M8 1v2M8 13v2M1 8h2M13 8h2M3 3l1.5 1.5M11.5 11.5L13 13M13 3l-1.5 1.5M4.5 11.5L3 13" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>' : '<svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M13 9.5A5.5 5.5 0 016.5 3c0-.5.1-1 .2-1.5A6.5 6.5 0 1014.5 9c-.5.1-1 .2-1.5.2z" stroke="currentColor" stroke-width="1.3"/></svg>';
+}
+if(localStorage.getItem('talentOn_darkMode')==='true'){
+  document.body.classList.add('dark');
+  document.getElementById('darkBtn').innerHTML='<svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="3.5" stroke="currentColor" stroke-width="1.3"/><path d="M8 1v2M8 13v2M1 8h2M13 8h2M3 3l1.5 1.5M11.5 11.5L13 13M13 3l-1.5 1.5M4.5 11.5L3 13" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>';
+}
+</script>
+
+</body>
+</html>

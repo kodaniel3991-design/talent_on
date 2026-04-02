@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Talent ON — 학생 현황</title>
+<link rel="preconnect" href="https://cdn.jsdelivr.net">
+<link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Sora:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/tokens.css">
+<link rel="stylesheet" href="css/base.css">
+<link rel="stylesheet" href="css/layout.css">
+<link rel="stylesheet" href="css/components.css">
+<link rel="stylesheet" href="css/dark.css">
+<link rel="stylesheet" href="css/pages/admin.css">
+</head>
+<body>
+<div class="shell">
+  <!-- SIDEBAR (common.js) -->
+  <aside class="sidebar" id="sidebar"></aside>
+
+  <div class="main-wrapper">
+    <!-- GNB (common.js) -->
+    <header class="gnb" id="gnb"></header>
+    <div class="content-area">
+      <main class="main-content">
+        <!-- TOOLBAR -->
+        <div class="toolbar">
+          <div class="search-box">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--text-tertiary)" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+            <input type="text" placeholder="이름, 학번으로 검색...">
+          </div>
+          <select class="filter-select">
+            <option>전체 학과</option>
+            <option>기계공학과</option>
+            <option>전기공학과</option>
+            <option>컴퓨터공학과</option>
+            <option>재료공학과</option>
+            <option>항공우주공학과</option>
+          </select>
+          <select class="filter-select">
+            <option>전체 학년</option>
+            <option>3학년</option>
+            <option>4학년</option>
+          </select>
+          <select class="filter-select">
+            <option>달성 가능성 전체</option>
+            <option>0~30%</option>
+            <option>30~60%</option>
+            <option>60~100%</option>
+          </select>
+          <div style="margin-left:auto;display:flex;gap:8px">
+            <button class="btn btn-primary btn-sm" id="counselBtn">선택 학생 상담 연결</button>
+            <button class="btn btn-outline btn-sm">📥 내보내기</button>
+          </div>
+        </div>
+
+        <!-- TABLE -->
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th><input type="checkbox" id="checkAll"></th>
+                <th>이름</th>
+                <th>학번</th>
+                <th>학년</th>
+                <th>목표 기업</th>
+                <th>진척률</th>
+                <th>달성 가능성</th>
+                <th>마지막 접속</th>
+                <th>상태</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><input type="checkbox" class="row-check"></td>
+                <td><div class="student-cell"><div class="student-avatar">김</div><div><div class="student-name">김민준</div><div class="student-dept">기계공학과</div></div></div></td>
+                <td style="font-family:var(--font-mono);font-size:12px">20211234</td>
+                <td>4학년</td>
+                <td>두산에너빌리티</td>
+                <td><span class="progress-bar"><span class="progress-fill pf-high" style="width:78%"></span></span>78%</td>
+                <td><span class="score score-high">82</span></td>
+                <td style="font-size:12px;color:var(--text-secondary)">오늘</td>
+                <td><span class="badge badge-active">활성</span></td>
+              </tr>
+              <tr>
+                <td><input type="checkbox" class="row-check"></td>
+                <td><div class="student-cell"><div class="student-avatar">이</div><div><div class="student-name">이서연</div><div class="student-dept">전기공학과</div></div></div></td>
+                <td style="font-family:var(--font-mono);font-size:12px">20210456</td>
+                <td>4학년</td>
+                <td>LG전자</td>
+                <td><span class="progress-bar"><span class="progress-fill pf-high" style="width:65%"></span></span>65%</td>
+                <td><span class="score score-high">74</span></td>
+                <td style="font-size:12px;color:var(--text-secondary)">1일 전</td>
+                <td><span class="badge badge-active">활성</span></td>
+              </tr>
+              <tr>
+                <td><input type="checkbox" class="row-check"></td>
+                <td><div class="student-cell"><div class="student-avatar">박</div><div><div class="student-name">박준혁</div><div class="student-dept">컴퓨터공학과</div></div></div></td>
+                <td style="font-family:var(--font-mono);font-size:12px">20220789</td>
+                <td>3학년</td>
+                <td>삼성SDI</td>
+                <td><span class="progress-bar"><span class="progress-fill pf-mid" style="width:45%"></span></span>45%</td>
+                <td><span class="score score-mid">58</span></td>
+                <td style="font-size:12px;color:var(--text-secondary)">3일 전</td>
+                <td><span class="badge badge-active">활성</span></td>
+              </tr>
+              <tr>
+                <td><input type="checkbox" class="row-check"></td>
+                <td><div class="student-cell"><div class="student-avatar">최</div><div><div class="student-name">최수아</div><div class="student-dept">재료공학과</div></div></div></td>
+                <td style="font-family:var(--font-mono);font-size:12px">20210321</td>
+                <td>4학년</td>
+                <td>현대위아</td>
+                <td><span class="progress-bar"><span class="progress-fill pf-mid" style="width:52%"></span></span>52%</td>
+                <td><span class="score score-mid">61</span></td>
+                <td style="font-size:12px;color:var(--text-secondary)">2일 전</td>
+                <td><span class="badge badge-active">활성</span></td>
+              </tr>
+              <tr>
+                <td><input type="checkbox" class="row-check"></td>
+                <td><div class="student-cell"><div class="student-avatar">정</div><div><div class="student-name">정하은</div><div class="student-dept">항공우주공학과</div></div></div></td>
+                <td style="font-family:var(--font-mono);font-size:12px">20220567</td>
+                <td>3학년</td>
+                <td>한화에어로스페이스</td>
+                <td><span class="progress-bar"><span class="progress-fill pf-high" style="width:71%"></span></span>71%</td>
+                <td><span class="score score-high">77</span></td>
+                <td style="font-size:12px;color:var(--text-secondary)">오늘</td>
+                <td><span class="badge badge-active">활성</span></td>
+              </tr>
+              <tr>
+                <td><input type="checkbox" class="row-check"></td>
+                <td><div class="student-cell"><div class="student-avatar">김</div><div><div class="student-name">김도현</div><div class="student-dept">기계공학과</div></div></div></td>
+                <td style="font-family:var(--font-mono);font-size:12px">20211098</td>
+                <td>4학년</td>
+                <td>두산에너빌리티</td>
+                <td><span class="progress-bar"><span class="progress-fill pf-low" style="width:12%"></span></span>12%</td>
+                <td><span class="score score-low">28</span></td>
+                <td style="font-size:12px;color:var(--text-secondary)">14일 전</td>
+                <td><span class="badge badge-inactive">비활성</span></td>
+              </tr>
+              <tr>
+                <td><input type="checkbox" class="row-check"></td>
+                <td><div class="student-cell"><div class="student-avatar">윤</div><div><div class="student-name">윤지호</div><div class="student-dept">전기공학과</div></div></div></td>
+                <td style="font-family:var(--font-mono);font-size:12px">20220134</td>
+                <td>3학년</td>
+                <td>LG전자</td>
+                <td><span class="progress-bar"><span class="progress-fill pf-mid" style="width:38%"></span></span>38%</td>
+                <td><span class="score score-mid">52</span></td>
+                <td style="font-size:12px;color:var(--text-secondary)">5일 전</td>
+                <td><span class="badge badge-idle">대기</span></td>
+              </tr>
+              <tr>
+                <td><input type="checkbox" class="row-check"></td>
+                <td><div class="student-cell"><div class="student-avatar">이</div><div><div class="student-name">이수빈</div><div class="student-dept">전기공학과</div></div></div></td>
+                <td style="font-family:var(--font-mono);font-size:12px">20210876</td>
+                <td>4학년</td>
+                <td>LG전자</td>
+                <td><span class="progress-bar"><span class="progress-fill pf-low" style="width:18%"></span></span>18%</td>
+                <td><span class="score score-low">31</span></td>
+                <td style="font-size:12px;color:var(--text-secondary)">21일 전</td>
+                <td><span class="badge badge-inactive">비활성</span></td>
+              </tr>
+              <tr>
+                <td><input type="checkbox" class="row-check"></td>
+                <td><div class="student-cell"><div class="student-avatar">한</div><div><div class="student-name">한소희</div><div class="student-dept">컴퓨터공학과</div></div></div></td>
+                <td style="font-family:var(--font-mono);font-size:12px">20211567</td>
+                <td>4학년</td>
+                <td>삼성SDI</td>
+                <td><span class="progress-bar"><span class="progress-fill pf-high" style="width:88%"></span></span>88%</td>
+                <td><span class="score score-high">91</span></td>
+                <td style="font-size:12px;color:var(--text-secondary)">오늘</td>
+                <td><span class="badge badge-active">활성</span></td>
+              </tr>
+              <tr>
+                <td><input type="checkbox" class="row-check"></td>
+                <td><div class="student-cell"><div class="student-avatar">장</div><div><div class="student-name">장우진</div><div class="student-dept">재료공학과</div></div></div></td>
+                <td style="font-family:var(--font-mono);font-size:12px">20220345</td>
+                <td>3학년</td>
+                <td>현대위아</td>
+                <td><span class="progress-bar"><span class="progress-fill pf-low" style="width:22%"></span></span>22%</td>
+                <td><span class="score score-low">35</span></td>
+                <td style="font-size:12px;color:var(--text-secondary)">9일 전</td>
+                <td><span class="badge badge-idle">대기</span></td>
+              </tr>
+              <tr>
+                <td><input type="checkbox" class="row-check"></td>
+                <td><div class="student-cell"><div class="student-avatar">오</div><div><div class="student-name">오예린</div><div class="student-dept">항공우주공학과</div></div></div></td>
+                <td style="font-family:var(--font-mono);font-size:12px">20210654</td>
+                <td>4학년</td>
+                <td>한화에어로스페이스</td>
+                <td><span class="progress-bar"><span class="progress-fill pf-mid" style="width:55%"></span></span>55%</td>
+                <td><span class="score score-mid">63</span></td>
+                <td style="font-size:12px;color:var(--text-secondary)">4일 전</td>
+                <td><span class="badge badge-active">활성</span></td>
+              </tr>
+              <tr>
+                <td><input type="checkbox" class="row-check"></td>
+                <td><div class="student-cell"><div class="student-avatar">송</div><div><div class="student-name">송민재</div><div class="student-dept">기계공학과</div></div></div></td>
+                <td style="font-family:var(--font-mono);font-size:12px">20220901</td>
+                <td>3학년</td>
+                <td>두산에너빌리티</td>
+                <td><span class="progress-bar"><span class="progress-fill pf-mid" style="width:41%"></span></span>41%</td>
+                <td><span class="score score-mid">49</span></td>
+                <td style="font-size:12px;color:var(--text-secondary)">6일 전</td>
+                <td><span class="badge badge-idle">대기</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- PAGINATION -->
+        <div class="pagination">
+          <button class="page-btn">←</button>
+          <button class="page-btn active">1</button>
+          <button class="page-btn">2</button>
+          <button class="page-btn">3</button>
+          <button class="page-btn">4</button>
+          <button class="page-btn">...</button>
+          <button class="page-btn">12</button>
+          <button class="page-btn">→</button>
+          <span class="page-info">총 1,247명 중 1-12</span>
+        </div>
+      </main>
+    </div>
+  </div>
+</div>
+
+<script>
+// Check all toggle
+document.getElementById('checkAll').addEventListener('change', function() {
+  document.querySelectorAll('.row-check').forEach(cb => cb.checked = this.checked);
+});
+
+// Add click handler to student rows for roadmap viewing
+document.querySelectorAll('tbody tr').forEach(function(row){
+  row.setAttribute('title','클릭하여 학생 로드맵 조회');
+  row.addEventListener('click', function(e){
+    if(e.target.type==='checkbox') return;
+    location.href='S-07_roadmap.html';
+  });
+});
+
+// Pagination active toggle
+document.querySelectorAll('.page-btn').forEach(btn => {
+  btn.addEventListener('click', function() {
+    if (this.textContent === '←' || this.textContent === '→' || this.textContent === '...') return;
+    document.querySelectorAll('.page-btn').forEach(b => b.classList.remove('active'));
+    this.classList.add('active');
+  });
+});
+</script>
+
+<!-- Common Components -->
+<script src="js/common.js"></script>
+<script>
+renderSidebar('sidebar', ADMIN_MENU, { admin: true });
+renderGNB('gnb', { title: '학생 현황' });
+</script>
+
+</body>
+</html>

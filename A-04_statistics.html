@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Talent ON — 통계/리포트</title>
+<link rel="preconnect" href="https://cdn.jsdelivr.net">
+<link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Sora:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/tokens.css">
+<link rel="stylesheet" href="css/base.css">
+<link rel="stylesheet" href="css/layout.css">
+<link rel="stylesheet" href="css/components.css">
+<link rel="stylesheet" href="css/dark.css">
+<link rel="stylesheet" href="css/pages/admin.css">
+</head>
+<body>
+<div class="shell">
+  <!-- SIDEBAR (common.js) -->
+  <aside class="sidebar" id="sidebar"></aside>
+
+  <div class="main-wrapper">
+    <!-- GNB (common.js) -->
+    <header class="gnb" id="gnb"></header>
+    <div class="content-area">
+      <main class="main-content">
+        <!-- CHIP FILTER -->
+        <div class="chip-bar">
+          <span class="chip-bar-label">기간</span>
+          <button class="chip active" data-period="1m">이번 달</button>
+          <button class="chip" data-period="3m">최근 3개월</button>
+          <button class="chip" data-period="6m">최근 6개월</button>
+        </div>
+
+        <!-- KPI CARDS -->
+        <div class="kpi-grid">
+          <div class="kpi-card">
+            <div class="kpi-label">총 학생</div>
+            <div class="kpi-value">1,247<span style="font-size:14px;font-weight:400;color:var(--text-secondary)">명</span></div>
+            <div class="kpi-sub">전월 대비 +38</div>
+          </div>
+          <div class="kpi-card">
+            <div class="kpi-label">로드맵 생성률</div>
+            <div class="kpi-value">68<span style="font-size:14px;font-weight:400;color:var(--text-secondary)">%</span></div>
+            <div class="kpi-sub">848명 생성 완료</div>
+          </div>
+          <div class="kpi-card">
+            <div class="kpi-label">평균 달성 가능성</div>
+            <div class="kpi-value">47<span style="font-size:14px;font-weight:400;color:var(--text-secondary)">%</span></div>
+            <div class="kpi-sub">전월 대비 +3.1%</div>
+          </div>
+          <div class="kpi-card">
+            <div class="kpi-label">목표 기업 설정률</div>
+            <div class="kpi-value">74<span style="font-size:14px;font-weight:400;color:var(--text-secondary)">%</span></div>
+            <div class="kpi-sub">923명 설정 완료</div>
+          </div>
+        </div>
+
+        <!-- CHART ROW 1 -->
+        <div class="chart-grid">
+          <!-- TOP 10 COMPANIES -->
+          <div class="chart-card">
+            <div class="chart-title">인기 목표 기업 TOP 10</div>
+            <div class="h-bar-item"><div class="h-bar-label">두산에너빌리티</div><div class="h-bar-track"><div class="h-bar-fill hb-taupe" style="width:100%"><span>187</span></div></div><div class="h-bar-count">187명</div></div>
+            <div class="h-bar-item"><div class="h-bar-label">한화에어로스페이스</div><div class="h-bar-track"><div class="h-bar-fill hb-green" style="width:83%"><span>156</span></div></div><div class="h-bar-count">156명</div></div>
+            <div class="h-bar-item"><div class="h-bar-label">LG전자</div><div class="h-bar-track"><div class="h-bar-fill hb-taupe" style="width:72%"><span>134</span></div></div><div class="h-bar-count">134명</div></div>
+            <div class="h-bar-item"><div class="h-bar-label">현대위아</div><div class="h-bar-track"><div class="h-bar-fill hb-green" style="width:52%"><span>98</span></div></div><div class="h-bar-count">98명</div></div>
+            <div class="h-bar-item"><div class="h-bar-label">삼성SDI</div><div class="h-bar-track"><div class="h-bar-fill hb-beige" style="width:47%"><span>87</span></div></div><div class="h-bar-count">87명</div></div>
+            <div class="h-bar-item"><div class="h-bar-label">한국항공우주산업</div><div class="h-bar-track"><div class="h-bar-fill hb-blue" style="width:38%"><span>72</span></div></div><div class="h-bar-count">72명</div></div>
+            <div class="h-bar-item"><div class="h-bar-label">STX엔진</div><div class="h-bar-track"><div class="h-bar-fill hb-taupe" style="width:31%"><span>58</span></div></div><div class="h-bar-count">58명</div></div>
+            <div class="h-bar-item"><div class="h-bar-label">LS일렉트릭</div><div class="h-bar-track"><div class="h-bar-fill hb-green" style="width:26%"><span>49</span></div></div><div class="h-bar-count">49명</div></div>
+            <div class="h-bar-item"><div class="h-bar-label">현대로템</div><div class="h-bar-track"><div class="h-bar-fill hb-gray" style="width:22%"><span>41</span></div></div><div class="h-bar-count">41명</div></div>
+            <div class="h-bar-item"><div class="h-bar-label">효성중공업</div><div class="h-bar-track"><div class="h-bar-fill hb-beige" style="width:18%"><span>34</span></div></div><div class="h-bar-count">34명</div></div>
+          </div>
+
+          <!-- DEPARTMENT PARTICIPATION -->
+          <div class="chart-card">
+            <div class="chart-title">학과별 참여 현황</div>
+            <div class="h-bar-item"><div class="h-bar-label">기계공학과</div><div class="h-bar-track"><div class="h-bar-fill hb-taupe" style="width:85%"><span>312명</span></div></div><div class="h-bar-count">312명</div></div>
+            <div class="h-bar-item"><div class="h-bar-label">전기공학과</div><div class="h-bar-track"><div class="h-bar-fill hb-green" style="width:72%"><span>267명</span></div></div><div class="h-bar-count">267명</div></div>
+            <div class="h-bar-item"><div class="h-bar-label">컴퓨터공학과</div><div class="h-bar-track"><div class="h-bar-fill hb-blue" style="width:65%"><span>241명</span></div></div><div class="h-bar-count">241명</div></div>
+            <div class="h-bar-item"><div class="h-bar-label">재료공학과</div><div class="h-bar-track"><div class="h-bar-fill hb-beige" style="width:55%"><span>203명</span></div></div><div class="h-bar-count">203명</div></div>
+            <div class="h-bar-item"><div class="h-bar-label">항공우주공학과</div><div class="h-bar-track"><div class="h-bar-fill hb-gray" style="width:60%"><span>224명</span></div></div><div class="h-bar-count">224명</div></div>
+          </div>
+        </div>
+
+        <!-- CHART ROW 2 -->
+        <div class="chart-grid">
+          <!-- MONTHLY ACTIVE STUDENTS -->
+          <div class="chart-card">
+            <div class="chart-title">월별 활성 학생 추이</div>
+            <div class="v-bar-chart">
+              <div class="v-bar-col">
+                <div class="v-bar-value">198</div>
+                <div class="v-bar hb-taupe" style="height:50%"></div>
+                <div class="v-bar-label">11월</div>
+              </div>
+              <div class="v-bar-col">
+                <div class="v-bar-value">215</div>
+                <div class="v-bar hb-taupe" style="height:55%"></div>
+                <div class="v-bar-label">12월</div>
+              </div>
+              <div class="v-bar-col">
+                <div class="v-bar-value">178</div>
+                <div class="v-bar hb-beige" style="height:45%"></div>
+                <div class="v-bar-label">1월</div>
+              </div>
+              <div class="v-bar-col">
+                <div class="v-bar-value">256</div>
+                <div class="v-bar hb-green" style="height:65%"></div>
+                <div class="v-bar-label">2월</div>
+              </div>
+              <div class="v-bar-col">
+                <div class="v-bar-value">310</div>
+                <div class="v-bar hb-green" style="height:80%"></div>
+                <div class="v-bar-label">3월</div>
+              </div>
+              <div class="v-bar-col">
+                <div class="v-bar-value">342</div>
+                <div class="v-bar hb-green" style="height:88%"></div>
+                <div class="v-bar-label">4월</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- PROGRESS DISTRIBUTION -->
+          <div class="chart-card">
+            <div class="chart-title">달성 가능성 분포</div>
+            <div style="margin-top:8px">
+              <div class="dist-item">
+                <div class="dist-label">0-20%</div>
+                <div class="dist-track"><div class="dist-fill" style="width:28%;background:var(--color-error)"><span>187</span></div></div>
+                <div class="dist-count">187명</div>
+              </div>
+              <div class="dist-item">
+                <div class="dist-label">20-40%</div>
+                <div class="dist-track"><div class="dist-fill" style="width:22%;background:var(--beige)"><span>156</span></div></div>
+                <div class="dist-count">156명</div>
+              </div>
+              <div class="dist-item">
+                <div class="dist-label">40-60%</div>
+                <div class="dist-track"><div class="dist-fill" style="width:25%;background:var(--taupe-400)"><span>168</span></div></div>
+                <div class="dist-count">168명</div>
+              </div>
+              <div class="dist-item">
+                <div class="dist-label">60-80%</div>
+                <div class="dist-track"><div class="dist-fill" style="width:15%;background:var(--green-400)"><span>102</span></div></div>
+                <div class="dist-count">102명</div>
+              </div>
+              <div class="dist-item">
+                <div class="dist-label">80-100%</div>
+                <div class="dist-track"><div class="dist-fill" style="width:10%;background:var(--green-600)"><span>68</span></div></div>
+                <div class="dist-count">68명</div>
+              </div>
+            </div>
+            <div style="margin-top:12px;padding:10px 14px;background:var(--taupe-50);border-radius:var(--radius-sm);font-size:12px;color:var(--text-secondary)">
+              전체 로드맵 보유 학생 <strong style="color:var(--text-primary)">681명</strong> 기준 (생성률 68% 중 활성 학생)
+            </div>
+          </div>
+        </div>
+
+        <!-- ACTIVITY LOG -->
+        <div class="section">
+          <div class="section-title">최근 활동 로그</div>
+          <div class="chart-card">
+            <div class="timeline">
+              <div class="tl-item">
+                <div class="tl-time">2026-04-02 14:32</div>
+                <div class="tl-text"><strong>김민준</strong> 학생이 두산에너빌리티 달성 분석을 완료했습니다.</div>
+              </div>
+              <div class="tl-item">
+                <div class="tl-time">2026-04-02 13:15</div>
+                <div class="tl-text"><strong>한소희</strong> 학생의 로드맵 진척률이 <strong>88%</strong>에 도달했습니다.</div>
+              </div>
+              <div class="tl-item">
+                <div class="tl-time">2026-04-02 11:48</div>
+                <div class="tl-text">관리자가 <strong>창원특수강</strong> 기업 정보를 수정했습니다.</div>
+              </div>
+              <div class="tl-item">
+                <div class="tl-time">2026-04-01 17:22</div>
+                <div class="tl-text">신규 학생 <strong>3명</strong>이 Talent ON에 가입했습니다.</div>
+              </div>
+              <div class="tl-item">
+                <div class="tl-time">2026-04-01 15:05</div>
+                <div class="tl-text"><strong>이서연</strong> 학생에게 상담이 배정되었습니다. (담당: 박센터장)</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </main>
+    </div>
+  </div>
+</div>
+
+<script>
+// Chip filter toggle
+document.querySelectorAll('.chip').forEach(chip => {
+  chip.addEventListener('click', function() {
+    document.querySelectorAll('.chip').forEach(c => c.classList.remove('active'));
+    this.classList.add('active');
+  });
+});
+</script>
+
+<!-- Common Components -->
+<script src="js/common.js"></script>
+<script>
+renderSidebar('sidebar', ADMIN_MENU, { admin: true });
+renderGNB('gnb', { title: '통계/리포트' });
+</script>
+
+</body>
+</html>

@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Talent ON — 관리자 홈</title>
+<link rel="preconnect" href="https://cdn.jsdelivr.net">
+<link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Sora:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/tokens.css">
+<link rel="stylesheet" href="css/base.css">
+<link rel="stylesheet" href="css/layout.css">
+<link rel="stylesheet" href="css/components.css">
+<link rel="stylesheet" href="css/dark.css">
+<link rel="stylesheet" href="css/pages/admin.css">
+</head>
+<body>
+<div class="shell">
+  <!-- SIDEBAR (common.js) -->
+  <aside class="sidebar" id="sidebar"></aside>
+
+  <!-- MAIN -->
+  <div class="main-wrapper">
+    <!-- GNB (common.js) -->
+    <header class="gnb" id="gnb"></header>
+    <div class="content-area">
+      <main class="main-content">
+        <!-- WELCOME -->
+        <div class="welcome-admin">
+          <div class="welcome-badge">ADMIN DASHBOARD</div>
+          <h1>국립창원대학교 <span>대학일자리플러스센터</span></h1>
+          <p>Talent ON 학생 취업역량 관리 시스템 · 전체 현황을 한눈에 확인하세요.</p>
+        </div>
+
+        <!-- 상담 연계 알림 배너 -->
+        <div id="alertBanner" style="display:flex;gap:16px;margin-bottom:20px;padding:18px 22px;border-radius:var(--radius-lg);background:#fef2f2;border:1.5px solid #fecaca;align-items:flex-start">
+          <div style="width:40px;height:40px;border-radius:50%;background:#fee2e2;display:flex;align-items:center;justify-content:center;flex-shrink:0">
+            <svg width="20" height="20" viewBox="0 0 16 16" fill="none"><path d="M4 6a4 4 0 018 0c0 4 2 5 2 5H2s2-1 2-5z" stroke="#dc2626" stroke-width="1.5" fill="none"/><path d="M6 13a2 2 0 004 0" stroke="#dc2626" stroke-width="1.5"/><circle cx="12" cy="4" r="3" fill="#dc2626"/><text x="12" y="5.5" text-anchor="middle" fill="#fff" font-size="5" font-weight="700">3</text></svg>
+          </div>
+          <div style="flex:1">
+            <div style="font-size:14px;font-weight:700;color:#991b1b;margin-bottom:4px">상담 권유 알림 3건 발생</div>
+            <div style="font-size:13px;color:#b91c1c;line-height:1.6;margin-bottom:10px">
+              <strong>3개월 이상 미접속</strong> 학생 1명, <strong>달성 가능성 하위 20%</strong> 학생 2명이 감지되었습니다.<br>
+              조기 개입이 이탈 방지에 효과적입니다. 상담 일정을 잡아주세요.
+            </div>
+            <div style="display:flex;gap:8px;flex-wrap:wrap">
+              <div style="display:flex;align-items:center;gap:6px;padding:6px 12px;border-radius:var(--radius-full);background:#fff;border:1px solid #fecaca;font-size:12px;font-weight:600;color:#dc2626">
+                <svg width="12" height="12" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="6" r="3" stroke="currentColor" stroke-width="1.3" fill="none"/><path d="M3 14c0-2.8 2.2-5 5-5s5 2.2 5 5" stroke="currentColor" stroke-width="1.3"/></svg>
+                최유나 · 90일 미접속
+              </div>
+              <div style="display:flex;align-items:center;gap:6px;padding:6px 12px;border-radius:var(--radius-full);background:#fff;border:1px solid #fecaca;font-size:12px;font-weight:600;color:#dc2626">
+                <svg width="12" height="12" viewBox="0 0 16 16" fill="none"><path d="M2 12l4-4 3 2 5-6" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                김도현 · 달성 가능성 12%
+              </div>
+              <div style="display:flex;align-items:center;gap:6px;padding:6px 12px;border-radius:var(--radius-full);background:#fff;border:1px solid #fecaca;font-size:12px;font-weight:600;color:#dc2626">
+                <svg width="12" height="12" viewBox="0 0 16 16" fill="none"><path d="M2 12l4-4 3 2 5-6" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                최유나 · 달성 가능성 8%
+              </div>
+            </div>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:6px;flex-shrink:0">
+            <button class="btn btn-sm" style="background:#dc2626;color:#fff;border:none;box-shadow:0 2px 6px rgba(220,38,38,.3)" onclick="alert('상담 일정 잡기 화면으로 이동합니다')">상담 일정 잡기</button>
+            <button class="btn btn-ghost btn-sm" style="font-size:11px" onclick="document.getElementById('alertBanner').style.display='none'">나중에 확인</button>
+          </div>
+        </div>
+
+        <!-- STAT CARDS -->
+        <div class="stats-grid">
+          <div class="stat-card">
+            <div class="stat-label">전체 학생 수</div>
+            <div class="stat-value">1,247<span style="font-size:14px;font-weight:400;color:var(--text-secondary)">명</span></div>
+            <div class="stat-bar"><div class="stat-bar-fill taupe" style="width:82%"></div></div>
+            <div class="stat-change up">▲ +38 이번 달</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-label">로드맵 생성률</div>
+            <div class="stat-value">68<span style="font-size:14px;font-weight:400;color:var(--text-secondary)">%</span></div>
+            <div class="stat-bar"><div class="stat-bar-fill green" style="width:68%"></div></div>
+            <div class="stat-change up">▲ +5.2% 전월 대비</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-label">이번 달 활성 학생</div>
+            <div class="stat-value">342<span style="font-size:14px;font-weight:400;color:var(--text-secondary)">명</span></div>
+            <div class="stat-bar"><div class="stat-bar-fill beige" style="width:27%"></div></div>
+            <div class="stat-change up">▲ +12 전주 대비</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-label">평균 달성 가능성</div>
+            <div class="stat-value">64<span style="font-size:14px;font-weight:400;color:var(--text-secondary)">%</span></div>
+            <div class="stat-bar"><div class="stat-bar-fill blue" style="width:64%"></div></div>
+            <div class="stat-change down">▼ -1.3 전월 대비</div>
+          </div>
+        </div>
+
+        <!-- SUPPORT NEEDED STUDENTS (위기 학생 감지) -->
+        <div class="section">
+          <div class="section-header" style="flex-wrap:wrap;gap:8px">
+            <span class="section-title"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" style="vertical-align:middle;margin-right:4px"><path d="M8 1L1 14h14L8 1z" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/><path d="M8 6v4M8 12v.5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg> 위기 학생 감지</span>
+            <div style="display:flex;gap:6px;margin-left:8px">
+              <span style="font-size:10px;padding:3px 10px;border-radius:var(--radius-full);background:#fef2f2;color:#dc2626;border:1px solid #fecaca;font-weight:600">3개월+ 미접속</span>
+              <span style="font-size:10px;padding:3px 10px;border-radius:var(--radius-full);background:#fef7ed;color:#b45309;border:1px solid #fde047;font-weight:600">달성 가능성 하위 20%</span>
+            </div>
+            <a href="A-02_student-list.html" class="section-link" style="margin-left:auto">전체 보기 →</a>
+          </div>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr><th>이름</th><th>학과</th><th>목표 기업</th><th>달성 가능성</th><th>마지막 접속</th><th>조치</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><div style="display:flex;align-items:center;gap:8px"><div class="student-avatar">김</div>김도현</div></td>
+                  <td>기계공학과</td>
+                  <td>두산에너빌리티</td>
+                  <td><span class="progress-low"><span class="progress-mini"><span class="progress-mini-fill" style="width:12%"></span></span>12%</span></td>
+                  <td style="color:var(--text-secondary);font-size:12px">14일 전</td>
+                  <td><button class="btn-sm btn-primary">상담 연결</button></td>
+                </tr>
+                <tr>
+                  <td><div style="display:flex;align-items:center;gap:8px"><div class="student-avatar">이</div>이수빈</div></td>
+                  <td>전기공학과</td>
+                  <td>LG전자</td>
+                  <td><span class="progress-low"><span class="progress-mini"><span class="progress-mini-fill" style="width:18%"></span></span>18%</span></td>
+                  <td style="color:var(--text-secondary);font-size:12px">21일 전</td>
+                  <td><button class="btn-sm btn-primary">상담 연결</button></td>
+                </tr>
+                <tr>
+                  <td><div style="display:flex;align-items:center;gap:8px"><div class="student-avatar">박</div>박지훈</div></td>
+                  <td>재료공학과</td>
+                  <td>현대위아</td>
+                  <td><span class="progress-low"><span class="progress-mini"><span class="progress-mini-fill" style="width:22%"></span></span>22%</span></td>
+                  <td style="color:var(--text-secondary);font-size:12px">9일 전</td>
+                  <td><button class="btn-sm btn-primary">상담 연결</button></td>
+                </tr>
+                <tr style="background:#fef2f2">
+                  <td><div style="display:flex;align-items:center;gap:8px"><div class="student-avatar" style="background:#dc2626">최</div>최유나 <span style="font-size:9px;padding:1px 6px;border-radius:var(--radius-full);background:#fef2f2;color:#dc2626;border:1px solid #fecaca;font-weight:600;margin-left:4px">위기</span></div></td>
+                  <td>컴퓨터공학과</td>
+                  <td>삼성SDI</td>
+                  <td><span class="progress-low"><span class="progress-mini"><span class="progress-mini-fill" style="width:8%"></span></span>8%</span></td>
+                  <td style="color:#dc2626;font-size:12px;font-weight:600">90일 전</td>
+                  <td><button class="btn-sm" style="background:#dc2626;color:#fff;border:none" onclick="alert('최유나 학생에게 상담 권유 알림을 발송합니다')">긴급 상담</button></td>
+                </tr>
+                <tr>
+                  <td><div style="display:flex;align-items:center;gap:8px"><div class="student-avatar">정</div>정민호</div></td>
+                  <td>항공우주공학과</td>
+                  <td>한화에어로스페이스</td>
+                  <td><span class="progress-low"><span class="progress-mini"><span class="progress-mini-fill" style="width:25%"></span></span>25%</span></td>
+                  <td style="color:var(--text-secondary);font-size:12px">7일 전</td>
+                  <td><button class="btn-sm btn-primary">상담 연결</button></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <!-- 상담 이력 & 알림 통계 -->
+          <div style="padding:16px 20px;border-top:.5px solid var(--border-subtle);display:flex;gap:16px;align-items:center;flex-wrap:wrap">
+            <div style="display:flex;gap:12px;flex:1">
+              <div style="padding:8px 14px;border-radius:var(--radius-md);background:var(--bg-page);border:.5px solid var(--border-subtle);text-align:center;flex:1">
+                <div style="font-size:10px;color:var(--text-tertiary);text-transform:uppercase;letter-spacing:.06em;margin-bottom:2px">이번 달 알림</div>
+                <div style="font-family:var(--font-display);font-size:20px;font-weight:700;color:#dc2626">7건</div>
+              </div>
+              <div style="padding:8px 14px;border-radius:var(--radius-md);background:var(--bg-page);border:.5px solid var(--border-subtle);text-align:center;flex:1">
+                <div style="font-size:10px;color:var(--text-tertiary);text-transform:uppercase;letter-spacing:.06em;margin-bottom:2px">상담 완료</div>
+                <div style="font-family:var(--font-display);font-size:20px;font-weight:700;color:var(--green-600)">4건</div>
+              </div>
+              <div style="padding:8px 14px;border-radius:var(--radius-md);background:var(--bg-page);border:.5px solid var(--border-subtle);text-align:center;flex:1">
+                <div style="font-size:10px;color:var(--text-tertiary);text-transform:uppercase;letter-spacing:.06em;margin-bottom:2px">상담 대기</div>
+                <div style="font-family:var(--font-display);font-size:20px;font-weight:700;color:var(--beige)">3건</div>
+              </div>
+              <div style="padding:8px 14px;border-radius:var(--radius-md);background:var(--bg-page);border:.5px solid var(--border-subtle);text-align:center;flex:1">
+                <div style="font-size:10px;color:var(--text-tertiary);text-transform:uppercase;letter-spacing:.06em;margin-bottom:2px">복귀 학생</div>
+                <div style="font-family:var(--font-display);font-size:20px;font-weight:700;color:var(--green-600)">2명</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- TWO COLUMN: SUMMARY + TOP 5 -->
+        <div class="two-col">
+          <div class="section">
+            <div class="section-header">
+              <span class="section-title">이번 주 요약</span>
+            </div>
+            <div class="summary-grid">
+              <div class="summary-card">
+                <div class="sc-label">신규 가입</div>
+                <div class="sc-value" style="color:var(--taupe-500)">24<span style="font-size:13px;font-weight:400;color:var(--text-secondary)">명</span></div>
+              </div>
+              <div class="summary-card">
+                <div class="sc-label">로드맵 완료</div>
+                <div class="sc-value" style="color:var(--green-500)">12<span style="font-size:13px;font-weight:400;color:var(--text-secondary)">명</span></div>
+              </div>
+              <div class="summary-card">
+                <div class="sc-label">달성 분석 요청</div>
+                <div class="sc-value" style="color:var(--taupe-400)">38<span style="font-size:13px;font-weight:400;color:var(--text-secondary)">건</span></div>
+              </div>
+              <div class="summary-card">
+                <div class="sc-label">기업 DB 조회</div>
+                <div class="sc-value" style="color:var(--green-600)">156<span style="font-size:13px;font-weight:400;color:var(--text-secondary)">건</span></div>
+              </div>
+            </div>
+          </div>
+          <div class="top-list">
+            <div class="top-list-title"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" style="vertical-align:middle;margin-right:4px"><rect x="3" y="2" width="10" height="12" rx="1" stroke="currentColor" stroke-width="1.3"/><path d="M6 5h1M9 5h1M6 8h1M9 8h1M6 11h4" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg> 인기 목표 기업 TOP 5</div>
+            <div class="top-item"><div class="top-rank r1">1</div><div class="top-name">두산에너빌리티</div><div class="top-count">187명</div></div>
+            <div class="top-item"><div class="top-rank r2">2</div><div class="top-name">한화에어로스페이스</div><div class="top-count">156명</div></div>
+            <div class="top-item"><div class="top-rank r3">3</div><div class="top-name">LG전자</div><div class="top-count">134명</div></div>
+            <div class="top-item"><div class="top-rank">4</div><div class="top-name">현대위아</div><div class="top-count">98명</div></div>
+            <div class="top-item"><div class="top-rank">5</div><div class="top-name">삼성SDI</div><div class="top-count">87명</div></div>
+          </div>
+        </div>
+
+      </main>
+    </div>
+  </div>
+</div>
+
+<!-- Common Components -->
+<script src="js/common.js"></script>
+<script>
+renderSidebar('sidebar', ADMIN_MENU, { admin: true });
+renderGNB('gnb', { title: '관리자 홈' });
+</script>
+
+</body>
+</html>

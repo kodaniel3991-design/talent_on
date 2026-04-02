@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Talent ON — 내 로드맵</title>
+<link rel="preconnect" href="https://cdn.jsdelivr.net">
+<link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Sora:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/tokens.css">
+<link rel="stylesheet" href="css/base.css">
+<link rel="stylesheet" href="css/layout.css">
+<link rel="stylesheet" href="css/components.css">
+<link rel="stylesheet" href="css/dark.css">
+<link rel="stylesheet" href="css/pages/roadmap.css">
+</head>
+<body>
+
+<div class="shell">
+
+  <!-- ═══ SIDEBAR (common.js) ═══ -->
+  <nav class="sidebar" id="sidebar"></nav>
+
+  <!-- ═══ MAIN ═══ -->
+  <div class="main-wrapper">
+    <header class="gnb" id="gnb"></header>
+
+    <div class="content-area">
+      <main class="main-content">
+
+        <!-- PAGE HEADER -->
+        <div class="page-header">
+          <div>
+            <h1>내 로드맵</h1>
+            <p>두산에너빌리티 목표 — AI가 생성한 학기별 준비 체크리스트</p>
+          </div>
+          <button class="btn btn-ghost btn-sm" onclick="if(confirm('로드맵을 재생성하시겠습니까? 기존 진행 기록은 유지됩니다.')){location.href='S-05_assessment.html';}">
+            <svg width="13" height="13" viewBox="0 0 16 16" fill="none"><path d="M13.5 2.5l-11 11M2.5 2.5l11 11" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>
+            로드맵 재생성
+          </button>
+        </div>
+
+        <!-- 학년 모드 표시 -->
+        <div id="gradeModeBar" style="display:flex;gap:8px;margin-bottom:16px">
+          <div id="modeJunior" style="display:none;flex:1;padding:12px 16px;border-radius:var(--radius-md);background:#fef7ed;border:1px solid var(--beige);align-items:center;gap:10px">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M1 6l7-3 7 3-7 3-7-3z" stroke="#b45309" stroke-width="1.3" stroke-linejoin="round"/><path d="M4 7.5v4l4 2 4-2v-4" stroke="#b45309" stroke-width="1.3" stroke-linejoin="round"/></svg>
+            <div>
+              <div style="font-size:13px;font-weight:700;color:#b45309">탐색 모드 · 기초 역량 로드맵</div>
+              <div style="font-size:11px;color:#92400e">목표 설정과 기초 스펙 쌓기에 집중하는 장기 플랜</div>
+            </div>
+          </div>
+          <div id="modeSenior" style="flex:1;padding:12px 16px;border-radius:var(--radius-md);background:var(--green-50);border:1px solid var(--green-200);display:flex;align-items:center;gap:10px">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="6" stroke="var(--green-600)" stroke-width="1.3"/><circle cx="8" cy="8" r="3" stroke="var(--green-600)" stroke-width="1.2"/><circle cx="8" cy="8" r="0.8" fill="var(--green-600)"/></svg>
+            <div>
+              <div style="font-size:13px;font-weight:700;color:var(--green-700)">실전 모드 · 목표 달성 로드맵</div>
+              <div style="font-size:11px;color:var(--green-600)">달성 분석 기반 단기 집중 체크리스트</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- PROGRESS HERO -->
+        <div class="progress-hero">
+          <div class="ph-ring">
+            <svg width="80" height="80" viewBox="0 0 80 80">
+              <circle cx="40" cy="40" r="32" fill="none" stroke="var(--border-subtle)" stroke-width="7"/>
+              <circle cx="40" cy="40" r="32" fill="none" stroke="var(--green-400)" stroke-width="7"
+                stroke-dasharray="136.6 201" stroke-linecap="round" id="progressRing"/>
+            </svg>
+            <div class="ph-center">
+              <div class="ph-pct" id="totalPct">68%</div>
+              <div class="ph-label">진행률</div>
+            </div>
+          </div>
+          <div class="ph-info">
+            <div class="ph-title">12 / 18 항목 완료</div>
+            <div class="ph-sub">이번 학기에 3개 항목을 더 완료하면 목표 달성에 한 걸음 더 가까워져요.</div>
+            <div class="ph-bar"><div class="ph-bar-fill" style="width:68%;background:var(--green-400)"></div></div>
+            <div class="ph-stats">
+              <div class="ph-stat"><div class="ph-stat-dot" style="background:var(--green-400)"></div>완료 <strong>12</strong></div>
+              <div class="ph-stat"><div class="ph-stat-dot" style="background:var(--beige)"></div>진행중 <strong>3</strong></div>
+              <div class="ph-stat"><div class="ph-stat-dot" style="background:var(--gray-300)"></div>예정 <strong>3</strong></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- SEMESTER TABS -->
+        <div class="semester-tabs">
+          <div class="sem-tab" onclick="filterSem('all',this)">전체<span class="tab-count">18</span></div>
+          <div class="sem-tab" data-sem="3-1-done" onclick="filterSem('3-1-done',this)">3-1 (완료)<span class="tab-count">5</span></div>
+          <div class="sem-tab active" data-sem="3-2" onclick="filterSem('3-2',this)">3-2 (현재)<span class="tab-count">5</span></div>
+          <div class="sem-tab" data-sem="4-1" onclick="filterSem('4-1',this)">4-1<span class="tab-count">5</span></div>
+          <div class="sem-tab" data-sem="4-2" onclick="filterSem('4-2',this)">4-2<span class="tab-count">3</span></div>
+        </div>
+
+        <!-- ═══ JUNIOR TIMELINE (1~2학년 탐색 모드) ═══ -->
+        <div id="juniorTimeline" class="timeline" style="display:none">
+        </div>
+
+        <!-- ═══ SENIOR TIMELINE (3~4학년 실전 모드) ═══ -->
+        <div id="seniorTimeline">
+        <div class="timeline" id="seniorTimelineInner">
+        </div>
+        </div><!-- /seniorTimeline -->
+
+      </main>
+
+      <!-- ═══ RIGHT PANEL ═══ -->
+      <aside class="right-panel">
+
+        <div class="rp-section">
+          <div class="rp-title">목표 기업</div>
+          <div class="target-mini">
+            <div class="tm-logo" style="overflow:hidden;background:#fff"><img src="https://www.google.com/s2/favicons?domain=doosan.com&sz=128" alt="두산" style="width:100%;height:100%;object-fit:contain;padding:4px" onerror="this.remove();this.parentElement.textContent='두산'"></div>
+            <div style="flex:1"><div class="tm-name">두산에너빌리티</div><div class="tm-sub">에너지/플랜트 · 달성 가능성 72%</div></div>
+          </div>
+        </div>
+
+        <div class="rp-section">
+          <div class="rp-title">카테고리별 진행률</div>
+          <div class="cat-progress">
+            <div class="cp-row">
+              <div class="cp-icon" style="background:var(--taupe-50)"><svg width="12" height="12" viewBox="0 0 16 16" fill="none"><rect x="2" y="3" width="12" height="10" rx="2" stroke="var(--taupe-400)" stroke-width="1.3" fill="none"/></svg></div>
+              <div class="cp-info"><div class="cp-name">자격증</div><div class="cp-bar"><div class="cp-bar-fill" style="width:33%;background:var(--beige)"></div></div></div>
+              <div class="cp-val" style="color:var(--beige)">1/3</div>
+            </div>
+            <div class="cp-row">
+              <div class="cp-icon" style="background:var(--pale-blue)"><svg width="12" height="12" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="5.5" stroke="#5b8db8" stroke-width="1.3" fill="none"/></svg></div>
+              <div class="cp-info"><div class="cp-name">어학</div><div class="cp-bar"><div class="cp-bar-fill" style="width:50%;background:var(--beige)"></div></div></div>
+              <div class="cp-val" style="color:var(--beige)">1/2</div>
+            </div>
+            <div class="cp-row">
+              <div class="cp-icon" style="background:#fef7ed"><svg width="12" height="12" viewBox="0 0 16 16" fill="none"><rect x="1" y="5" width="14" height="8" rx="2" stroke="#b45309" stroke-width="1.3" fill="none"/></svg></div>
+              <div class="cp-info"><div class="cp-name">경험</div><div class="cp-bar"><div class="cp-bar-fill" style="width:33%;background:var(--color-error)"></div></div></div>
+              <div class="cp-val" style="color:var(--color-error)">1/3</div>
+            </div>
+            <div class="cp-row">
+              <div class="cp-icon" style="background:var(--green-50)"><svg width="12" height="12" viewBox="0 0 16 16" fill="none"><path d="M3 8l3 3 7-7" stroke="var(--green-500)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+              <div class="cp-info"><div class="cp-name">역량</div><div class="cp-bar"><div class="cp-bar-fill" style="width:67%;background:var(--green-400)"></div></div></div>
+              <div class="cp-val" style="color:var(--green-600)">2/3</div>
+            </div>
+            <div class="cp-row">
+              <div class="cp-icon" style="background:var(--gray-100)"><svg width="12" height="12" viewBox="0 0 16 16" fill="none"><path d="M4 4h8M4 8h6M4 12h4" stroke="var(--gray-500)" stroke-width="1.3" stroke-linecap="round"/></svg></div>
+              <div class="cp-info"><div class="cp-name">기타</div><div class="cp-bar"><div class="cp-bar-fill" style="width:100%;background:var(--green-400)"></div></div></div>
+              <div class="cp-val" style="color:var(--green-600)">7/7</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="rp-section">
+          <div class="rp-title">이번 학기 마감 임박</div>
+          <div class="upcoming-list">
+            <div class="up-item">
+              <div class="up-date" style="color:var(--color-error)">4.15</div>
+              <div class="up-text"><strong>에너지관리기사 필기</strong> 원서접수 마감</div>
+            </div>
+            <div class="up-item">
+              <div class="up-date">5월</div>
+              <div class="up-text"><strong>TOEIC 재응시</strong> — 850점 목표</div>
+            </div>
+            <div class="up-item">
+              <div class="up-date">5월</div>
+              <div class="up-text">두산 <strong>하계 인턴</strong> 공고 확인</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="rp-section">
+          <div class="rp-title">AI 코칭 팁</div>
+          <div class="ai-tip">
+            <div class="ai-tip-header">
+              <svg viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="6.5" stroke="var(--taupe-400)" stroke-width="1.3"/><path d="M6 6.5a2 2 0 113.5 1.8c-.5.3-.5.5-.5 1.2M8 12v.5" stroke="var(--taupe-400)" stroke-width="1.3" stroke-linecap="round"/></svg>
+              이번 달 집중 포인트
+            </div>
+            <p><strong>에너지관리기사 원서접수</strong>가 가장 급합니다. 4월 15일 마감이므로 즉시 한국산업인력공단 큐넷에서 접수하세요. 필기 시험은 6월이므로 2개월 준비 기간이 있습니다.</p>
+          </div>
+        </div>
+
+        <div class="rp-section">
+          <div class="rp-title">로드맵 정보</div>
+          <div style="font-size:11px;color:var(--text-tertiary);display:flex;flex-direction:column;gap:4px;padding:12px;border-radius:var(--radius-sm);background:var(--bg-page);border:.5px solid var(--border-subtle)">
+            <span>생성일: 2026.04.01</span>
+            <span>기반: 달성 분석 v2.0</span>
+            <span>총 항목: 18개 (4학기)</span>
+            <span>마지막 업데이트: 오늘</span>
+          </div>
+        </div>
+
+      </aside>
+    </div>
+  </div>
+</div>
+
+<script>
+// Toggle checklist item
+function toggleItem(el) {
+  el.classList.toggle('done');
+  const isDone = el.classList.contains('done');
+  // Update check visual
+  const badge = el.querySelector('.badge');
+  const priorityIcon = el.querySelector('.cl-priority');
+  if (isDone) {
+    if (priorityIcon) { priorityIcon.style.display = 'none'; }
+    if (!badge) {
+      const b = document.createElement('span');
+      b.className = 'badge badge-green';
+      b.style.fontSize = '9px';
+      b.textContent = '완료';
+      el.appendChild(b);
+    }
+  } else {
+    if (priorityIcon) { priorityIcon.style.display = ''; }
+    const b = el.querySelector('.badge-green:not(:first-of-type)');
+    if (b && !el.dataset.wasDone) b.remove();
+  }
+  updateProgress();
+  saveRoadmapState();
+}
+
+// Filter by semester
+function filterSem(sem, btn) {
+  document.querySelectorAll('.sem-tab').forEach(t => t.classList.remove('active'));
+  btn.classList.add('active');
+  document.querySelectorAll('.tl-semester').forEach(s => {
+    if (sem === 'all') {
+      s.style.display = '';
+    } else {
+      s.style.display = s.dataset.semester === sem ? '' : 'none';
+    }
+  });
+}
+
+// Update progress ring
+function updateProgress() {
+  const all = document.querySelectorAll('.cl-item');
+  const done = document.querySelectorAll('.cl-item.done');
+  const pct = Math.round((done.length / all.length) * 100);
+  document.getElementById('totalPct').textContent = pct + '%';
+  // Ring: circumference = 2 * PI * 32 ≈ 201
+  const circ = 201;
+  const ring = document.getElementById('progressRing');
+  ring.setAttribute('stroke-dasharray', `${circ * pct / 100} ${circ}`);
+  // Bar
+  document.querySelector('.ph-bar-fill').style.width = pct + '%';
+  document.querySelector('.ph-title').textContent = `${done.length} / ${all.length} 항목 완료`;
+}
+
+function saveRoadmapState(){
+  const items = document.querySelectorAll('.cl-item');
+  const state = {};
+  items.forEach(function(el, i){ state[i] = el.classList.contains('done'); });
+  localStorage.setItem('talentOn_roadmap_items', JSON.stringify(state));
+  const all = items.length;
+  const done = document.querySelectorAll('.cl-item.done').length;
+  const pct = all ? Math.round((done / all) * 100) : 0;
+  localStorage.setItem('talentOn_progress', pct);
+}
+
+function restoreRoadmapState(){
+  var saved = localStorage.getItem('talentOn_roadmap_items');
+  if(!saved) return;
+  try {
+    var state = JSON.parse(saved);
+    var items = document.querySelectorAll('.cl-item');
+    items.forEach(function(el, i){
+      if(state[i] === true && !el.classList.contains('done')){
+        el.classList.add('done');
+        el.dataset.wasDone = '1';
+      } else if(state[i] === false && el.classList.contains('done')){
+        el.classList.remove('done');
+      }
+    });
+    updateProgress();
+  } catch(e){}
+}
+
+// Grade mode (page-specific)
+function applyGradeMode(){
+  var mode = getGradeMode();
+  if(mode === 'junior'){
+    document.getElementById('modeJunior').style.display = 'flex';
+    document.getElementById('modeSenior').style.display = 'none';
+    document.getElementById('juniorTimeline').style.display = '';
+    document.getElementById('seniorTimeline').style.display = 'none';
+    document.querySelector('.page-header p').textContent = '기초 역량 중심 — 1~2학년 탐색 모드 장기 로드맵';
+  }
+}
+</script>
+
+<script src="data/roadmap.js"></script>
+<script src="js/renderers.js"></script>
+<script>
+(function(){
+  var data = ROADMAP_DATA;
+  window._roadmapData = data;
+  renderRoadmapTimeline('seniorTimelineInner', data.semesters);
+  renderRoadmapTimeline('juniorTimeline', data.juniorSemesters);
+  restoreRoadmapState();
+  applyGradeMode();
+})();
+</script>
+
+<!-- Common Components -->
+<script src="js/common.js"></script>
+<script>
+renderSidebar('sidebar', STUDENT_MENU);
+renderGNB('gnb', { breadcrumb: [{ label: '홈', href: 'S-02_dashboard.html' }, { label: '내 로드맵' }] });
+</script>
+
+</body>
+</html>

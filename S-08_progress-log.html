@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Talent ON — 진척 기록</title>
+<link rel="preconnect" href="https://cdn.jsdelivr.net">
+<link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Sora:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/tokens.css">
+<link rel="stylesheet" href="css/base.css">
+<link rel="stylesheet" href="css/layout.css">
+<link rel="stylesheet" href="css/components.css">
+<link rel="stylesheet" href="css/dark.css">
+<link rel="stylesheet" href="css/pages/progress-log.css">
+</head>
+<body>
+
+<div class="shell">
+  <!-- ═══ SIDEBAR (common.js) ═══ -->
+  <nav class="sidebar" id="sidebar"></nav>
+
+  <div class="main-wrapper">
+    <!-- GNB (common.js) -->
+    <header class="gnb" id="gnb"></header>
+
+    <div class="content-area">
+      <main class="main-content">
+
+        <div class="page-header">
+          <div class="page-header-left">
+            <h1>진척 기록</h1>
+            <p>로드맵 항목을 완료하고, 증빙 파일이나 메모를 기록하세요.</p>
+          </div>
+        </div>
+
+        <!-- STREAK BAR -->
+        <div class="streak-bar">
+          <div class="streak-flame"><svg width="24" height="24" viewBox="0 0 16 16" fill="none"><path d="M8 1c0 3 4 4 4 8 0 2.5-2 4-4 4S4 11.5 4 9c0-2 1-3 2-4s2-2.5 2-4z" stroke="currentColor" stroke-width="1.3"/><path d="M8 13c-1 0-2-.8-2-2 0-1.5 2-3 2-3s2 1.5 2 3c0 1.2-1 2-2 2z" stroke="currentColor" stroke-width="1.1"/></svg></div>
+          <div class="streak-info">
+            <div class="streak-title">7일 연속 기록 중!</div>
+            <div class="streak-sub">꾸준히 기록하면 로드맵 완성에 가까워져요.</div>
+            <div class="streak-days">
+              <div class="streak-day filled">월</div>
+              <div class="streak-day filled">화</div>
+              <div class="streak-day filled">수</div>
+              <div class="streak-day filled">목</div>
+              <div class="streak-day filled">금</div>
+              <div class="streak-day filled">토</div>
+              <div class="streak-day today">일</div>
+            </div>
+          </div>
+          <div class="streak-count">
+            <div class="streak-num">7</div>
+            <div class="streak-label">연속일</div>
+          </div>
+        </div>
+
+        <!-- RECORD FORM -->
+        <div class="record-form">
+          <div class="rf-header">
+            <div class="rf-title">
+              <div class="rf-icon" style="background:var(--green-50)">
+                <svg width="12" height="12" viewBox="0 0 16 16" fill="none"><path d="M8 3v10M3 8h10" stroke="var(--green-500)" stroke-width="2" stroke-linecap="round"/></svg>
+              </div>
+              새 진척 기록 추가
+            </div>
+            <span class="badge badge-taupe">빠른 기록</span>
+          </div>
+          <div class="rf-body">
+            <div class="form-grid">
+              <div class="form-group">
+                <label class="form-label">로드맵 항목 <span class="req">*</span></label>
+                <select class="select" id="recordStep">
+                  <option value="">항목 선택...</option>
+                  <optgroup label="3학년 2학기 (현재)">
+                    <option value="cert-energy">에너지관리기사 필기 원서접수 & 공부 시작</option>
+                    <option value="lang-toeic">TOEIC 재응시 — 850점 이상 달성</option>
+                    <option value="etc-analysis">두산에너빌리티 인재상 & 직무 분석 완료</option>
+                  </optgroup>
+                  <optgroup label="4학년 1학기">
+                    <option value="cert-energy-p">에너지관리기사 필기 합격</option>
+                    <option value="exp-intern">두산에너빌리티 하계 인턴 지원</option>
+                  </optgroup>
+                </select>
+              </div>
+              <div class="form-group">
+                <label class="form-label">완료 상태</label>
+                <select class="select">
+                  <option>완료</option>
+                  <option>진행중</option>
+                  <option>시작</option>
+                </select>
+              </div>
+              <div class="form-group form-full">
+                <label class="form-label">메모</label>
+                <textarea class="input" placeholder="어떤 내용을 기록하고 싶으신가요? (결과, 느낀 점, 다음 계획 등)"></textarea>
+              </div>
+              <div class="form-group">
+                <label class="form-label">링크 첨부</label>
+                <input type="url" class="input" placeholder="https://...">
+                <div class="form-hint">관련 사이트, 수료증 링크 등</div>
+              </div>
+              <div class="form-group">
+                <label class="form-label">파일 첨부</label>
+                <div class="file-drop" onclick="document.getElementById('fileInput').click()">
+                  <div class="file-drop-icon">
+                    <svg width="20" height="20" viewBox="0 0 16 16" fill="none"><path d="M8 2v8M4 6l4-4 4 4" stroke="var(--text-tertiary)" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/><path d="M2 11v2a1 1 0 001 1h10a1 1 0 001-1v-2" stroke="var(--text-tertiary)" stroke-width="1.3"/></svg>
+                  </div>
+                  <div class="file-drop-text">클릭하여 파일 선택</div>
+                  <div class="file-drop-hint">PDF, 이미지, 문서 (최대 10MB)</div>
+                </div>
+                <input type="file" id="fileInput" style="display:none" multiple>
+              </div>
+            </div>
+            <div style="display:flex;justify-content:flex-end;gap:10px;margin-top:16px">
+              <button class="btn btn-ghost btn-sm">취소</button>
+              <button class="btn btn-primary" onclick="addRecord()">
+                <svg width="13" height="13" viewBox="0 0 16 16" fill="none"><path d="M3 8l3 3 7-7" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                기록 저장
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- FILTER -->
+        <div class="filter-bar">
+          <div class="filter-chip active" onclick="toggleFilter(this)">전체</div>
+          <div class="filter-chip" onclick="toggleFilter(this)">완료</div>
+          <div class="filter-chip" onclick="toggleFilter(this)">파일 첨부</div>
+          <div class="filter-chip" onclick="toggleFilter(this)">메모</div>
+          <div class="filter-count">총 <strong>8</strong>건의 기록</div>
+        </div>
+
+        <!-- LOG TIMELINE -->
+        <div class="log-timeline">
+
+          <!-- 오늘 -->
+          <div class="log-group">
+            <div class="log-date-label">오늘 · 2026.04.01</div>
+
+            <div class="log-item">
+              <div class="log-dot check"><svg width="10" height="10" viewBox="0 0 16 16" fill="none"><path d="M3 8l3 3 7-7" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+              <div class="log-card">
+                <div class="log-card-header">
+                  <div class="log-card-title">TOEIC 820점 성적 등록</div>
+                  <div class="log-card-time">14:30</div>
+                </div>
+                <div class="log-card-step"><span class="cl-cat cat-lang">어학</span>TOEIC 재응시 — 850점 목표 (진행중)</div>
+                <div class="log-card-body">
+                  <p>3월 시험 결과 820점 확인. 목표 850까지 30점 부족. LC 445 / RC 375. RC 파트7 집중 보완 필요.</p>
+                </div>
+                <div class="log-attachment">
+                  <div class="log-att-icon" style="background:var(--pale-blue)"><svg width="10" height="10" viewBox="0 0 16 16" fill="none"><rect x="3" y="1" width="10" height="14" rx="1.5" stroke="#3b6fa0" stroke-width="1.3" fill="none"/><path d="M6 5h4M6 8h4M6 11h2" stroke="#3b6fa0" stroke-width="1"/></svg></div>
+                  <div class="log-att-name">TOEIC_성적표_202603.pdf</div>
+                  <div class="log-att-action">보기</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 어제 -->
+          <div class="log-group">
+            <div class="log-date-label">어제 · 2026.03.31</div>
+
+            <div class="log-item">
+              <div class="log-dot note"><svg width="10" height="10" viewBox="0 0 16 16" fill="none"><path d="M4 4h8M4 8h5M4 12h6" stroke="var(--taupe-400)" stroke-width="1.5" stroke-linecap="round"/></svg></div>
+              <div class="log-card">
+                <div class="log-card-header">
+                  <div class="log-card-title">에너지관리기사 공부 계획 수립</div>
+                  <div class="log-card-time">20:15</div>
+                </div>
+                <div class="log-card-step"><span class="cl-cat cat-cert">자격증</span>에너지관리기사 필기 원서접수 & 공부 시작</div>
+                <div class="log-card-body">
+                  <p>큐넷에서 시험 일정 확인 완료. 필기 접수 4/7~4/15, 시험일 6/7. 교재 구매: 에듀윌 에너지관리기사 필기. 하루 2시간씩 60일 플랜 작성.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 3월 29일 -->
+          <div class="log-group">
+            <div class="log-date-label">2026.03.29</div>
+
+            <div class="log-item">
+              <div class="log-dot check"><svg width="10" height="10" viewBox="0 0 16 16" fill="none"><path d="M3 8l3 3 7-7" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+              <div class="log-card">
+                <div class="log-card-header">
+                  <div class="log-card-title">Python 데이터 분석 강좌 이수 완료</div>
+                  <div class="log-card-time">16:40</div>
+                </div>
+                <div class="log-card-step"><span class="cl-cat cat-skill">역량</span>Python 데이터 분석 강좌 이수 <span class="badge badge-green" style="font-size:9px">완료</span></div>
+                <div class="log-card-body">
+                  <p>학교 비교과 프로그램 수료. pandas, matplotlib, 기초 통계 분석 학습 완료. 수료증 발급됨.</p>
+                </div>
+                <div class="log-attachment">
+                  <div class="log-att-icon" style="background:var(--green-50)"><svg width="10" height="10" viewBox="0 0 16 16" fill="none"><rect x="3" y="1" width="10" height="14" rx="1.5" stroke="var(--green-500)" stroke-width="1.3" fill="none"/></svg></div>
+                  <div class="log-att-name">Python_데이터분석_수료증.pdf</div>
+                  <div class="log-att-action">보기</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="log-item">
+              <div class="log-dot link"><svg width="10" height="10" viewBox="0 0 16 16" fill="none"><path d="M6.5 9.5l3-3M5.5 7.5L4 9a2.5 2.5 0 003.5 3.5l1.5-1.5M10.5 8.5L12 7a2.5 2.5 0 00-3.5-3.5L7 5" stroke="#b45309" stroke-width="1.3" stroke-linecap="round"/></svg></div>
+              <div class="log-card">
+                <div class="log-card-header">
+                  <div class="log-card-title">두산에너빌리티 채용 페이지 분석</div>
+                  <div class="log-card-time">11:20</div>
+                </div>
+                <div class="log-card-step"><span class="cl-cat cat-etc">기타</span>두산에너빌리티 인재상 & 직무 분석</div>
+                <div class="log-card-body">
+                  <p>채용 홈페이지에서 기계설계 직무 요구사항 정리. 핵심: 에너지관리기사, CAD/CAE, 영어 의사소통.</p>
+                </div>
+                <a class="log-link" href="#">
+                  <svg width="10" height="10" viewBox="0 0 16 16" fill="none"><path d="M6.5 9.5l3-3M5.5 7.5L4 9a2.5 2.5 0 003.5 3.5l1.5-1.5M10.5 8.5L12 7a2.5 2.5 0 00-3.5-3.5L7 5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>
+                  doosan.com/careers — 기계설계 직무 공고
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <!-- 3월 25일 -->
+          <div class="log-group">
+            <div class="log-date-label">2026.03.25</div>
+
+            <div class="log-item">
+              <div class="log-dot check"><svg width="10" height="10" viewBox="0 0 16 16" fill="none"><path d="M3 8l3 3 7-7" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+              <div class="log-card">
+                <div class="log-card-header">
+                  <div class="log-card-title">컴퓨터활용능력 1급 취득</div>
+                  <div class="log-card-time">09:00</div>
+                </div>
+                <div class="log-card-step"><span class="cl-cat cat-cert">자격증</span>컴퓨터활용능력 1급 취득 <span class="badge badge-green" style="font-size:9px">완료</span></div>
+                <div class="log-card-body">
+                  <p>대한상공회의소 자격증 합격 확인. 실기 85점. 자격증 번호 등록 완료.</p>
+                </div>
+                <div class="log-attachment">
+                  <div class="log-att-icon" style="background:var(--taupe-50)"><svg width="10" height="10" viewBox="0 0 16 16" fill="none"><rect x="3" y="1" width="10" height="14" rx="1.5" stroke="var(--taupe-400)" stroke-width="1.3" fill="none"/></svg></div>
+                  <div class="log-att-name">컴활1급_자격증사본.jpg</div>
+                  <div class="log-att-action">보기</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 3월 20일 -->
+          <div class="log-group">
+            <div class="log-date-label">2026.03.20</div>
+
+            <div class="log-item">
+              <div class="log-dot note"><svg width="10" height="10" viewBox="0 0 16 16" fill="none"><path d="M4 4h8M4 8h5M4 12h6" stroke="var(--taupe-400)" stroke-width="1.5" stroke-linecap="round"/></svg></div>
+              <div class="log-card">
+                <div class="log-card-header">
+                  <div class="log-card-title">GAP 분석 결과 확인 & 로드맵 생성</div>
+                  <div class="log-card-time">15:30</div>
+                </div>
+                <div class="log-card-step"><span class="cl-cat cat-etc">기타</span>시스템 자동 기록</div>
+                <div class="log-card-body">
+                  <p>AI GAP 분석 완료. 적합도 72점. 핵심 GAP: 에너지관리기사(미보유), 인턴 경험(0회), TOEIC(30점 부족). 로드맵 18개 항목 자동 생성됨.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+      </main>
+
+      <!-- ═══ RIGHT PANEL ═══ -->
+      <aside class="right-panel">
+
+        <div class="rp-section">
+          <div class="rp-title">활동 히트맵 <small>최근 12주</small></div>
+          <div class="heatmap" id="heatmap"></div>
+          <div class="hm-months" id="heatmapMonths"></div>
+        </div>
+
+        <div class="rp-section">
+          <div class="rp-title">이번 달 통계</div>
+          <div class="stats-mini">
+            <div class="stat-mini">
+              <div class="stat-mini-num" style="color:var(--green-600)">8</div>
+              <div class="stat-mini-label">기록 수</div>
+            </div>
+            <div class="stat-mini">
+              <div class="stat-mini-num" style="color:var(--taupe-500)">3</div>
+              <div class="stat-mini-label">항목 완료</div>
+            </div>
+            <div class="stat-mini">
+              <div class="stat-mini-num" style="color:var(--beige)">4</div>
+              <div class="stat-mini-label">파일 첨부</div>
+            </div>
+            <div class="stat-mini">
+              <div class="stat-mini-num" style="color:var(--green-400)">7</div>
+              <div class="stat-mini-label">연속일</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="rp-section">
+          <div class="rp-title">학과 내 활동 순위 <small>기계공학과</small></div>
+          <div style="padding:14px;border-radius:var(--radius-md);background:var(--bg-surface);border:.5px solid var(--border-subtle)">
+            <div style="display:flex;align-items:center;gap:12px;margin-bottom:12px">
+              <div style="text-align:center;flex:1">
+                <div style="font-family:var(--font-display);font-size:28px;font-weight:800;color:var(--taupe-500)">12위</div>
+                <div style="font-size:10px;color:var(--text-tertiary)">87명 중</div>
+              </div>
+              <div style="text-align:center;flex:1">
+                <div style="font-family:var(--font-display);font-size:28px;font-weight:800;color:var(--green-600)">상위 14%</div>
+                <div style="font-size:10px;color:var(--text-tertiary)">이번 달 기준</div>
+              </div>
+            </div>
+            <div style="height:6px;background:var(--border-subtle);border-radius:3px;overflow:hidden;margin-bottom:8px">
+              <div style="width:86%;height:100%;background:var(--green-400);border-radius:3px"></div>
+            </div>
+            <div style="font-size:11px;color:var(--text-tertiary);text-align:center">지난 달 대비 <strong style="color:var(--green-600)">3단계 상승</strong></div>
+          </div>
+        </div>
+
+        <div class="rp-section">
+          <div class="rp-title">기록 대기 항목 <small>이번 학기</small></div>
+          <div class="pending-list">
+            <div class="pending-item">
+              <div class="pi-check"></div>
+              <div class="pi-text">에너지관리기사 필기 원서접수</div>
+              <span class="pi-cat cat-cert">자격증</span>
+            </div>
+            <div class="pending-item">
+              <div class="pi-check"></div>
+              <div class="pi-text">TOEIC 850점 달성</div>
+              <span class="pi-cat cat-lang">어학</span>
+            </div>
+            <div class="pending-item">
+              <div class="pi-check"></div>
+              <div class="pi-text">직무 분석 완료</div>
+              <span class="pi-cat cat-etc">기타</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="rp-section">
+          <div class="rp-title">AI 코칭</div>
+          <div style="background:linear-gradient(135deg,var(--taupe-50) 0%,var(--green-50) 100%);border:.5px solid var(--green-200);border-radius:var(--radius-md);padding:14px">
+            <div style="display:flex;align-items:center;gap:6px;font-size:11px;font-weight:600;color:var(--taupe-600);margin-bottom:8px">
+              <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="6.5" stroke="var(--taupe-400)" stroke-width="1.3"/><path d="M6 6.5a2 2 0 113.5 1.8c-.5.3-.5.5-.5 1.2M8 12v.5" stroke="var(--taupe-400)" stroke-width="1.3" stroke-linecap="round"/></svg>
+              기록 습관 분석
+            </div>
+            <p style="font-size:12px;color:var(--text-secondary);line-height:1.6"><strong>7일 연속 기록</strong> 중이에요! 이 페이스라면 이번 학기 목표 달성률이 <strong>85% 이상</strong> 예상됩니다. 에너지관리기사 원서접수 후 기록을 남기면 진행률이 올라갑니다.</p>
+          </div>
+        </div>
+
+      </aside>
+    </div>
+  </div>
+</div>
+
+<script>
+function toggleFilter(el){
+  document.querySelectorAll('.filter-chip').forEach(c=>c.classList.remove('active'));
+  el.classList.add('active');
+}
+
+function addRecord(){
+  const step = document.getElementById('recordStep');
+  if(!step.value){alert('로드맵 항목을 선택하세요.');return;}
+  var toast = document.getElementById('successToast');
+  toast.classList.add('show');
+  setTimeout(function(){ toast.classList.remove('show'); },2000);
+  var timeline = document.querySelector('.log-timeline');
+  if(timeline){ timeline.scrollIntoView({behavior:'smooth'}); }
+  // Streak persistence
+  var today = new Date().toISOString().slice(0,10);
+  localStorage.setItem('talentOn_lastRecord', today);
+  var streak = parseInt(localStorage.getItem('talentOn_streak')||'0',10);
+  streak = streak + 1;
+  localStorage.setItem('talentOn_streak', streak);
+  var sn = document.querySelector('.streak-num');
+  if(sn) sn.textContent = streak;
+  var st = document.querySelector('.streak-title');
+  if(st) st.textContent = streak + '일 연속 기록 중!';
+}
+
+// Generate heatmap
+(function(){
+  const hm = document.getElementById('heatmap');
+  const days = ['','월','','수','','금',''];
+  const data = [];
+  // 12 weeks x 7 days = 84 cells
+  for(let i=0;i<84;i++){
+    const r = Math.random();
+    data.push(r < 0.3 ? 0 : r < 0.5 ? 1 : r < 0.7 ? 2 : r < 0.85 ? 3 : 4);
+  }
+  // last 7 days more active
+  for(let i=77;i<84;i++) data[i] = Math.max(data[i], 2);
+  data[83] = 4; // today
+
+  for(let row=0;row<7;row++){
+    const r = document.createElement('div');
+    r.className='hm-row';
+    r.innerHTML=`<span class="hm-label">${days[row]}</span>`;
+    for(let col=0;col<12;col++){
+      const idx = col*7+row;
+      const c = document.createElement('div');
+      c.className = `hm-cell hm-${data[idx]}`;
+      c.title = `${data[idx]}건 기록`;
+      r.appendChild(c);
+    }
+    hm.appendChild(r);
+  }
+
+  const months = document.getElementById('heatmapMonths');
+  const mNames = ['1','','2','','3','','4','','','','',''];
+  // Show month labels roughly
+  const labels = ['1월','','','2월','','','3월','','','4월','',''];
+  labels.forEach(m=>{
+    const s = document.createElement('span');
+    s.className='hm-month';
+    s.textContent=m;
+    months.appendChild(s);
+  });
+})();
+</script>
+
+<div class="toast" id="successToast">
+  <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8l3 3 7-7" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+  기록이 저장되었습니다!
+</div>
+
+<script>
+(function restoreStreak(){
+  var lastRecord = localStorage.getItem('talentOn_lastRecord');
+  if(!lastRecord) return;
+  var today = new Date();
+  var todayStr = today.toISOString().slice(0,10);
+  var yesterday = new Date(today); yesterday.setDate(today.getDate()-1);
+  var yesterdayStr = yesterday.toISOString().slice(0,10);
+  var streak = parseInt(localStorage.getItem('talentOn_streak')||'1',10);
+  if(lastRecord === todayStr){
+    // already recorded today, show current streak
+  } else if(lastRecord === yesterdayStr){
+    // yesterday was last record, streak continues
+  } else {
+    // streak broken, reset
+    streak = 0;
+    localStorage.setItem('talentOn_streak', '0');
+  }
+  if(streak > 0){
+    var sn = document.querySelector('.streak-num');
+    if(sn) sn.textContent = streak;
+    var st = document.querySelector('.streak-title');
+    if(st) st.textContent = streak + '일 연속 기록 중!';
+  }
+})();
+
+</script>
+
+<!-- Common Components -->
+<script src="js/common.js"></script>
+<script>
+renderSidebar('sidebar', STUDENT_MENU);
+renderGNB('gnb', { breadcrumb: [{ label: '홈', href: 'S-02_dashboard.html' }, { label: '진척 기록' }] });
+</script>
+
+</body>
+</html>

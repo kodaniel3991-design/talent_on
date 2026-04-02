@@ -1,0 +1,110 @@
+[
+  {
+    "id": "doosan",
+    "name": "두산에너빌리티",
+    "industry": "에너지/플랜트",
+    "location": "창원 성산구",
+    "size": "대기업",
+    "logo": "doosan.com",
+    "status": "채용 중",
+    "statusType": "green",
+    "score": 72,
+    "keywords": ["도전정신", "글로벌 역량", "기술 전문성", "팀워크"],
+    "specs": [
+      { "name": "학점", "value": "3.0+", "pct": 70, "color": "var(--green-400)" },
+      { "name": "어학", "value": "850+", "pct": 85, "color": "var(--green-400)" },
+      { "name": "자격증", "value": "필수", "pct": 60, "color": "var(--beige)" }
+    ],
+    "detailPage": "S-04_company-detail.html"
+  },
+  {
+    "id": "hanwha",
+    "name": "한화에어로스페이스",
+    "industry": "방산/항공",
+    "location": "창원 성산구",
+    "size": "대기업",
+    "logo": "hanwhaaerospace.com",
+    "status": "채용 중",
+    "statusType": "green",
+    "score": 68,
+    "keywords": ["신뢰", "헌신", "창의", "열정"],
+    "specs": [
+      { "name": "학점", "value": "3.2+", "pct": 75, "color": "var(--green-400)" },
+      { "name": "어학", "value": "900+", "pct": 90, "color": "var(--green-400)" },
+      { "name": "인턴", "value": "우대", "pct": 50, "color": "var(--beige)" }
+    ],
+    "detailPage": "S-04_company-detail.html"
+  },
+  {
+    "id": "lg",
+    "name": "LG전자 창원",
+    "industry": "전자/가전",
+    "location": "창원 성산구",
+    "size": "대기업",
+    "logo": "lg.com",
+    "status": "인턴 모집",
+    "statusType": "yellow",
+    "score": 65,
+    "keywords": ["고객가치 창출", "정도경영", "인간존중"],
+    "specs": [
+      { "name": "학점", "value": "3.5+", "pct": 80, "color": "var(--green-400)" },
+      { "name": "어학", "value": "800+", "pct": 80, "color": "var(--green-400)" },
+      { "name": "자격증", "value": "우대", "pct": 40, "color": "var(--gray-300)" }
+    ],
+    "detailPage": "S-04_company-detail.html"
+  },
+  {
+    "id": "stx",
+    "name": "STX엔진",
+    "industry": "조선/엔진",
+    "location": "창원 의창구",
+    "size": "중견기업",
+    "logo": "stx.co.kr",
+    "status": "채용 중",
+    "statusType": "green",
+    "score": 61,
+    "keywords": ["전문가정신", "성과지향", "소통"],
+    "specs": [
+      { "name": "학점", "value": "2.8+", "pct": 60, "color": "var(--green-400)" },
+      { "name": "어학", "value": "700+", "pct": 65, "color": "var(--green-400)" },
+      { "name": "자격증", "value": "필수", "pct": 70, "color": "var(--beige)" }
+    ],
+    "detailPage": "S-04_company-detail.html"
+  },
+  {
+    "id": "hyundai",
+    "name": "현대위아",
+    "industry": "기계/자동차",
+    "location": "창원 성산구",
+    "size": "대기업",
+    "logo": "hyundai.com",
+    "status": "채용 예정",
+    "statusType": "gray",
+    "score": 55,
+    "keywords": ["무한책임", "가능성", "고객 최우선"],
+    "specs": [
+      { "name": "학점", "value": "3.0+", "pct": 75, "color": "var(--green-400)" },
+      { "name": "어학", "value": "800+", "pct": 80, "color": "var(--green-400)" },
+      { "name": "인턴", "value": "우대", "pct": 55, "color": "var(--beige)" }
+    ],
+    "detailPage": "S-04_company-detail.html"
+  },
+  {
+    "id": "samsung",
+    "name": "삼성SDI 창원",
+    "industry": "전자/배터리",
+    "location": "창원 성산구",
+    "size": "대기업",
+    "logo": "samsung.com",
+    "status": "채용 중",
+    "statusType": "green",
+    "score": 52,
+    "keywords": ["인재제일", "최고지향", "변화선도", "상생추구"],
+    "specs": [
+      { "name": "학점", "value": "3.5+", "pct": 85, "color": "var(--green-400)" },
+      { "name": "어학", "value": "900+", "pct": 90, "color": "var(--green-400)" },
+      { "name": "자격증", "value": "우대", "pct": 55, "color": "var(--beige)" }
+    ],
+    "detailPage": "S-04_company-detail.html"
+  }
+]

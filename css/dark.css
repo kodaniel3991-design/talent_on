@@ -1,0 +1,32 @@
+/* ═══════════════════════════════════════════════
+   DARK MODE
+═══════════════════════════════════════════════ */
+body.dark {
+  --bg-page: #2b2b2b;
+  --bg-surface: #333;
+  --bg-subtle: #3d3d3d;
+  --text-primary: #fff;
+  --text-secondary: #d4d4d4;
+  --text-tertiary: #b3b3b3;
+  --border-subtle: #444;
+  --border-default: #555;
+  --shadow-sm: 0 1px 3px rgba(0,0,0,0.2);
+  --shadow-md: 0 4px 12px rgba(0,0,0,0.3);
+  --shadow-lg: 0 12px 32px rgba(0,0,0,0.4);
+}
+body.dark .sidebar { background: #333; border-color: #444; }
+body.dark .gnb { background: #333; border-color: #444; }
+body.dark .menu-item:hover,
+body.dark .mi:hover { background: #3d3d3d; }
+body.dark .menu-item.active,
+body.dark .mi.active { background: #3d3d3d; color: #d4c0b3; border-left-color: #bfa091; }
+body.dark .right-panel { background: #333; border-color: #444; }
+body.dark .section-card { background: #333; border-color: #444; }
+body.dark .stat-card { background: #333; border-color: #444; }
+body.dark table thead { background: #3d3d3d; }
+body.dark tbody tr { background: #333; }
+body.dark tbody tr:hover { background: #3d3d3d; }
+body.dark .input { background: #3d3d3d; border-color: #555; color: #fff; }
+body.dark .select { background: #3d3d3d; border-color: #555; color: #fff; }
+body.dark .tag-input-wrap { background: #3d3d3d; border-color: #555; }
+body.dark .loading-overlay { background: rgba(43,43,43,0.92); }
