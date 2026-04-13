@@ -54,8 +54,10 @@ body{background:var(--taupe-800);min-height:100%;display:flex}
 .login-panel.active{display:block}
 
 /* FORM (page-specific overrides) */
-.form-group{margin-bottom:16px;flex-direction:row}
-.form-label{display:block;margin-bottom:6px}
+.form-group{margin-bottom:16px;display:flex;flex-direction:row;align-items:center;gap:12px}
+.form-group .form-label{flex:0 0 70px;margin-bottom:0}
+.form-group .input-icon-wrap{flex:1}
+.form-label{display:block}
 .input{padding:11px 14px}
 .input-icon-wrap{position:relative}
 .input-icon-wrap .input{padding-left:42px}
